@@ -1,8 +1,10 @@
-const express = require('express');
+const express = require('express')
+const router = express.Router();
 const userModel = require('../models/user')
-const app = express();
 
-app.get('/users', async (req, res) => {
+
+// Get all
+router.get('/users', async (req, res) => {
   const users = await userModel.find({});
 
   try {
@@ -13,10 +15,22 @@ app.get('/users', async (req, res) => {
   }
 })
 
-app.post('/user', async (req, res) => {
-  console.log(req.body);
+router.get('/user/:id', async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id)
+    // if (!user) res.status(404).send("No user here")
+    res.send(user)
+  } catch {
+    res.status(500).send(err)
+    console.log("Not a valid user");
+  }
+
+})
+
+
+// Create
+router.post('/user', async (req, res) => {
   const user = new userModel(req.body);
-  console.log(user);
 
   try {
     await user.save();
@@ -27,5 +41,29 @@ app.post('/user', async (req, res) => {
   }
 })
 
-module.exports = app
+
+
+router.delete('/user/:id', async (req, res) => {
+  try {
+    const user = await userModel.findByIdAndDelete(req.params.id)
+
+    if (!user) res.status(404).send("No user here")
+    res.status(200).send()
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+// Update - works
+router.patch('/user/:id', async (req, res) => {
+  try {
+    await userModel.findByIdAndUpdate(req.params.id, req.body)
+    await userModel.save()
+    res.send(user)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+module.exports = router
 

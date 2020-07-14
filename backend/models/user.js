@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
+const User =  new Schema({
   email: {
     type: String,
-    required: [true, "cant be blank"],
+    required: true
     // match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   // recipes: [
   //   {
   //   name: {
   //     type: String,
-  //     // required: true,
+  //     required: true,
   //   },
   //   playlistRef: {
   //     type: String,
@@ -21,5 +22,4 @@ const UserSchema = new mongoose.Schema({
 })
 
 
-const User = mongoose.model("User", UserSchema)
-module.exports = User;
+module.exports = mongoose.model('User', User)
