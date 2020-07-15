@@ -61,6 +61,8 @@ router.delete('/user/:id', async (req, res) => {
   }
 })
 
+
+
 // Update - works
 router.patch('/user/:id', async (req, res) => {
   try {
@@ -71,6 +73,20 @@ router.patch('/user/:id', async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+
+
+//clear all users
+// router.delete('/users', async (req, res) => {
+//   try {
+//     const user = await userModel.deleteMany({})
+//     res.status(200).send()
+//   } catch (err) {
+//     res.status(500).send(err)
+//   }
+// })
+
+
 
 module.exports = router
 
