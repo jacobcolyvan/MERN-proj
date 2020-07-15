@@ -7,6 +7,7 @@ import SearchController from '../components/SearchController'
 const AddRecipe = () => {
   return (
     <div>
+    Add Recipe
       <SearchController/>
       
     </div>

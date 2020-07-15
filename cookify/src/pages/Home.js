@@ -7,8 +7,9 @@ import SearchController from '../components/SearchController'
 const Home = () => {
     return (
         <div>
+            View saved recipes/home
             <SearchController />
-            
+
 
         </div>
     )

@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios'
+import RecipeTile from '../components/RecipeTile'
 
 
 const SearchController = () => {
@@ -11,9 +12,10 @@ const SearchController = () => {
   const [currentSearch, setCurrentSearch] = useState('')
   const [currentRecipes, setCurrentRecipes] = useState([])
 
+  console.log(process.env);
   const getRecipes = async () => {
-
-    await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${APP_KEY}&addRecipeInformation=true`)
+    // process.env
+    await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`)
     .then(res => {
       // console.log();
       // console.log(res.data.results);
@@ -27,13 +29,12 @@ const SearchController = () => {
       console.log(err)
       console.log("something wrong w/ spoonacular request")
     })
-    console.log(currentRecipes);
+    // console.log(currentRecipes);
   }
   
 
   return (
     <div>
-
       <SearchBar
         searchValue={searchValue}
         onSearchValueChange={(newSearchValue) => {
@@ -41,17 +42,15 @@ const SearchController = () => {
         }
         onEnter={getRecipes}
       />
-      <div className='recipes'>
-        {currentRecipes.map((recipe) => (
-          <>
-            <li>{(recipe.title)}</li>
-            <img src={recipe.image} />
-          </>
-        ))}
-      </div>
+    {currentRecipes.map((recipe) => (
+      <RecipeTile 
+        title={recipe.title}
+        image={recipe.image}
+      />
+    ))}
+      
     </div>
   )
-
 }
 
 export default SearchController
