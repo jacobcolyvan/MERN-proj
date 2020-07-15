@@ -1,0 +1,1 @@
+// Logic for both searchbars: user recipes and spoonacular (finds recipes)
