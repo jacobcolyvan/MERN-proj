@@ -16,7 +16,8 @@ const User =  new Schema({
     playlistRef: {
       type: String,
       default: "crickets..."
-    }
+    },
+    
   }
   ]
 })

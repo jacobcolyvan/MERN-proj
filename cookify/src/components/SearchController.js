@@ -1,36 +1,57 @@
 // Logic for both searchbars: user recipes and spoonacular (finds recipes)
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios'
 import RecipeTile from '../components/RecipeTile'
 
 
-const SearchController = () => {
-  const APP_KEY = 'd712f788eec84018840ff6b7bc2abbdd';
+const SearchController = (userRecipes) => {
+
 
   const [searchValue, setSearchValue] = useState('')
-  const [currentSearch, setCurrentSearch] = useState('')
+  // const [currentSearch, setCurrentSearch] = useState('')
   const [currentRecipes, setCurrentRecipes] = useState([])
 
   const getRecipes = async () => {
-    // process.env
-    await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`)
-    .then(res => {
-      // console.log();
-      // console.log(res.data.results);
-      setCurrentRecipes((res.data.results))
-      console.log("wallah hussy")
-      
-      // console.log(currentRecipes);
-      
-    })
-    .catch( err => {
-      console.log(err)
-      console.log("something wrong w/ spoonacular request")
-    })
-    // console.log(currentRecipes);
+    await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`)
+      .then(res => {
+        // console.log(res.data.results);
+        setCurrentRecipes((res.data.results))
+        console.log("wallah hussy")
+      })
+      .catch( err => {
+        console.log(err)
+        console.log("something wrong w/ spoonacular request")
+      }
+    )
   }
-  
+
+  const saveRecipe = () => {
+    const data = {
+      newRecipe: {
+        name: "is them some APPles?!"
+      }
+    }
+
+    axios.put(
+      'http://localhost:3000/user/5f0d8f6f9420353e3e8da972',
+      data,
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+    .then(() => {
+      console.log('recipe has been added')
+    })
+    .catch((err) => {
+      console.log('somethings said no')
+      console.log(err)
+    }
+  )}
+
+  // const saveRecipe = () => {
+  //   console.log(currentRecipes);
+  // }
+
 
   return (
     <div>
@@ -41,10 +62,12 @@ const SearchController = () => {
         }
         onEnter={getRecipes}
       />
-    {currentRecipes.map((recipe) => (
+    {currentRecipes.map((recipe, index) => (
       <RecipeTile 
+        key={`${recipe}-${index}`}
         title={recipe.title}
         image={recipe.image}
+        saveRecipe={saveRecipe}
       />
     ))}
       

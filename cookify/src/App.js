@@ -3,13 +3,15 @@ import Navbar from './components/Navbar'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import Home from './pages/Home'
 import AddRecipe from './pages/AddRecipe'
+import "./App.css";
 
 const App = () => {
   return (
-    <div>  
+    <div className="main">  
       <Router>
         <Navbar />
-        <h1>Cookify bru</h1>
+        <h1>Cookify bru</h1>  
+        <br/>
 
         <Switch>
           <Route exact path ='/'>
@@ -22,8 +24,6 @@ const App = () => {
           <Redirect to='/' />
         </Switch>
       </Router>
-
-      
     </div>
   )
 }

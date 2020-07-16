@@ -63,14 +63,22 @@ router.delete('/user/:id', async (req, res) => {
 
 
 
-// Update - works
-router.patch('/user/:id', async (req, res) => {
+// Update for recipes
+router.put('/user/:id', async (req, res) => {
   try {
-    await userModel.findByIdAndUpdate(req.params.id, req.body)
-    await userModel.save()
-    res.send(user)
+    // await userModel.findByIdAndUpdate(req.params.id, req.body)
+    // await userModel.save()
+    // res.send(user)
+
+    const user = await userModel.findById(req.params.id);
+    console.log(req.body.newRecipe);
+    newRecipes = [...user.recipes, req.body.newRecipe]
+    await user.update({ recipes: newRecipes })
+    res.send(newRecipes)
+    // res.send('Recipe added to user')
   } catch (err) {
-    res.status(500).send(err)
+    console.log("no way mon");
+    res.status(400).send(err)
   }
 })
 
