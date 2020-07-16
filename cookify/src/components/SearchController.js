@@ -12,7 +12,6 @@ const SearchController = () => {
   const [currentSearch, setCurrentSearch] = useState('')
   const [currentRecipes, setCurrentRecipes] = useState([])
 
-  console.log(process.env);
   const getRecipes = async () => {
     // process.env
     await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`)

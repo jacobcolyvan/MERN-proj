@@ -9,6 +9,8 @@ const App = () => {
     <div>  
       <Router>
         <Navbar />
+        <h1>Cookify bru</h1>
+
         <Switch>
           <Route exact path ='/'>
             <Home /> 
@@ -21,7 +23,7 @@ const App = () => {
         </Switch>
       </Router>
 
-      <h1>Cookify bru</h1>
+      
     </div>
   )
 }
