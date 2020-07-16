@@ -27,10 +27,10 @@ const SearchController = (userRecipes) => {
     )
   }
 
-  const saveRecipe = () => {
+  const saveRecipe = (index) => {
     const data = {
       newRecipe: {
-        name: "is them some APPles?!"
+        name: currentRecipes[index].title
       }
     }
 
@@ -48,10 +48,6 @@ const SearchController = (userRecipes) => {
     }
   )}
 
-  // const saveRecipe = () => {
-  //   console.log(currentRecipes);
-  // }
-
 
   return (
     <div>
@@ -68,6 +64,7 @@ const SearchController = (userRecipes) => {
         title={recipe.title}
         image={recipe.image}
         saveRecipe={saveRecipe}
+        index={index}
       />
     ))}
       

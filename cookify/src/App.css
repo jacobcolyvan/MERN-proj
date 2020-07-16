@@ -36,3 +36,13 @@ body {
   color: black;
   width: 70%;
 }
+
+.navBar {
+  display:flex;
+  margin: 0 0 10px 0;
+}
+
+.navBar li {
+  list-style: none;
+  padding-right: 20px;
+}
