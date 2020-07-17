@@ -10,10 +10,10 @@ import ViewRecipe from './pages/ViewRecipe'
 
 
 const App = () => {
-  const [userRecipes, setUserRecipes] = useState([])
+  const [userRecipes, setUserRecipes] = useState(null)
 
-  function requestUserData() {
-      axios
+  async function requestUserData() {
+      await axios
       .get('http://localhost:3000/user/5f0d8f6f9420353e3e8da972')
       .then(res => {
           setUserRecipes(res.data.recipes)
@@ -23,6 +23,7 @@ const App = () => {
 
     useEffect (() => {
         requestUserData()
+        console.log("gg");
     }, [])
 
 
@@ -34,7 +35,8 @@ const App = () => {
         <h1>Cookify bru</h1>  
         <br/>
 
-        <Switch>
+        {userRecipes && (
+          <Switch>
           <Route exact path ='/'>
             <Home 
               userRecipes={userRecipes}
@@ -50,15 +52,18 @@ const App = () => {
           <Route exact path='/recipes/:id'
               render={props => 
                 <ViewRecipe
-                  userRecipes={userRecipes}
-                  // userRecipe={userRecipes[props.match.params.id]}
+                  // userRecipes={userRecipes}
+                  userRecipe={userRecipes[props.match.params.id]}
                 />
               }
           />
-          
-          
           <Redirect to='/' />
-        </Switch>
+          </Switch>
+        )}
+        
+          
+          
+          
       </Router>
     </div>
   )

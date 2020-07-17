@@ -2,14 +2,10 @@
 // recipeslist
 // Search controller on this page should search through presaved recipes
 
-import React, { useState, useEffect } from 'react'
-import SearchController from '../components/SearchController'
-import axios from 'axios'
+import React from 'react'
 import UserRecipeTile from '../components/UserRecipeTile'
 
-const Home = (userRecipes) => {
-    console.log(userRecipes)
-
+const Home = ({userRecipes}) => {
     return (
         <div>
             <p>View saved recipes/home</p>

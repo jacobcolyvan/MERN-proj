@@ -4,15 +4,14 @@ import { Link } from "react-router-dom";
 const UserRecipeTile = ({userRecipes}) => {
     return (
         <div className = 'userRecipeTile'>
-            {if (userRecipes) {
-                userRecipes.map( (recipe, index) => (
+            {userRecipes.map( (recipe, index) => (
                 <div key={`${recipe}-${index}`}>
                     {/* <br/> */}
-                    {/* <h3><Link to = '/add'>{recipe.name}</Link></h3> */}
+                    <h3><Link to={`/recipes/${index}`}>{recipe.name}</Link></h3>
                     <br/>
                     <p>Playlist: {recipe.playlistRef}</p>
                 </div>
-            ))}}
+            ))}
         </div>
     )
 }
