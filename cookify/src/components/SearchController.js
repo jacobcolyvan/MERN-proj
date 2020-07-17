@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios'
 import RecipeTile from '../components/RecipeTile'
+import { Link } from "react-router-dom";
 
 
 const SearchController = ({userRecipes, onUpdate}) => {
@@ -58,13 +59,15 @@ const SearchController = ({userRecipes, onUpdate}) => {
         onEnter={getRecipes}
       />
     {currentRecipes.map((recipe, index) => (
-      <RecipeTile 
-        key={`${recipe}-${index}`}
-        title={recipe.title}
-        image={recipe.image}
-        saveRecipe={saveRecipe}
-        index={index}
-      />
+      <Link to={`/recipes/${userRecipes.length-1}`} key={`${recipe}-${index}`}>
+        <RecipeTile 
+          key={`${recipe}-${index}`}
+          title={recipe.title}
+          image={recipe.image}
+          saveRecipe={saveRecipe}
+          index={index}
+        />
+      </Link>
     ))}
       
     </div>

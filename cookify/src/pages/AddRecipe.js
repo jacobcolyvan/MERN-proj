@@ -9,6 +9,7 @@ import { Redirect } from "react-router-dom";
 const AddRecipe = ({userRecipes, onUpdate}) => {
   // const onAdd = () => {
     
+    
   // }
 
   return (
@@ -17,7 +18,7 @@ const AddRecipe = ({userRecipes, onUpdate}) => {
       <br/>
       <SearchController
         userRecipes={userRecipes}
-        onAdd={onUpdate}
+        onUpdate={onUpdate}
       />
       
     </div>
