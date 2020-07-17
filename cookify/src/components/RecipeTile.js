@@ -1,7 +1,5 @@
 import React from 'react'
 import './RecipeTile.css'
-// import {Link} from 'react-router-dom'
-import ViewRecipe from '../pages/ViewRecipe'
 
 const RecipeTile = ({title, image, saveRecipe, index}) => {
   return (

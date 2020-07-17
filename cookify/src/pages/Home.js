@@ -7,21 +7,8 @@ import SearchController from '../components/SearchController'
 import axios from 'axios'
 import UserRecipeTile from '../components/UserRecipeTile'
 
-const Home = () => {
-    const [userRecipes, setUserRecipes] = useState([])
-
-    function requestUserData() {
-        axios
-        .get('http://localhost:3000/user/5f0d8f6f9420353e3e8da972')
-        .then(res => {
-            setUserRecipes(res.data.recipes)
-            // console.log(res);
-        })
-    }
-
-    useEffect (() => {
-        requestUserData()
-    }, [])
+const Home = (userRecipes) => {
+    console.log(userRecipes)
 
     return (
         <div>

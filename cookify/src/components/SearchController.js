@@ -5,9 +5,7 @@ import axios from 'axios'
 import RecipeTile from '../components/RecipeTile'
 
 
-const SearchController = (userRecipes) => {
-
-
+const SearchController = ({userRecipes, onUpdate}) => {
   const [searchValue, setSearchValue] = useState('')
   // const [currentSearch, setCurrentSearch] = useState('')
   const [currentRecipes, setCurrentRecipes] = useState([])
@@ -41,6 +39,7 @@ const SearchController = (userRecipes) => {
     )
     .then(() => {
       console.log('recipe has been added')
+      onUpdate()
     })
     .catch((err) => {
       console.log('somethings said no')
