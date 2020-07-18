@@ -1,15 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user_routes.js');
-const cors = require('cors')
+const cors = require('cors');
 
 const app = express();
-app.use(express.json()); 
-app.use(cors())
+app.use(express.json()); //init middleware
+app.use(cors());
 
-mongoose.connect('mongodb+srv://yeddy:denver@cluster0.gvtay.mongodb.net/<dbname>?retryWrites=true&w=majority', {
-  useNewUrlParser: true
-})
+mongoose.connect(
+  'mongodb+srv://yeddy:denver@cluster0.gvtay.mongodb.net/<dbname>?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*');
@@ -20,4 +24,9 @@ mongoose.connect('mongodb+srv://yeddy:denver@cluster0.gvtay.mongodb.net/<dbname>
 
 app.use(userRouter);
 
-app.listen(3000, () => { console.log('Server is running...') });
+app.listen(3000, () => {
+  console.log('Server is running...');
+});
+
+//Defining route for auth
+app.use('/auth', require('./routes/auth'));
