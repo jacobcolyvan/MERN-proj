@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const userModel = require('../models/user');
 const {
   getUsers,
@@ -34,15 +35,27 @@ router.get('/user/:id', async (req, res) => {
 
 // Create
 router.post('/user', async (req, res) => {
-  const user = new userModel(req.body);
+  // const user = new userModel(req.body);
 
   const { username, password } = req.body;
 
   try {
     let check = await userModel.findOne({ username });
+    // if not the last res.json/res.etc, have to add a return
     if (check) {
-      res.status(400).json({ errors: [{ msg: 'username already taken' }] });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'username already taken' }] });
     }
+
+    const salt = await bcrypt.genSalt(10); //create salt for password
+
+    user = new userModel({
+      username,
+      password,
+    });
+
+    user.password = await bcrypt.hash(password, salt);
 
     await user.save();
     res.send(user);
