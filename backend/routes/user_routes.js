@@ -68,7 +68,7 @@ router.post('/user', async (req, res) => {
       },
     };
 
-    //sign the payload using the secret from config > default.justify-content
+    //sign the payload using the secret from config > default.json
     jwt.sign(
       payload,
       config.get('jwtSecret'),
