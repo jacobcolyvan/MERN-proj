@@ -1,7 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user_routes.js');
+const spotifyRouter = require('./routes/spotify_routes.js');
 const cors = require('cors');
+
+require('dotenv').config({path: './.env'})
+console.log(process.env.SPOTIFY_CLIENT_ID);
 
 const app = express();
 app.use(express.json()); //init middleware
@@ -23,6 +27,7 @@ mongoose.connect(
 // });
 
 app.use(userRouter);
+app.use(spotifyRouter);
 
 app.listen(3000, () => {
   console.log('Server is running...');
@@ -30,3 +35,5 @@ app.listen(3000, () => {
 
 //Defining route for auth
 app.use('/auth', require('./routes/auth'));
+
+
