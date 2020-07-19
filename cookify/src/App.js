@@ -33,6 +33,10 @@ const App = () => {
       <Router>
         <Navbar />
         <h1>Cookify bru</h1>  
+        <p><a href="https://accounts.spotify.com/en/login?continue=https:%2F%2Faccounts.spotify.com%2Fauthorize%3Fscope%3Duser-read-private%2Buser-read-email%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8888%252Fcallback%26client_id%3D613a9b0f2f88482e861cfaf59533a685" target="_blank">login to Spotify</a></p>
+
+        {/* // login button (first things first) if backend doesn't respond with successful login status once user object is requested.
+            // Is there a refresh token? Did it work successfully? */}
         <br/>
 
         {userRecipes && (
