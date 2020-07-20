@@ -8,6 +8,9 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import AddRecipe from './pages/AddRecipe';
@@ -34,37 +37,42 @@ const App = () => {
 
   return (
     <div className='main'>
-      <Router>
-        <Navbar />
-        <h1>Cookify bru</h1>
-        <br />
+      <Provider store={store}>
+        <Router>
+          <Navbar />
+          <h1>Cookify bru</h1>
+          <br />
 
-        {userRecipes && (
-          <Switch>
-            <Route exact path='/'>
-              <Home userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
-            <Route exact path='/add'>
-              <AddRecipe userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
-
-            <Route exact path='/register' component={Register} />
-
-            <Route exact path='/login' component={LoginForm} />
-            <Route
-              exact
-              path='/recipes/:id'
-              render={(props) => (
-                <ViewRecipe
-                  // userRecipes={userRecipes}
-                  userRecipe={userRecipes[props.match.params.id]}
+          {userRecipes && (
+            <Switch>
+              <Route exact path='/'>
+                <Home userRecipes={userRecipes} onUpdate={requestUserData} />
+              </Route>
+              <Route exact path='/add'>
+                <AddRecipe
+                  userRecipes={userRecipes}
+                  onUpdate={requestUserData}
                 />
-              )}
-            />
-            <Redirect to='/' />
-          </Switch>
-        )}
-      </Router>
+              </Route>
+
+              <Route exact path='/register' component={Register} />
+
+              <Route exact path='/login' component={LoginForm} />
+              <Route
+                exact
+                path='/recipes/:id'
+                render={(props) => (
+                  <ViewRecipe
+                    // userRecipes={userRecipes}
+                    userRecipe={userRecipes[props.match.params.id]}
+                  />
+                )}
+              />
+              <Redirect to='/' />
+            </Switch>
+          )}
+        </Router>
+      </Provider>
     </div>
   );
 };
