@@ -24,7 +24,7 @@ router.get('/users', async (req, res) => {
   }
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get('/users/:id', async (req, res) => {
   try {
     const user = await userModel.findById(req.params.id);
     // if (!user) res.status(404).send("No user here")
@@ -36,7 +36,7 @@ router.get('/user/:id', async (req, res) => {
 });
 
 // Create
-router.post('/user', async (req, res) => {
+router.post('/users', async (req, res) => {
   // const user = new userModel(req.body);
 
   const { username, password } = req.body;
@@ -97,7 +97,7 @@ router.delete('/user/:id', async (req, res) => {
 });
 
 // Update for recipes
-router.put('/user/:id', async (req, res) => {
+router.put('/users/:id', async (req, res) => {
   try {
     // await userModel.findByIdAndUpdate(req.params.id, req.body)
     // await userModel.save()
