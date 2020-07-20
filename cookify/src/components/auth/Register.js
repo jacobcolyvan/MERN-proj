@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; //need to export connect
 import { setAlert } from '../../actions/alert'; // bring action in
+import PropTypes from 'prop-types';
 
 //connect allows us to connect our components to redux
 
@@ -45,7 +46,6 @@ const Register = ({ setAlert }) => {
           placeholder='Password'
           required
           name='password'
-          required
           value={password}
           onChange={(e) => onChange(e)}
           minLength='6'
@@ -56,7 +56,6 @@ const Register = ({ setAlert }) => {
           placeholder='Confirm passwword'
           required
           name='password2'
-          required
           value={password2}
           onChange={(e) => onChange(e)}
           minLength='6'
@@ -68,6 +67,10 @@ const Register = ({ setAlert }) => {
       </p>
     </div>
   );
+};
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default connect(null, { setAlert })(Register);

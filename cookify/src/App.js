@@ -1,3 +1,4 @@
+//Libraries
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
@@ -8,22 +9,25 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+//Redux
 import { Provider } from 'react-redux';
 import store from './store';
 
+//Components
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
 import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
+// import Alert from './components/Alert';
 
 const App = () => {
   const [userRecipes, setUserRecipes] = useState(null);
 
   async function requestUserData() {
     await axios
-      .get('http://localhost:3000/users/5f12c2a7d4323119d3e7d0b7')
+      .get('http://localhost:3000/users/5f1533ac7a07e0be45e808cd')
       .then((res) => {
         setUserRecipes(res.data.recipes);
         // console.log(res);
@@ -42,7 +46,7 @@ const App = () => {
           <Navbar />
           <h1>Cookify bru</h1>
           <br />
-
+          {/* <Alert /> */}
           {userRecipes && (
             <Switch>
               <Route exact path='/'>

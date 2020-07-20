@@ -36,7 +36,6 @@ const LoginForm = () => {
           placeholder='Password'
           required
           name='password'
-          required
           value={password}
           onChange={(e) => onChange(e)}
           minLength='6'
