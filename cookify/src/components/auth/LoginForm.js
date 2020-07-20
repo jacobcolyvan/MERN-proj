@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
+    "username": '',
+    "password": '',
   });
 
   const { username, password } = formData;
+  const [userToken, setUserToken] = useState(null);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,7 +18,18 @@ const LoginForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('success');
+
+    await axios
+      .post('http://localhost:3000/auth/login', formData, {
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then((res) => {
+        console.log(res);
+        console.log('success');
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (

@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 // /auth
 // authenticate user and get json web token
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   console.log(req.body);
   // console.log(username);

@@ -6,7 +6,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { username, password, password2 } = formData;
@@ -27,7 +27,7 @@ const Register = () => {
 
       await axios
         .post('http://localhost:3000/auth/register', formData, {
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         })
         .then((res) => {
           console.log(res);
@@ -35,7 +35,7 @@ const Register = () => {
           // console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.message);
           console.log('there was an error');
         });
     }
