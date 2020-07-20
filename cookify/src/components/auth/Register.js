@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    password2: '',
+    password2: ''
   });
 
   const { username, password, password2 } = formData;
+  const [userToken, setUserToken] = useState(null);
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  console.log(formData);
+  };
+  // console.log(formData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -21,12 +23,28 @@ const Register = () => {
       console.log('passwords do not match');
     } else {
       console.log('success');
+      //send username and password to backend?
+
+      await axios
+        .post('http://localhost:3000/auth/register', formData, {
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then((res) => {
+          console.log(res);
+          setUserToken(res.data.token);
+          // console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('there was an error');
+        });
     }
   };
 
   return (
     <div>
       <h1>Sign up</h1>
+      <p>{userToken}</p>
       <form onSubmit={(e) => onSubmit(e)}>
         <input
           type='text'

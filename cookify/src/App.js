@@ -17,6 +17,7 @@ import LoginForm from './components/auth/LoginForm';
 
 const App = () => {
   const [userRecipes, setUserRecipes] = useState(null);
+  const [userToken, setUserToken] = useState(null);
 
   async function requestUserData() {
     await axios
@@ -43,31 +44,31 @@ const App = () => {
             // Is there a refresh token? Did it work successfully? */}
         <br />
 
-        {userRecipes && (
-          <Switch>
-            <Route exact path='/'>
-              <Home userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
-            <Route exact path='/add'>
-              <AddRecipe userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
+        {/* {userRecipes && ( */}
+        <Switch>
+          <Route exact path='/'>
+            <Home userRecipes={userRecipes} onUpdate={requestUserData} />
+          </Route>
+          <Route exact path='/add'>
+            <AddRecipe userRecipes={userRecipes} onUpdate={requestUserData} />
+          </Route>
 
-            <Route exact path='/register' component={Register} />
+          <Route exact path='/register' component={Register} />
 
-            <Route exact path='/login' component={LoginForm} />
-            <Route
-              exact
-              path='/recipes/:id'
-              render={(props) => (
-                <ViewRecipe
-                  // userRecipes={userRecipes}
-                  userRecipe={userRecipes[props.match.params.id]}
-                />
-              )}
-            />
-            <Redirect to='/' />
-          </Switch>
-        )}
+          <Route exact path='/login' component={LoginForm} />
+          <Route
+            exact
+            path='/recipes/:id'
+            render={(props) => (
+              <ViewRecipe
+                // userRecipes={userRecipes}
+                userRecipe={userRecipes[props.match.params.id]}
+              />
+            )}
+          />
+          <Redirect to='/' />
+        </Switch>
+        {/* )} */}
       </Router>
     </div>
   );
