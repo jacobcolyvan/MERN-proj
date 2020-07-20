@@ -10,13 +10,12 @@ const {
   getUser,
   newUser,
   updateUser,
-  deleteUser,
+  deleteUser
 } = require('../controllers/users_controller');
 
 // Get all
 router.get('/users', async (req, res) => {
   const users = await userModel.find({});
-
   try {
     res.send(users);
   } catch (err) {
@@ -55,7 +54,7 @@ router.post('/user', async (req, res) => {
 
     user = new userModel({
       username,
-      password,
+      password
     });
 
     user.password = await bcrypt.hash(password, salt);
@@ -64,8 +63,8 @@ router.post('/user', async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id,
-      },
+        id: user.id
+      }
     };
 
     //sign the payload using the secret from config > default.json

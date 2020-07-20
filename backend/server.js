@@ -4,8 +4,8 @@ const userRouter = require('./routes/user_routes.js');
 const spotifyRouter = require('./routes/spotify_routes.js');
 const cors = require('cors');
 
-require('dotenv').config({path: './.env'})
-console.log(process.env.SPOTIFY_CLIENT_ID);
+require('dotenv').config({ path: './.env' });
+console.log(process.env.SPOTIFY_CLIENT_ID2);
 
 const app = express();
 app.use(express.json()); //init middleware
@@ -35,5 +35,3 @@ app.listen(3000, () => {
 
 //Defining route for auth
 app.use('/auth', require('./routes/auth'));
-
-
