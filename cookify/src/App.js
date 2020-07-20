@@ -16,7 +16,8 @@ import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
 
 const App = () => {
-  const [userRecipes, setUserRecipes] = useState(null);
+  // const [userRecipes, setUserRecipes] = useState(null);
+  const [userRecipes, setUserRecipes] = useState([]);
   const [userToken, setUserToken] = useState(null);
 
   async function requestUserData() {

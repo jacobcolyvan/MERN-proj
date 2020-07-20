@@ -36,7 +36,7 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-router.delete('/user/:id', auth, async (req, res) => {
+router.delete('/user/:username', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);
 
@@ -44,6 +44,19 @@ router.delete('/user/:id', auth, async (req, res) => {
     res.status(200).send();
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+
+// get user recipes
+// @private
+router.get('/users/recipes/:username', auth, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+    // if (!user) res.status(404).send("No user here")
+    res.send(user.recipes);
+  } catch {
+    res.status(500).send(err);
+    console.log('Not a valid user');
   }
 });
 
