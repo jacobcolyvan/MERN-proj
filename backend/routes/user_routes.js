@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
 const {
@@ -35,57 +36,7 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-// Create
-router.post('/users', async (req, res) => {
-  // const user = new userModel(req.body);
-
-  const { username, password } = req.body;
-
-  try {
-    let check = await userModel.findOne({ username });
-    // if not the last res.json/res.etc, have to add a return
-    if (check) {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: 'username already taken' }] });
-    }
-
-    const salt = await bcrypt.genSalt(10); //create salt for password
-
-    user = new userModel({
-      username,
-      password
-    });
-
-    user.password = await bcrypt.hash(password, salt);
-
-    await user.save();
-
-    const payload = {
-      user: {
-        id: user.id
-      }
-    };
-
-    //sign the payload using the secret from config > default.json
-    jwt.sign(
-      payload,
-      config.get('jwtSecret'),
-      { expiresIn: 360000 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-
-    // res.send(user);
-  } catch (err) {
-    console.log('there was an error');
-    res.status(500).send(err.message);
-  }
-});
-
-router.delete('/user/:id', async (req, res) => {
+router.delete('/user/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);
 
@@ -97,7 +48,9 @@ router.delete('/user/:id', async (req, res) => {
 });
 
 // Update for recipes
-router.put('/users/:id', async (req, res) => {
+// private
+// router.put('/users/:id', auth, async (req, res) => {
+router.put('/users/:id', auth, async (req, res) => {
   try {
     // await userModel.findByIdAndUpdate(req.params.id, req.body)
     // await userModel.save()
@@ -115,14 +68,14 @@ router.put('/users/:id', async (req, res) => {
   }
 });
 
-//clear all users
-// router.delete('/users', async (req, res) => {
-//   try {
-//     const user = await userModel.deleteMany({})
-//     res.status(200).send()
-//   } catch (err) {
-//     res.status(500).send(err)
-//   }
-// })
+// clear all users
+router.delete('/users', async (req, res) => {
+  try {
+    const user = await userModel.deleteMany({});
+    res.status(200).send();
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 module.exports = router;
