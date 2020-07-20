@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'; //need to export connect
+import { setAlert } from '../../actions/alert'; // bring action in
 
-const Register = () => {
+//connect allows us to connect our components to redux
+
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -18,7 +22,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('passwords do not match');
+      setAlert('passwords do not match', 'danger'); // refer to actions/alerts, for what this will do
     } else {
       console.log('success');
     }
@@ -66,4 +70,6 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(null, { setAlert })(Register);
+//connect takes in a state and an object with actions you want to use, we can access the actions through props
+//name of component goes after connect
