@@ -20,7 +20,7 @@ const App = () => {
 
   async function requestUserData() {
     await axios
-      .get('http://localhost:3000/user/5f12c2a7d4323119d3e7d0b7')
+      .get('http://localhost:3000/users/5f12c2a7d4323119d3e7d0b7')
       .then((res) => {
         setUserRecipes(res.data.recipes);
         // console.log(res);
