@@ -31,6 +31,7 @@ router.post('/login', async (req, res) => {
 
     // const username = user.username;
     const recipes = user.recipes;
+    console.log(recipes);
     const _id = user.id;
     const payload = {
       user: {
@@ -57,7 +58,7 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   // const user = new userModel(req.body);
 
-  const { username, password } = req.body;
+  const { username, password, recipes } = req.body;
 
   try {
     let check = await userModel.findOne({ username });
@@ -72,13 +73,14 @@ router.post('/register', async (req, res) => {
 
     user = new userModel({
       username,
-      password
+      password,
+      recipes
     });
 
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-    const recipes = user.recipes;
+    console.log(user.recipes);
     const _id = user.id;
     const payload = {
       user: {
@@ -99,20 +101,24 @@ router.post('/register', async (req, res) => {
 
     // res.send(user);
   } catch (err) {
-    console.log('there was an error');
+    console.log('there was an error in creating user');
     res.status(500).send(err.message);
   }
 });
 
 router.post('/tokenIsValid', async (req, res) => {
   try {
+    console.log('before verified');
     const token = req.header('x-auth-token');
     if (!token) return res.json(false);
 
+    console.log('before verified');
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) return res.json(false);
 
+    console.log('before user found');
     const user = await userModel.findById(verified.id);
+    console.log(user);
     if (!user) return res.json(false);
 
     return res.json(true);

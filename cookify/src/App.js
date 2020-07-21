@@ -16,29 +16,26 @@ import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
 import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
+import UserRecipeTile from './components/UserRecipeTile';
 
 //css
 import './App.css';
 
 const App = () => {
   // const [userRecipes, setUserRecipes] = useState(null);
-  // const [userRecipes, setUserRecipes] = useState([]);
 
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    recipes: undefined
+    recipes: [
+      {
+        playlistRef: 'pleaseworkkkkkkkkkkkkkkk',
+        _id: '5f1697cc6c3bd5ab8f5f54fe',
+        name: 'test'
+      }
+    ]
     // spotifyToken: undefined
   });
-
-  async function requestUserData() {
-    await Axios.get(
-      'http://localhost:3000/users/5f12c2a7d4323119d3e7d0b7'
-    ).then((res) => {
-      // setUserRecipes(res.data.recipes);
-      // console.log(res);
-    });
-  }
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -52,43 +49,55 @@ const App = () => {
         null,
         { headers: { 'x-auth-token': token } }
       );
+      console.log('token res coming');
+      console.log(tokenRes);
       if (tokenRes.data) {
+        console.log('nup');
         const userRes = await Axios.get('http://localhost:3000/users/', {
           headers: { 'x-auth-token': token }
         });
+        console.log(userRes);
         setUserData({
           token,
-          user: userRes.data
+          user: userRes.data,
+          recipes: userRes.recipes
         });
       }
     };
     checkLoggedIn();
   }, []);
 
+  console.log(userData);
+
   return (
     <div className='main'>
       <Router>
         <UserContext.Provider value={{ userData, setUserData }}>
           <Navbar />
-          <h1>Cookify bru</h1>
+          <h1 className='home-header'>Cookify bru</h1>
           <br />
 
-          {/* {userRecipes && ( */}
           <Switch>
+            {/* {userData.recipes && ( */}
+            {/* <> */}
             <Route exact path='/' component={Home} />
             <Route exact path='/add' component={AddRecipe} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={LoginForm} />
             {/* <Route
               exact
               path='/recipes/:id'
               render={(props) => (
-                <ViewRecipe
-                // userRecipes={userRecipes}
-                // userRecipe={userRecipes[props.match.params.id]}
-                />
+                // <ViewRecipe
+                //   userRecipes={userData.recipes[props.match.params.id]}
+                //   // userRecipe={userRecipes[props.match.params.id]}
+                // />
+                
               )}
             /> */}
+            {/* <UserRecipeTile userRecipes={userData.recipes} /> */}
+
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={LoginForm} />
+
             <Redirect to='/' />
           </Switch>
           {/* )} */}

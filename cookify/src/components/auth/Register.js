@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
+import ErrorNotice from '../ErrorNotice';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Register = () => {
 
   const { setUserData } = useContext(UserContext);
   const { username, password, password2 } = formData;
+  const [error, setError] = useState();
   const history = useHistory();
 
   const onChange = (e) => {
@@ -23,7 +25,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('passwords do not match');
+      setError('passwords do not match');
     } else {
       try {
         await axios.post('http://localhost:3000/auth/register', formData);
@@ -40,14 +42,18 @@ const Register = () => {
         history.push('/');
       } catch (err) {
         console.log(err);
+        err && setError(JSON.stringify(err));
       }
     }
   };
 
   return (
     <div>
-      <h1>Sign up</h1>
-      {/* <p>{userToken}</p> */}
+      <h1>Register</h1>
+      {error && (
+        <ErrorNotice message={error} clearError={() => setError(undefined)} />
+      )}
+
       <form onSubmit={(e) => onSubmit(e)} className='form'>
         <label>Username</label>
         <input

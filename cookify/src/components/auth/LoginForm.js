@@ -2,15 +2,16 @@ import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
+import ErrorNotice from '../ErrorNotice';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
+  const [error, setError] = useState('');
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
-
   const { username, password } = formData;
 
   const onChange = (e) =>
@@ -35,13 +36,16 @@ const LoginForm = () => {
       history.push('/');
     } catch (err) {
       console.log(err);
+      err && setError(JSON.stringify(err));
     }
   };
 
   return (
     <div>
       <h1>Sign In</h1>
-      {/* </br> */}
+      {error && (
+        <ErrorNotice message={error} clearError={() => setError(undefined)} />
+      )}
       <form onSubmit={(e) => onSubmit(e)} className='form'>
         <label>Username</label>
         <input

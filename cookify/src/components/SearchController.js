@@ -57,18 +57,18 @@ const SearchController = ({ userRecipes, onUpdate }) => {
         onEnter={getRecipes}
       />
       {currentRecipes.map((recipe, index) => (
-        <Link
-          to={`/recipes/${userRecipes.length - 1}`}
+        // <Link
+        //   to={`/recipes/${userRecipes.length - 1}`}
+        //   key={`${recipe}-${index}`}
+        // >
+        <RecipeTile
           key={`${recipe}-${index}`}
-        >
-          <RecipeTile
-            key={`${recipe}-${index}`}
-            title={recipe.title}
-            image={recipe.image}
-            saveRecipe={saveRecipe}
-            index={index}
-          />
-        </Link>
+          title={recipe.title}
+          image={recipe.image}
+          saveRecipe={saveRecipe}
+          index={index}
+        />
+        // </Link>
       ))}
     </div>
   );

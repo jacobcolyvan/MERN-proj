@@ -2,19 +2,27 @@
 // recipeslist
 // Search controller on this page should search through presaved recipes
 
-import React from 'react'
-import UserRecipeTile from '../components/UserRecipeTile'
+import React, { useEffect, useContext } from 'react';
+import UserRecipeTile from '../components/UserRecipeTile';
+import UserContext from '../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
-const Home = ({userRecipes}) => {
-    return (
-        <div>
-            <p>View saved recipes/home</p>
-            <br/>
-            <UserRecipeTile userRecipes={userRecipes}/>
-            {/* <SearchController /> */}
+const Home = () => {
+  const { userData } = useContext(UserContext);
+  const history = useHistory();
+  console.log(userData);
 
-        </div>
-    )
-}
+  useEffect(() => {
+    if (!userData.user) history.push('/login');
+  });
 
-export default Home
+  return (
+    <div>
+      <p>View saved recipes/home</p>
+      <br />
+      {userData.recipes && <UserRecipeTile userRecipes={userData.recipes} />}
+    </div>
+  );
+};
+
+export default Home;
