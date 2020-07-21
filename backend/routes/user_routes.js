@@ -6,37 +6,36 @@ const config = require('config');
 const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
-const {
-  getUsers,
-  getUser,
-  newUser,
-  updateUser,
-  deleteUser
-} = require('../controllers/users_controller');
+// const {
+//   default: UserContext
+// } = require('../../cookify/src/context/UserContext');
+const { response } = require('express');
 
-// Get all
-router.get('/users', async (req, res) => {
-  const users = await userModel.find({});
-  try {
-    res.send(users);
-  } catch (err) {
-    console.log('there was an error');
-    res.status(500).send(err);
-  }
-});
-
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.params.id);
     // if (!user) res.status(404).send("No user here")
     res.send(user);
   } catch {
     res.status(500).send(err);
-    console.log('Not a valid user');
+    console.log('No user here');
   }
 });
 
-router.delete('/user/:username', auth, async (req, res) => {
+router.get('/user', auth, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user);
+    res.json({
+      username: user.username,
+      id: user.id
+    });
+  } catch {
+    res.status(500).send(err);
+    console.log('No user here');
+  }
+});
+
+router.delete('/user/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);
 
@@ -49,26 +48,20 @@ router.delete('/user/:username', auth, async (req, res) => {
 
 // get user recipes
 // @private
-router.get('/users/recipes/:username', auth, async (req, res) => {
+router.get('/users/recipes/', auth, async (req, res) => {
   try {
-    const user = await userModel.findById(req.params.id);
-    // if (!user) res.status(404).send("No user here")
+    const user = await userModel.findById(req.id);
     res.send(user.recipes);
   } catch {
     res.status(500).send(err);
-    console.log('Not a valid user');
+    console.log('No user here');
   }
 });
 
 // Update for recipes
 // private
-// router.put('/users/:id', auth, async (req, res) => {
 router.put('/users/:id', auth, async (req, res) => {
   try {
-    // await userModel.findByIdAndUpdate(req.params.id, req.body)
-    // await userModel.save()
-    // res.send(user)
-
     const user = await userModel.findById(req.params.id);
     console.log(req.body.newRecipe);
     newRecipes = [...user.recipes, req.body.newRecipe];
@@ -78,16 +71,6 @@ router.put('/users/:id', auth, async (req, res) => {
   } catch (err) {
     console.log('no way mon');
     res.status(400).send(err);
-  }
-});
-
-// clear all users
-router.delete('/users', async (req, res) => {
-  try {
-    const user = await userModel.deleteMany({});
-    res.status(200).send();
-  } catch (err) {
-    res.status(500).send(err);
   }
 });
 

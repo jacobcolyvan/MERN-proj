@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user_routes.js');
 const spotifyRouter = require('./routes/spotify_routes.js');
+const devRouter = require('./routes/dev_routes.js');
 const cors = require('cors');
 
 require('dotenv').config({ path: './.env' });
@@ -11,13 +12,10 @@ const app = express();
 app.use(express.json()); //init middleware
 app.use(cors());
 
-mongoose.connect(
-  'mongodb+srv://yeddy:denver@cluster0.gvtay.mongodb.net/<dbname>?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*');
@@ -27,10 +25,11 @@ mongoose.connect(
 // });
 
 app.use(userRouter);
+app.use(devRouter);
 //Defining route for auth
 app.use('/auth', require('./routes/auth'));
 // app.use(spotifyRouter);
 
-app.listen(3000, () => {
-  console.log('Servers running on port 3000');
+app.listen(process.env.PORT, () => {
+  console.log(`Servers running on port ${process.env.PORT}`);
 });

@@ -31,19 +31,20 @@ router.post('/login', async (req, res) => {
 
     // const username = user.username;
     const recipes = user.recipes;
+    const _id = user.id;
     const payload = {
       user: {
-        id: user.id
+        id: _id
       }
     };
 
     jwt.sign(
       payload,
-      config.get('jwtSecret'),
+      process.env.JWT_SECRET,
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        return res.json({ token, username, recipes });
+        return res.json({ token, _id, recipes });
       }
     );
   } catch (error) {
@@ -78,21 +79,21 @@ router.post('/register', async (req, res) => {
 
     await user.save();
     const recipes = user.recipes;
-
+    const _id = user.id;
     const payload = {
       user: {
-        id: user.id
+        id: _id
       }
     };
 
     //sign the payload using the secret from config > default.json
     jwt.sign(
       payload,
-      config.get('jwtSecret'),
+      process.env.JWT_SECRET,
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, username, recipes });
+        res.json({ token, _id, recipes });
       }
     );
 
@@ -103,16 +104,33 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// * NOT IN USE
-//chuck middleware, so that you need a token to access the protected route
-router.get('/', async (req, res) => {
+router.post('tokenIsValid', async (req, res) => {
   try {
-    const user = await userModel.findById(req.user.id).select('-password');
-    res.json(user);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server error');
+    const token = req.header('x-auth-token');
+    if (!token) return res.json(false);
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) return res.json(false);
+
+    const user = await UserContext.findById(verified.id);
+    if (!user) return res.json(false);
+
+    return res.json(true);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
+
+// * NOT IN USE
+//chuck middleware, so that you need a token to access the protected route
+// router.get('/', async (req, res) => {
+//   try {
+//     const user = await userModel.findById(req.user.id).select('-password');
+//     res.json(user);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 module.exports = router;
