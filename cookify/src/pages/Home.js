@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 const Home = () => {
   const { userData } = useContext(UserContext);
   const history = useHistory();
-  console.log(userData);
+  // console.log(userData);
 
   useEffect(() => {
     if (!userData.user) history.push('/login');

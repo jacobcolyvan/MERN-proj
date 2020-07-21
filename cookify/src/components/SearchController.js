@@ -1,14 +1,19 @@
 // Logic for both searchbars: user recipes and spoonacular (finds recipes)
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import SearchBar from './SearchBar';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const SearchController = ({ userRecipes, onUpdate }) => {
+const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
-  // const [currentSearch, setCurrentSearch] = useState('')
   const [currentRecipes, setCurrentRecipes] = useState([]);
+
+  const { userData, setUserData } = useContext(UserContext);
+  const history = useHistory();
+
+  let userRecipes = userData.recipes;
 
   const getRecipes = async () => {
     await axios
@@ -18,7 +23,7 @@ const SearchController = ({ userRecipes, onUpdate }) => {
       .then((res) => {
         // console.log(res.data.results);
         setCurrentRecipes(res.data.results);
-        console.log('wallah hussy');
+        console.log('wallah hussy, shes loaded');
       })
       .catch((err) => {
         console.log(err);
@@ -26,20 +31,29 @@ const SearchController = ({ userRecipes, onUpdate }) => {
       });
   };
 
-  const saveRecipe = (index) => {
+  const saveRecipe = async (index) => {
     const data = {
       newRecipe: {
         name: currentRecipes[index].title
-      }
+      },
+      id: userData.user
     };
-
-    axios
-      .put('http://localhost:3000/user/5f0d8f6f9420353e3e8da972', data, {
-        headers: { 'Content-Type': 'application/json' }
+    console.log(userData.token);
+    await axios
+      .put(`http://localhost:3000/users/`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': userData.token
+        }
       })
-      .then(() => {
+      .then((data) => {
         console.log('recipe has been added');
-        onUpdate();
+        setUserData({
+          token: userData.token,
+          user: userData.user,
+          recipes: data.data
+        });
+        history.push(`/recipes/${userRecipes.length - 1}`);
       })
       .catch((err) => {
         console.log('somethings said no');

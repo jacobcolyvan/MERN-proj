@@ -27,7 +27,8 @@ router.get('/user', auth, async (req, res) => {
     const user = await userModel.findById(req.user);
     res.json({
       username: user.username,
-      id: user.id
+      user: user.id,
+      recipes: user.recipes
     });
   } catch {
     res.status(500).send(err);
@@ -46,23 +47,11 @@ router.delete('/user/:id', auth, async (req, res) => {
   }
 });
 
-// get user recipes
-// @private
-router.get('/users/recipes/', auth, async (req, res) => {
-  try {
-    const user = await userModel.findById(req.id);
-    res.send(user.recipes);
-  } catch {
-    res.status(500).send(err);
-    console.log('No user here');
-  }
-});
-
 // Update for recipes
-// private
-router.put('/users/:id', auth, async (req, res) => {
+// @ private
+router.put('/users/', auth, async (req, res) => {
   try {
-    const user = await userModel.findById(req.params.id);
+    const user = await userModel.findById(req.body.id);
     console.log(req.body.newRecipe);
     newRecipes = [...user.recipes, req.body.newRecipe];
     await user.update({ recipes: newRecipes });
@@ -75,3 +64,15 @@ router.put('/users/:id', auth, async (req, res) => {
 });
 
 module.exports = router;
+
+// // get user recipes
+// // @private
+// router.get('/users/recipes/', auth, async (req, res) => {
+//   try {
+//     const user = await userModel.findById(req.id);
+//     res.send(user.recipes);
+//   } catch {
+//     res.status(500).send(err);
+//     console.log('No user here');
+//   }
+// });

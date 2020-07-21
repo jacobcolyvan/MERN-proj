@@ -16,7 +16,7 @@ import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
 import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
-import UserRecipeTile from './components/UserRecipeTile';
+// import UserRecipeTile from './components/UserRecipeTile';
 
 //css
 import './App.css';
@@ -27,13 +27,7 @@ const App = () => {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    recipes: [
-      {
-        playlistRef: 'pleaseworkkkkkkkkkkkkkkk',
-        _id: '5f1697cc6c3bd5ab8f5f54fe',
-        name: 'test'
-      }
-    ]
+    recipes: undefined
     // spotifyToken: undefined
   });
 
@@ -57,15 +51,17 @@ const App = () => {
           headers: { 'x-auth-token': token }
         });
         console.log(userRes);
-        setUserData({
-          token,
-          user: userRes.data,
-          recipes: userRes.recipes
-        });
+        // setUserData({
+        //   token: ,
+        //   user: userRes.data,
+        //   recipes: userRes.data.recipes
+        // });
       }
     };
     checkLoggedIn();
   }, []);
+
+  const getUserData = async () => {};
 
   console.log(userData);
 
@@ -78,22 +74,15 @@ const App = () => {
           <br />
 
           <Switch>
-            {/* {userData.recipes && ( */}
-            {/* <> */}
             <Route exact path='/' component={Home} />
             <Route exact path='/add' component={AddRecipe} />
-            {/* <Route
+            <Route
               exact
               path='/recipes/:id'
               render={(props) => (
-                // <ViewRecipe
-                //   userRecipes={userData.recipes[props.match.params.id]}
-                //   // userRecipe={userRecipes[props.match.params.id]}
-                // />
-                
+                <ViewRecipe recipe={userData.recipes[props.match.params.id]} />
               )}
-            /> */}
-            {/* <UserRecipeTile userRecipes={userData.recipes} /> */}
+            />
 
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={LoginForm} />

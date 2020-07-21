@@ -6,8 +6,8 @@ import SearchController from '../components/SearchController';
 import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
 
-const AddRecipe = ({ userRecipes, onUpdate }) => {
-  const { userData, setUserData } = useContext(UserContext);
+const AddRecipe = () => {
+  const { userData } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const AddRecipe = ({ userRecipes, onUpdate }) => {
     <div>
       <p>Add Recipe</p>
       <br />
-      <SearchController userRecipes={userRecipes} onUpdate={onUpdate} />
+      <SearchController />
     </div>
   );
 };

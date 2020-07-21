@@ -5,8 +5,8 @@ import Playlist from '../components/Playlist';
 import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
 
-const ViewRecipe = ({ userRecipe }) => {
-  const { userData, setUserData } = useContext(UserContext);
+const ViewRecipe = ({ recipe }) => {
+  const { userData } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ViewRecipe = ({ userRecipe }) => {
   return (
     <div>
       <h1>View Recipe</h1>
-      <p>{userRecipe.name}</p>
+      <p>{recipe.name}</p>
 
       <br />
       <br />

@@ -108,7 +108,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/tokenIsValid', async (req, res) => {
   try {
-    console.log('before verified');
+    // console.log('before verified');
     const token = req.header('x-auth-token');
     if (!token) return res.json(false);
 
@@ -116,9 +116,9 @@ router.post('/tokenIsValid', async (req, res) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) return res.json(false);
 
-    console.log('before user found');
+    // console.log('before user found');
     const user = await userModel.findById(verified.id);
-    console.log(user);
+    // console.log(user);
     if (!user) return res.json(false);
 
     return res.json(true);

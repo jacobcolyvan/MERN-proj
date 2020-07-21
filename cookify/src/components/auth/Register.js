@@ -36,7 +36,8 @@ const Register = () => {
         // console.log(loginRes);
         setUserData({
           token: loginRes.data.token,
-          user: loginRes.data._id
+          user: loginRes.data._id,
+          recipes: loginRes.data.recipes
         });
         localStorage.setItem('auth-token', loginRes.data.token);
         history.push('/');
@@ -70,7 +71,6 @@ const Register = () => {
           placeholder=''
           required
           name='password'
-          required
           value={password}
           onChange={(e) => onChange(e)}
           minLength='6'
@@ -80,7 +80,6 @@ const Register = () => {
           placeholder='Confirm Password'
           required
           name='password2'
-          required
           value={password2}
           onChange={(e) => onChange(e)}
           minLength='6'

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const UserRecipeTile = ({ userRecipes }) => {
-  console.log(userRecipes);
+  // console.log(userRecipes);
   return (
     <div className='userRecipeTile'>
       {userRecipes.map((recipe, index) => (

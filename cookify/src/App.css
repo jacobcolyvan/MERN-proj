@@ -99,3 +99,7 @@ body {
   background-color: #f8cece;
   color: black;
 }
+
+button {
+  padding: 0.2rem;
+}

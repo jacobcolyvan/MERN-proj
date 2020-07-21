@@ -14,10 +14,9 @@ const LoginForm = () => {
   const history = useHistory();
   const { username, password } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  // console.log(formData);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +26,11 @@ const LoginForm = () => {
         'http://localhost:3000/auth/login',
         formData
       );
-      // console.log(loginRes);
+      console.log(loginRes);
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data._id
+        user: loginRes.data._id,
+        recipes: loginRes.data.recipes
       });
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
@@ -62,7 +62,6 @@ const LoginForm = () => {
           placeholder='Password'
           required
           name='password'
-          required
           value={password}
           onChange={(e) => onChange(e)}
           minLength='6'
