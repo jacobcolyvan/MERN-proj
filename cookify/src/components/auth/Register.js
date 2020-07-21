@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 import axios from 'axios';
 
 const Register = () => {
@@ -8,6 +9,8 @@ const Register = () => {
     password: '',
     password2: ''
   });
+
+  const { setUserData } = useContext(UserContext);
 
   const { username, password, password2 } = formData;
   const [userToken, setUserToken] = useState(null);
@@ -22,22 +25,23 @@ const Register = () => {
     if (password !== password2) {
       console.log('passwords do not match');
     } else {
-      console.log('success');
-      //send username and password to backend?
-
-      await axios
-        .post('http://localhost:3000/auth/register', formData, {
-          headers: { 'Content-Type': 'application/json' }
-        })
-        .then((res) => {
-          console.log(res);
-          setUserToken(res.data.token);
-          // console.log(res);
-        })
-        .catch((err) => {
-          console.log(err.message);
-          console.log('there was an error');
+      try {
+        console.log('before post');
+        const loginRes = await axios.post(
+          'http://localhost:3000/auth/register',
+          formData
+        );
+        console.log('before session');
+        setUserData({
+          token: loginRes.data.token,
+          user: loginRes.data.user
         });
+        console.log('after session');
+        localStorage.setItem('auth-token', loginRes.data.token);
+        console.log('done');
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

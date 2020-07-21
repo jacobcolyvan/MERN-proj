@@ -41,8 +41,6 @@ const App = () => {
   }
 
   useEffect(() => {
-    // requestUserData();
-    // console.log('gg');
     const checkLoggedIn = async () => {
       let token = localStorage.getItem('auth-token');
       if (token === null) {
@@ -50,7 +48,7 @@ const App = () => {
         token = '';
       }
       const tokenRes = await Axios.post(
-        'http://localhost:3000/users/tokenIsValid',
+        'http://localhost:3000/auth/tokenIsValid',
         null,
         { headers: { 'x-auth-token': token } }
       );
@@ -64,6 +62,7 @@ const App = () => {
         });
       }
     };
+    checkLoggedIn();
   }, []);
 
   return (
@@ -76,15 +75,9 @@ const App = () => {
 
           {/* {userRecipes && ( */}
           <Switch>
-            <Route exact path='/'>
-              <Home userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
-            <Route exact path='/add'>
-              <AddRecipe userRecipes={userRecipes} onUpdate={requestUserData} />
-            </Route>
-
+            <Route exact path='/' component={Home} />
+            <Route exact path='/add' component={AddRecipe} />
             <Route exact path='/register' component={Register} />
-
             <Route exact path='/login' component={LoginForm} />
             <Route
               exact

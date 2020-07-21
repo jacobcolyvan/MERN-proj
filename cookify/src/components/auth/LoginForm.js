@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 import axios from 'axios';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    "username": '',
-    "password": '',
+    username: '',
+    password: ''
   });
+  const { setUserData } = useContext(UserContext);
 
   const { username, password } = formData;
   const [userToken, setUserToken] = useState(null);
@@ -14,22 +16,26 @@ const LoginForm = () => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  console.log(formData);
+  // console.log(formData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post('http://localhost:3000/auth/login', formData, {
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then((res) => {
-        console.log(res);
-        console.log('success');
-      })
-      .catch((err) => {
-        console.log(err.message);
+    try {
+      const loginRes = await axios.post(
+        'http://localhost:3000/auth/login',
+        formData
+      );
+      console.log(loginRes);
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user
       });
+      console.log(loginRes.data.token);
+      localStorage.setItem('auth-token', loginRes.data.token);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
