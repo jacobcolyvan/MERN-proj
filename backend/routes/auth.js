@@ -93,7 +93,7 @@ router.post('/register', async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, _id, recipes });
+        res.json('user created');
       }
     );
 

@@ -21,7 +21,7 @@ import LoginForm from './components/auth/LoginForm';
 import './App.css';
 
 const App = () => {
-  const [userRecipes, setUserRecipes] = useState(null);
+  // const [userRecipes, setUserRecipes] = useState(null);
   // const [userRecipes, setUserRecipes] = useState([]);
 
   const [userData, setUserData] = useState({
@@ -35,7 +35,7 @@ const App = () => {
     await Axios.get(
       'http://localhost:3000/users/5f12c2a7d4323119d3e7d0b7'
     ).then((res) => {
-      setUserRecipes(res.data.recipes);
+      // setUserRecipes(res.data.recipes);
       // console.log(res);
     });
   }
@@ -68,7 +68,7 @@ const App = () => {
   return (
     <div className='main'>
       <Router>
-        <UserContext.Provider value={(userData, setUserData)}>
+        <UserContext.Provider value={{ userData, setUserData }}>
           <Navbar />
           <h1>Cookify bru</h1>
           <br />
@@ -79,16 +79,16 @@ const App = () => {
             <Route exact path='/add' component={AddRecipe} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={LoginForm} />
-            <Route
+            {/* <Route
               exact
               path='/recipes/:id'
               render={(props) => (
                 <ViewRecipe
-                  // userRecipes={userRecipes}
-                  userRecipe={userRecipes[props.match.params.id]}
+                // userRecipes={userRecipes}
+                // userRecipe={userRecipes[props.match.params.id]}
                 />
               )}
-            />
+            /> */}
             <Redirect to='/' />
           </Switch>
           {/* )} */}

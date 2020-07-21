@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
 
@@ -9,9 +9,9 @@ const LoginForm = () => {
     password: ''
   });
   const { setUserData } = useContext(UserContext);
+  const history = useHistory();
 
   const { username, password } = formData;
-  const [userToken, setUserToken] = useState(null);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,13 +26,13 @@ const LoginForm = () => {
         'http://localhost:3000/auth/login',
         formData
       );
-      console.log(loginRes);
+      // console.log(loginRes);
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user
+        user: loginRes.data._id
       });
-      console.log(loginRes.data.token);
       localStorage.setItem('auth-token', loginRes.data.token);
+      history.push('/');
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +41,9 @@ const LoginForm = () => {
   return (
     <div>
       <h1>Sign In</h1>
-      <form onSubmit={(e) => onSubmit(e)}>
+      {/* </br> */}
+      <form onSubmit={(e) => onSubmit(e)} className='form'>
+        <label>Username</label>
         <input
           type='text'
           placeholder='Username'
@@ -50,6 +52,7 @@ const LoginForm = () => {
           value={username}
           onChange={(e) => onChange(e)}
         />
+        <label>Password</label>
         <input
           type='password'
           placeholder='Password'

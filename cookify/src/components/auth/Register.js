@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
 
@@ -11,9 +12,8 @@ const Register = () => {
   });
 
   const { setUserData } = useContext(UserContext);
-
   const { username, password, password2 } = formData;
-  const [userToken, setUserToken] = useState(null);
+  const history = useHistory();
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,19 +26,18 @@ const Register = () => {
       console.log('passwords do not match');
     } else {
       try {
-        console.log('before post');
-        const loginRes = await axios.post(
-          'http://localhost:3000/auth/register',
-          formData
-        );
-        console.log('before session');
+        await axios.post('http://localhost:3000/auth/register', formData);
+        const loginRes = await axios.post('http://localhost:3000/auth/login', {
+          username,
+          password
+        });
+        // console.log(loginRes);
         setUserData({
           token: loginRes.data.token,
-          user: loginRes.data.user
+          user: loginRes.data._id
         });
-        console.log('after session');
         localStorage.setItem('auth-token', loginRes.data.token);
-        console.log('done');
+        history.push('/');
       } catch (err) {
         console.log(err);
       }
@@ -48,19 +47,21 @@ const Register = () => {
   return (
     <div>
       <h1>Sign up</h1>
-      <p>{userToken}</p>
-      <form onSubmit={(e) => onSubmit(e)}>
+      {/* <p>{userToken}</p> */}
+      <form onSubmit={(e) => onSubmit(e)} className='form'>
+        <label>Username</label>
         <input
           type='text'
-          placeholder='Username'
+          placeholder=''
           name='username'
           required
           value={username}
           onChange={(e) => onChange(e)}
         />
+        <label>Password</label>
         <input
           type='password'
-          placeholder='Password'
+          placeholder=''
           required
           name='password'
           required
@@ -68,10 +69,9 @@ const Register = () => {
           onChange={(e) => onChange(e)}
           minLength='6'
         />
-
         <input
           type='password'
-          placeholder='Confirm passwword'
+          placeholder='Confirm Password'
           required
           name='password2'
           required

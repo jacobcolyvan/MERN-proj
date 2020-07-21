@@ -4,7 +4,7 @@ import UserContext from '../../context/UserContext';
 
 const AuthOptions = () => {
   const { userData, setUserData } = useContext(UserContext);
-  console.log(userData);
+  // console.log(userData);
 
   const history = useHistory();
 
@@ -16,10 +16,11 @@ const AuthOptions = () => {
       user: undefined
     });
     localStorage.setItem('auth-token', '');
+    console.log(userData);
   };
   return (
     <div className='auth-options'>
-      {userData ? (
+      {userData.user ? (
         <button onClick={logout}>Log out</button>
       ) : (
         <>
