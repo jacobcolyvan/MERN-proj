@@ -1,4 +1,5 @@
 // Logic for both searchbars: user recipes and spoonacular (finds recipes)
+
 import React, { useState, useContext } from 'react';
 import SearchBar from './SearchBar';
 import UserContext from '../context/UserContext';
@@ -18,7 +19,7 @@ const SearchController = () => {
   const getRecipes = async () => {
     await axios
       .get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
         // `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
       )
       .then((res) => {
@@ -38,7 +39,19 @@ const SearchController = () => {
       newRecipe: {
         name: currentRecipes[index].title,
         image: currentRecipes[index].image,
-        instructions: currentRecipes[index].instructions,
+        recipeUrl: currentRecipes[index].sourceUrl,
+        cuisines: JSON.stringify(currentRecipes[index].cuisines),
+        sourceName: currentRecipes[index].sourceName,
+        summary: currentRecipes[index].summary,
+        preptime: currentRecipes[index].preparationMinutes,
+        totalCookingTime: currentRecipes[index].readyInMinutes,
+        ingredients: JSON.stringify(currentRecipes[index].missedIngredients),
+        dishTypes: JSON.stringify(currentRecipes[index].dishTypes),
+        diets: JSON.stringify(currentRecipes[index].diets),
+        instructions: JSON.stringify(
+          currentRecipes[index].analyzedInstructions
+        ),
+        winePairing: JSON.stringify(currentRecipes[index].winePairing),
       },
       id: userData.user,
     };
@@ -65,7 +78,7 @@ const SearchController = () => {
       });
   };
 
-  console.log(currentRecipes);
+  console.log();
 
   return (
     <div>

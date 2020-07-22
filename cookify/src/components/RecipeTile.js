@@ -1,5 +1,8 @@
 import React from 'react';
 import './RecipeTile.css';
+import { Link } from 'react-router-dom';
+
+// this is to render individual recipe block/tiles
 
 const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
@@ -7,7 +10,9 @@ const RecipeTile = ({ recipes, saveRecipe }) => {
       {/* <Link to="/View" */}
       {recipes.map((recipe, index) => (
         <div className='recipe'>
-          <h3 key={recipe.index}>{recipe.title} </h3>
+          <h3 key={recipe.index}>
+            <Link to>{recipe.title} </Link>
+          </h3>
           <img className='image' src={recipe.image} alt='' />
           <p>
             {recipe.diets.map((diet, index) => (

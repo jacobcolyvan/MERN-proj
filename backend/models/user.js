@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const User = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
     // match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   password: { type: String, required: true, minlength: 6 },
@@ -13,29 +13,76 @@ const User = new Schema({
     {
       name: {
         type: String,
-        required: true
+        required: true,
+      },
+      image: {
+        type: String,
+        default: '',
+      },
+      recipeUrl: {
+        type: String,
+        default: '',
+      },
+      cuisines: {
+        type: String,
+        default: '',
+      },
+      sourceName: {
+        type: String,
+        default: '',
+      },
+      summary: {
+        type: String,
+        default: '',
+      },
+      preptime: {
+        type: Number,
+        default: '',
+      },
+      totalCookingTime: {
+        type: Number,
+        default: '',
+      },
+      ingredients: {
+        type: String,
+        default: '',
+      },
+      dishTypes: {
+        type: String,
+        default: '',
+      },
+      diets: {
+        type: String,
+        default: '',
+      },
+      instructions: {
+        type: String,
+        default: '',
+      },
+      winePairing: {
+        type: String,
+        default: '',
       },
       playlistRef: {
         type: String,
-        default: 'crickets...'
-      }
-    }
+        default: 'crickets...',
+      },
+    },
   ],
   spotifyTokens: [
     {
       // this one gets returned
       access: {
         type: String,
-        default: ''
+        default: '',
       },
       // this one stays on the backend
       refresh: {
         type: String,
-        default: ''
-      }
-    }
-  ]
-  //spotify tokens
+        default: '',
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model('User', User);

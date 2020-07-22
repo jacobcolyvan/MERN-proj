@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//this is for saved user recipes
+
 const UserRecipeTile = ({ userRecipes }) => {
   // console.log(userRecipes);
   return (
