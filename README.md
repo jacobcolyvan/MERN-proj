@@ -3,7 +3,8 @@
 # MERN-docs-T3A2
 
 Link to deployed website: ######
-Link to Github repo: ######
+
+Link to Github repo: https://github.com/yeddyfit/MERN-proj
 
 ### R1 Overview
 
