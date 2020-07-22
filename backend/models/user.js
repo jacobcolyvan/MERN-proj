@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { stringify } = require('querystring');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
@@ -17,6 +18,20 @@ const User = new Schema({
       playlistRef: {
         type: String,
         default: 'crickets...'
+      }
+    }
+  ],
+  spotifyTokens: [
+    {
+      // this one gets returned
+      access: {
+        type: String,
+        default: ''
+      },
+      // this one stays on the backend
+      refresh: {
+        type: String,
+        default: ''
       }
     }
   ]
