@@ -16,7 +16,7 @@ const ViewRecipe = ({ recipe }) => {
   return (
     <div>
       <h1>View Recipe</h1>
-      <p>{recipe.name}</p>
+      {recipe && <p>{recipe.name}</p>}
 
       <br />
       <br />

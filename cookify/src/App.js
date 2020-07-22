@@ -80,7 +80,11 @@ const App = () => {
               exact
               path='/recipes/:id'
               render={(props) => (
-                <ViewRecipe recipe={userData.recipes[props.match.params.id]} />
+                <ViewRecipe
+                  recipe={
+                    userData.recipes && userData.recipes[props.match.params.id]
+                  }
+                />
               )}
             />
 
