@@ -3,17 +3,18 @@ import './RecipeTile.css';
 
 const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
-    <div className='recipe'>
+    <div>
       {/* <Link to="/View" */}
       {recipes.map((recipe, index) => (
-        <div>
+        <div className='recipe'>
           <h3 key={recipe.index}>{recipe.title} </h3>
-          <img
-            className='image'
-            src={`https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg`}
-            alt=''
-          />
-          <br></br>
+          <img className='image' src={recipe.image} alt='' />
+          <p>
+            {recipe.diets.map((diet, index) => (
+              <li key={diet.index}>{diet}</li>
+            ))}
+          </p>
+
           <button
             onClick={() => {
               saveRecipe(index);

@@ -18,8 +18,8 @@ const SearchController = () => {
   const getRecipes = async () => {
     await axios
       .get(
-        // `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`
-        `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`
+        // `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
       )
       .then((res) => {
         // console.log(res.data.results);
