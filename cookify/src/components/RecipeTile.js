@@ -1,20 +1,30 @@
-import React from 'react'
-import './RecipeTile.css'
+import React from 'react';
+import './RecipeTile.css';
 
-const RecipeTile = ({title, image, saveRecipe, index}) => {
+const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
     <div className='recipe'>
-      <h3>{title}</h3>
       {/* <Link to="/View" */}
-      <img className='image' src={image} alt=""/>
-      <button 
-        onClick={() => {
-          saveRecipe(index)
-        }}
-      >Favourite/Save</button>
+      {recipes.map((recipe, index) => (
+        <div>
+          <h3 key={recipe.index}>{recipe.title} </h3>
+          <img
+            className='image'
+            src={`https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg`}
+            alt=''
+          />
+          <br></br>
+          <button
+            onClick={() => {
+              saveRecipe(index);
+            }}
+          >
+            Favourite/Save
+          </button>
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-
-export default RecipeTile
+export default RecipeTile;

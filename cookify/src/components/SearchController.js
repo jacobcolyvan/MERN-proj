@@ -18,10 +18,12 @@ const SearchController = () => {
   const getRecipes = async () => {
     await axios
       .get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`
+        // `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true`
+        `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
       )
       .then((res) => {
         // console.log(res.data.results);
+        console.log(res);
         setCurrentRecipes(res.data.results);
         console.log('wallah hussy, shes loaded');
       })
@@ -34,24 +36,26 @@ const SearchController = () => {
   const saveRecipe = async (index) => {
     const data = {
       newRecipe: {
-        name: currentRecipes[index].title
+        name: currentRecipes[index].title,
+        image: currentRecipes[index].image,
+        instructions: currentRecipes[index].instructions,
       },
-      id: userData.user
+      id: userData.user,
     };
     console.log(userData.token);
     await axios
       .put(`http://localhost:3000/users/`, data, {
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': userData.token
-        }
+          'x-auth-token': userData.token,
+        },
       })
       .then((data) => {
         console.log('recipe has been added');
         setUserData({
           token: userData.token,
           user: userData.user,
-          recipes: data.data
+          recipes: data.data,
         });
         history.push(`/recipes/${userRecipes.length - 1}`);
       })
@@ -60,6 +64,8 @@ const SearchController = () => {
         console.log(err);
       });
   };
+
+  console.log(currentRecipes);
 
   return (
     <div>
@@ -70,20 +76,14 @@ const SearchController = () => {
         }}
         onEnter={getRecipes}
       />
-      {currentRecipes.map((recipe, index) => (
-        // <Link
-        //   to={`/recipes/${userRecipes.length - 1}`}
-        //   key={`${recipe}-${index}`}
-        // >
-        <RecipeTile
-          key={`${recipe}-${index}`}
-          title={recipe.title}
-          image={recipe.image}
-          saveRecipe={saveRecipe}
-          index={index}
-        />
-        // </Link>
-      ))}
+      {/* {currentRecipes.map((recipe, index) => ( */}
+      {/* // <Link */}
+      {/* //   to={`/recipes/${userRecipes.length - 1}`} */}
+      {/* //   key={`${recipe}-${index}`} */}
+      {/* // > */}
+      <RecipeTile saveRecipe={saveRecipe} recipes={currentRecipes} />
+      {/* // </Link> */}
+      {/* /* ))} */}
     </div>
   );
 };
