@@ -28,7 +28,7 @@ app.use(userRouter);
 app.use(devRouter);
 //Defining route for auth
 app.use('/auth', require('./routes/auth'));
-// app.use(spotifyRouter);
+app.use(spotifyRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servers running on port ${process.env.PORT}`);

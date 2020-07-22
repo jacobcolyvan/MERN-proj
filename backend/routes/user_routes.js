@@ -6,10 +6,6 @@ const config = require('config');
 const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
-// const {
-//   default: UserContext
-// } = require('../../cookify/src/context/UserContext');
-const { response } = require('express');
 
 router.get('/users/:id', auth, async (req, res) => {
   try {

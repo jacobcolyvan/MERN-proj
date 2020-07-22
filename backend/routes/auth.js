@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const bcrypt = require('bcryptjs');
 
 // /auth
@@ -56,13 +55,10 @@ router.post('/login', async (req, res) => {
 
 // Create new user,
 router.post('/register', async (req, res) => {
-  // const user = new userModel(req.body);
-
   const { username, password, recipes } = req.body;
 
   try {
     let check = await userModel.findOne({ username });
-    // if not the last res.json/res.etc, have to add a return
     if (check) {
       return res
         .status(400)
