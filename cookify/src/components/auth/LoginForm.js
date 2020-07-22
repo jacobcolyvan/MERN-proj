@@ -7,6 +7,7 @@ import ErrorNotice from '../ErrorNotice';
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     username: '',
+<<<<<<< HEAD
     password: ''
   });
   const [error, setError] = useState('');

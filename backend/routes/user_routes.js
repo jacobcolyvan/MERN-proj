@@ -7,20 +7,20 @@ const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
 
-router.get('/users/:id', auth, async (req, res) => {
-  try {
-    const user = await userModel.findById(req.params.id);
-    // if (!user) res.status(404).send("No user here")
-    res.send(user);
-  } catch {
-    res.status(500).send(err);
-    console.log('No user here');
-  }
-});
+// router.get('/users/:id', auth, async (req, res) => {
+//   try {
+//     const user = await userModel.findById(req.params.id);
+//     // if (!user) res.status(404).send("No user here")
+//     res.send(user);
+//   } catch {
+//     res.status(500).send(err);
+//     console.log('No user here');
+//   }
+// });
 
 router.get('/user', auth, async (req, res) => {
   try {
-    const user = await userModel.findById(req.user);
+    const user = await userModel.findById(req.body.id);
     res.json({
       username: user.username,
       user: user.id,
