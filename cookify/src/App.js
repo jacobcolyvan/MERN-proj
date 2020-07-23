@@ -7,10 +7,7 @@ import {
   Switch,
   Route,
   Redirect,
-<<<<<<< HEAD
-=======
   useHistory
->>>>>>> 1353963a2540627ef4163caa8f9596f40f769b65
 } from 'react-router-dom';
 
 //Components
@@ -47,23 +44,10 @@ const App = () => {
       );
       console.log('token res coming');
       console.log(tokenRes);
-<<<<<<< HEAD
-      if (tokenRes.data) {
-        console.log('nup');
-        const userRes = await Axios.get('http://localhost:3000/users/', {
-          headers: { 'x-auth-token': token },
-        });
-        console.log(userRes);
-        // setUserData({
-        //   token: ,
-        //   user: userRes.data,
-        //   recipes: userRes.data.recipes
-=======
       if (tokenRes.data.isUser) {
         console.log('yep');
         // const userRes = await Axios.get('http://localhost:3000/users/', {
         //   headers: { 'x-auth-token': token }
->>>>>>> 1353963a2540627ef4163caa8f9596f40f769b65
         // });
         setUserData({
           token: tokenRes.data.token,

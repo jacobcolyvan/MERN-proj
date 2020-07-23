@@ -1,34 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import axios from 'axios'
-
+import UserContext from '../context/UserContext'
 //shows detailed recipe info within ViewRecipe.js
 
 const DetailedRecipeView = ({ recipe }) => {
-<<<<<<< HEAD
-=======
   console.log(recipe.ingredients);
-  // const deleteRecipe = async () => {
-  //   await axios.put(`http://localhost:3000/users/recipes/delete`, recipe.id, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'x-auth-token': userData.token
-  //     }
-  //   });
-  // };
->>>>>>> aa79b17222a1fc197a61e0aac62911065233641a
 
-  const deleteRecipe = async() => {
-    await axios.put('http://localhost:3000/recipe/:id')
-  }
-
+  const { userData, setUserData } = useContext(UserContext);
+  console.log(userData);
+  console.log(userData.token)
+  const deleteRecipe = async () => {
+    await axios.put(`http://localhost:3000/users/recipes/delete`, recipe._id, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': userData.token
+      }
+    });
+  };
+  console.log(recipe._id)
   return (
     <div>
-<<<<<<< HEAD
-      <h2 className='recipeViewHeader'>{recipe.name}</h2> <button onClick={deleteRecipe}>Delete</button>
-=======
       <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}
-      {/* <button onClick={deleteRecipe}>Delete</button> */}
->>>>>>> aa79b17222a1fc197a61e0aac62911065233641a
+      <button onClick={deleteRecipe}>Delete</button>
+
       <img src={recipe.image} alt='' />
       <div className='cookingTimes'>
         {recipe.preptime > 0 && <span>Prep Time:{recipe.preptime}</span>}
