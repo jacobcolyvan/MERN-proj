@@ -16,7 +16,6 @@ const ViewRecipe = ({ recipe }) => {
 
   return (
     <div>
-      <h1>View Recipe</h1>
       {recipe && <DetailedRecipeView recipe={recipe} />}
 
       <br />

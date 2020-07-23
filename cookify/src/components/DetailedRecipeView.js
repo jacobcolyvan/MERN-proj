@@ -6,7 +6,7 @@ const DetailedRecipeView = ({ recipe }) => {
   console.log(recipe.instructions);
   return (
     <div>
-      <h3>{recipe.name}</h3>
+      <h2 className='recipeViewHeader'>{recipe.name}</h2>
       <img src={recipe.image} alt='' />
 
       <div className='cookingTimes'>
