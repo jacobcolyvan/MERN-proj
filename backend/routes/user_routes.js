@@ -45,17 +45,47 @@ router.delete('/user/:id', auth, async (req, res) => {
 
 // Update for recipes
 // @ private
-router.put('/users/', auth, async (req, res) => {
+router.put('/users/recipes/add', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    console.log(req.body.newRecipe);
+    // console.log(req.body.newRecipe);
     newRecipes = [...user.recipes, req.body.newRecipe];
     await user.update({ recipes: newRecipes });
     res.send(newRecipes);
     // res.send('Recipe added to user')
   } catch (err) {
-    console.log('no way mon');
+    console.log('no adding nothing mon');
     res.status(400).send(err);
+  }
+});
+
+//delete recipes
+router.put('/users/recipes/delete', auth, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.body.id);
+    console.log(user)
+    console.log(user.recipes)
+    console.log(req.body.recipeId, 'gg');
+    let recipeIndex = null;
+    user.recipes.forEach((recipe, index) => {
+      console.log(recipe._id);
+      if (recipe._id == req.body.recipeId) {
+        console.log('they match!');
+        recipeIndex = index;
+      }
+    });
+
+    if (recipeIndex === null) throw 'no recipe with given id found';
+    let newRecipes = user.recipes;
+    newRecipes.splice(recipeIndex, 1);
+
+    await user.update({ recipes: newRecipes });
+    console.log('done');
+    res.send(newRecipes);
+  } catch (err) {
+    console.log('no deleting this time');
+    res.status(400).send(err);
+    console.log(err.message)
   }
 });
 
