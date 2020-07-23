@@ -40,18 +40,17 @@ const SearchController = () => {
         name: currentRecipes[index].title,
         image: currentRecipes[index].image,
         recipeUrl: currentRecipes[index].sourceUrl,
-        cuisines: JSON.stringify(currentRecipes[index].cuisines),
+        cuisines: currentRecipes[index].cuisines,
         sourceName: currentRecipes[index].sourceName,
         summary: currentRecipes[index].summary,
         preptime: currentRecipes[index].preparationMinutes,
+        cookingTime: currentRecipes[index].cookingMinutes,
         totalCookingTime: currentRecipes[index].readyInMinutes,
-        ingredients: JSON.stringify(currentRecipes[index].missedIngredients),
-        dishTypes: JSON.stringify(currentRecipes[index].dishTypes),
-        diets: JSON.stringify(currentRecipes[index].diets),
-        instructions: JSON.stringify(
-          currentRecipes[index].analyzedInstructions
-        ),
-        winePairing: JSON.stringify(currentRecipes[index].winePairing),
+        ingredients: parseIngredients(currentRecipes[index].missedIngredients),
+        dishTypes: currentRecipes[index].dishTypes,
+        diets: currentRecipes[index].diets,
+        instructions:currentRecipes[index].analyzedInstructions,
+        winePairing: currentRecipes[index].winePairing,
       },
       id: userData.user,
     };
@@ -77,6 +76,14 @@ const SearchController = () => {
         console.log(err);
       });
   };
+
+  const parseIngredients = (ingredients) => {
+    let ingredientArray = []
+    ingredients.forEach( ingredient => {
+      ingredientArray.push([ingredient.original, ingredient.originalName, `${ingredient.amount} ${ingredient.unitLong}`])
+    })
+    return ingredientArray
+  }
 
   console.log();
 

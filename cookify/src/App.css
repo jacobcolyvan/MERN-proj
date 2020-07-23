@@ -103,3 +103,15 @@ body {
 button {
   padding: 0.2rem;
 }
+
+.cookingTimes {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media all and (max-width: 600px) {
+  .main {
+    padding: 100px 2%;
+  }
+}
+

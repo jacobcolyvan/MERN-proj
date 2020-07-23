@@ -24,7 +24,7 @@ const User = new Schema({
         default: '',
       },
       cuisines: {
-        type: String,
+        type: Object,
         default: '',
       },
       sourceName: {
@@ -44,29 +44,33 @@ const User = new Schema({
         default: '',
       },
       ingredients: {
-        type: String,
+        type: Object,
         default: '',
       },
       dishTypes: {
-        type: String,
+        type: Object,
         default: '',
       },
       diets: {
-        type: String,
+        type: Object,
         default: '',
       },
       instructions: {
-        type: String,
+        type: Object,
         default: '',
       },
       winePairing: {
-        type: String,
+        type: Object,
         default: '',
       },
       playlistRef: {
         type: String,
         default: 'crickets...',
       },
+      cookingTime: {
+        type: String,
+        default: '',
+      }
     },
   ],
   spotifyTokens: [
