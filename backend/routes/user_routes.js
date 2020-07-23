@@ -63,8 +63,8 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    console.log(user)
-    console.log(user.recipes)
+    console.log(user);
+    console.log(user.recipes);
     console.log(req.body.recipeId, 'gg');
     let recipeIndex = null;
     user.recipes.forEach((recipe, index) => {
@@ -85,7 +85,7 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
   } catch (err) {
     console.log('no deleting this time');
     res.status(400).send(err);
-    console.log(err.message)
+    console.log(err.message);
   }
 });
 

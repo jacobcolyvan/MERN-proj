@@ -103,11 +103,9 @@ router.post('/register', async (req, res) => {
 
 router.post('/tokenIsValid', async (req, res) => {
   try {
-    console.log('before verified');
     const token = req.header('x-auth-token');
     if (!token) return res.json(false);
 
-    console.log('before verified');
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) return res.json(false);
 
@@ -124,7 +122,6 @@ router.post('/tokenIsValid', async (req, res) => {
       recipes: user.recipes
     };
     let isUser = true;
-    console.log('p^3');
     return res.json(userObject);
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-let request = require('request');
-require('dotenv').config();
-
+const request = require('request');
+const axios = require('axios');
+const auth = require('../middleware/auth');
+const userModel = require('../models/user');
 let querystring = require('querystring');
-let SpotifyWebApi = require('spotify-web-api-node');
+// let SpotifyWebApi = require('spotify-web-api-node');
 
-let redirect_uri = 'http://localhost:3000/spotify/callback';
+// let redirect_uri = 'http://localhost:3001/spotify/callback';
+let redirect_uri = 'http://localhost:3001/spotify-loading';
 
 // let spotifyApi = new SpotifyWebApi(credentials);
 
@@ -27,15 +29,8 @@ router.get('/spotify/login', (req, res) => {
   }
 });
 
-// // https://accounts.spotify.com/authorize?response_type=code&client_id=88341562f37b4a32a4ebf5a2e7bbe9e4&scope=user-read-private%20user-read-email&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fspotify%2Fcallback
-
-// // https://accounts.spotify.com/en/login?continue=https:%2F%2Faccounts.spotify.com%2Fauthorize%3Fscope%3Duser-read-private%2Buser-read-email%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8888%252Fcallback%26client_id%3D613a9b0f2f88482e861cfaf59533a685
-
-router.get('/spotify/callback', (req, res) => {
-  console.log('–––');
-  console.log(req);
-
-  let code = req.query.code || null;
+router.post('/spotify/callback', auth, (req, res) => {
+  let code = req.body.code || null;
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     form: {
@@ -55,13 +50,18 @@ router.get('/spotify/callback', (req, res) => {
     json: true
   };
 
-  request.post(authOptions, function (error, response, body) {
-    var access_token = body.access_token;
-    let uri = process.env.FRONTEND_URI || 'http://localhost:3001';
+  request.post(authOptions, async function (error, response, body) {
+    console.log('–––');
     console.log(body);
-    // console.log(access_token);
-    // initialiseSpotify(access_token)
-    res.redirect(uri);
+    console.log(req.body.id);
+
+    const user = await userModel.findById(req.body.id);
+    let spotifyTokens = {
+      access: body.access_token,
+      refresh: body.refresh_token
+    };
+    await user.update({ spotifyTokens: spotifyTokens });
+    console.log('tokens added to user');
   });
 });
 
