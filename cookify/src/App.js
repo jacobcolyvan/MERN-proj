@@ -54,6 +54,7 @@ const App = () => {
           user: tokenRes.data._id,
           recipes: tokenRes.data.recipes
         });
+        // history.push
       }
     };
     checkLoggedIn();
