@@ -69,7 +69,7 @@ const SearchController = () => {
           user: userData.user,
           recipes: data.data
         });
-        history.push(`/recipes/${userRecipes.length}`);
+        history.push(`/recipes/${userRecipes.length-1}`);
       })
       .catch((err) => {
         console.log('somethings said no');
