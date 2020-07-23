@@ -65,22 +65,18 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
     const user = await userModel.findById(req.body.id);
 
     console.log(req.body.recipeId, 'gg');
-    let recipeIndex;
+    let recipeIndex = null;
     user.recipes.forEach((recipe, index) => {
       console.log(recipe._id);
       if (recipe._id == req.body.recipeId) {
         console.log('they match!');
         recipeIndex = index;
       }
-      // else throw
     });
 
-    let newRecipes;
-    if (user.recipes.length === 1) {
-      newRecipes = [];
-    } else {
-      newRecipes = user.recipes.splice(recipeIndex, 1);
-    }
+    if (recipeIndex === null) throw 'no recipe with given id found';
+    let newRecipes = user.recipes;
+    newRecipes.splice(recipeIndex, 1);
 
     await user.update({ recipes: newRecipes });
     console.log('done');
