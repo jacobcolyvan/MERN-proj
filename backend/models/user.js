@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const User = new Schema({
   username: {
     type: String,
-    required: true,
+    required: true
     // match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   password: { type: String, required: true, minlength: 6 },
@@ -13,80 +13,80 @@ const User = new Schema({
     {
       name: {
         type: String,
-        required: true,
+        required: true
       },
       image: {
         type: String,
-        default: '',
+        default: ''
       },
       recipeUrl: {
         type: String,
-        default: '',
+        default: ''
       },
       cuisines: {
         type: Object,
-        default: '',
+        default: ''
       },
       sourceName: {
         type: String,
-        default: '',
+        default: ''
       },
       summary: {
         type: String,
-        default: '',
+        default: ''
       },
       preptime: {
         type: Number,
-        default: '',
+        default: ''
       },
       totalCookingTime: {
         type: Number,
-        default: '',
+        default: ''
       },
       ingredients: {
         type: Object,
-        default: '',
+        default: ''
       },
       dishTypes: {
         type: Object,
-        default: '',
+        default: ''
       },
       diets: {
         type: Object,
-        default: '',
+        default: ''
       },
       instructions: {
         type: Object,
-        default: '',
+        default: ''
       },
       winePairing: {
         type: Object,
-        default: '',
+        default: ''
       },
       playlistRef: {
         type: String,
-        default: 'crickets...',
+        default: 'crickets...'
       },
       cookingTime: {
         type: String,
-        default: '',
+        default: ''
       }
-    },
+    }
   ],
   spotifyTokens: [
     {
       // this one gets returned
       access: {
         type: String,
-        default: '',
+        default: ''
       },
       // this one stays on the backend
       refresh: {
         type: String,
-        default: '',
-      },
-    },
-  ],
+        default: ''
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model('User', User);
