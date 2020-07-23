@@ -20,7 +20,6 @@ const SearchController = () => {
     await axios
       .get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
-        // `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
       )
       .then((res) => {
         // console.log(res.data.results);
@@ -49,25 +48,25 @@ const SearchController = () => {
         ingredients: parseIngredients(currentRecipes[index].missedIngredients),
         dishTypes: currentRecipes[index].dishTypes,
         diets: currentRecipes[index].diets,
-        instructions:currentRecipes[index].analyzedInstructions,
-        winePairing: currentRecipes[index].winePairing,
+        instructions: currentRecipes[index].analyzedInstructions,
+        winePairing: currentRecipes[index].winePairing
       },
-      id: userData.user,
+      id: userData.user
     };
     console.log(userData.token);
     await axios
       .put(`http://localhost:3000/users/`, data, {
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': userData.token,
-        },
+          'x-auth-token': userData.token
+        }
       })
       .then((data) => {
         console.log('recipe has been added');
         setUserData({
           token: userData.token,
           user: userData.user,
-          recipes: data.data,
+          recipes: data.data
         });
         history.push(`/recipes/${userRecipes.length - 1}`);
       })
@@ -78,12 +77,16 @@ const SearchController = () => {
   };
 
   const parseIngredients = (ingredients) => {
-    let ingredientArray = []
-    ingredients.forEach( ingredient => {
-      ingredientArray.push([ingredient.original, ingredient.originalName, `${ingredient.amount} ${ingredient.unitLong}`])
-    })
-    return ingredientArray
-  }
+    let ingredientArray = [];
+    ingredients.forEach((ingredient) => {
+      ingredientArray.push({
+        original: ingredient.original,
+        ingredient: ingredient.originalName,
+        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`
+      });
+    });
+    return ingredientArray;
+  };
 
   console.log();
 
@@ -96,14 +99,8 @@ const SearchController = () => {
         }}
         onEnter={getRecipes}
       />
-      {/* {currentRecipes.map((recipe, index) => ( */}
-      {/* // <Link */}
-      {/* //   to={`/recipes/${userRecipes.length - 1}`} */}
-      {/* //   key={`${recipe}-${index}`} */}
-      {/* // > */}
+
       <RecipeTile saveRecipe={saveRecipe} recipes={currentRecipes} />
-      {/* // </Link> */}
-      {/* /* ))} */}
     </div>
   );
 };

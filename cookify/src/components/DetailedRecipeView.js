@@ -1,33 +1,51 @@
 import React from 'react';
 
-const DetailedRecipeView = ({recipe}) => {
+const DetailedRecipeView = ({ recipe }) => {
+  console.log(recipe.ingredients);
+
+  console.log(recipe.instructions);
   return (
     <div>
-    <h3>{recipe.name}</h3>
-    <img src={recipe.image} alt='' />
+      <h3>{recipe.name}</h3>
+      <img src={recipe.image} alt='' />
 
-    <div className="cookingTimes">
-     {(recipe.preptime != 0) && <span>Prep Time:{recipe.preptime}</span>}
-      <span>Cooking Time:{recipe.cookingMinutes}</span>
-      <span>Total Cooking Time:{recipe.totalCookingTime}</span>
+      <div className='cookingTimes'>
+        {recipe.preptime > 0 && <span>Prep Time:{recipe.preptime}</span>}
+        {recipe.cookingMinutes > 0 && (
+          <span>Cooking Time:{recipe.cookingMinutes}</span>
+        )}
+        {recipe.totalCookingTime > 0 && (
+          <span>Total Cooking Time:{recipe.totalCookingTime}</span>
+        )}
+      </div>
+
+      <p>{recipe.winePairing.length > 0 && <p>{recipe.winePairings}</p>}</p>
+      <p>
+        Source:{' '}
+        <a href={recipe.recipeUrl} target='_blank' rel='noopener noreferrer'>
+          {recipe.sourceName}
+        </a>
+      </p>
+      <p>Diet categories: {recipe.diets}</p>
+      <p>Cuisines: {recipe.cuisines}</p>
+
+      <p>
+        Ingredients:
+        {recipe.ingredients.map((ingredient) => (
+          <li>{ingredient.original}</li>
+        ))}
+      </p>
+      <br />
+      {recipe.instructions.length > 0 && (
+        <ol>
+          Instructions: <div></div>
+          {recipe.instructions[0].steps.map((steps, index) => (
+            <li key={`step${index}`}>{steps.step}</li>
+          ))}
+        </ol>
+      )}
     </div>
-
-    <p>{recipe.winePairing.length > 0 && <p>{recipe.winePairings}</p>}</p>
-    <p>Source: <a href={recipe.recipeUrl} target="_blank">{recipe.sourceName}</a></p>
-    <p>Diet categories: {recipe.diets}</p>
-    <p>Cuisines: {recipe.cuisines}</p>
-
-    <p>Ingredients:  {recipe.ingredients.map((ingredient) => (
-      <li>{ingredient.original}</li>
-    ))}</p> 
-
-    <p>Instructions: {recipe.instructions.map((steps)=> (
-        <li>{steps.step}</li>
-    ))}
-    </p>
-    {/* {JSON.stringify(recipe.instructions)} */}
-    </div>
-  )
+  );
 };
 
 export default DetailedRecipeView;
