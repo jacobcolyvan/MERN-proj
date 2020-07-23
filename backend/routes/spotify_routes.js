@@ -32,6 +32,9 @@ router.get('/spotify/login', (req, res) => {
 // // https://accounts.spotify.com/en/login?continue=https:%2F%2Faccounts.spotify.com%2Fauthorize%3Fscope%3Duser-read-private%2Buser-read-email%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8888%252Fcallback%26client_id%3D613a9b0f2f88482e861cfaf59533a685
 
 router.get('/spotify/callback', (req, res) => {
+  console.log('–––');
+  console.log(req);
+
   let code = req.query.code || null;
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
@@ -56,9 +59,9 @@ router.get('/spotify/callback', (req, res) => {
     var access_token = body.access_token;
     let uri = process.env.FRONTEND_URI || 'http://localhost:3001';
     console.log(body);
-    console.log(access_token);
+    // console.log(access_token);
     // initialiseSpotify(access_token)
-    uri + res.redirect(uri);
+    res.redirect(uri);
   });
 });
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 
     // const username = user.username;
     const recipes = user.recipes;
-    console.log(recipes);
+    // console.log(recipes);
     const _id = user.id;
     const payload = {
       user: {

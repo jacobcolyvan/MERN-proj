@@ -6,6 +6,7 @@ import React, { useEffect, useContext } from 'react';
 import UserRecipeTile from '../components/UserRecipeTile';
 import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
+import SpotifyAuth from '../components/SpotifyAuth';
 
 const Home = () => {
   const { userData } = useContext(UserContext);
@@ -20,6 +21,7 @@ const Home = () => {
     <div>
       <p>View saved recipes/home</p>
       <br />
+      <SpotifyAuth />
       {userData.recipes && <UserRecipeTile userRecipes={userData.recipes} />}
     </div>
   );
