@@ -1,4 +1,5 @@
-// View Recipe information and playlist
+// Shows DetailedRecipeView and Playlist
+// Rendered in App.js
 
 import React, { useContext, useEffect } from 'react';
 import Playlist from '../components/Playlist';

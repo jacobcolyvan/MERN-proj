@@ -1,12 +1,17 @@
 import React from 'react';
+import axios from 'axios'
+
+//shows detailed recipe info within ViewRecipe.js
 
 const DetailedRecipeView = ({ recipe }) => {
-  console.log(recipe.ingredients);
 
-  console.log(recipe.instructions);
+  const deleteRecipe = async() => {
+    await axios.put('http://localhost:3000/recipe/:id')
+  }
+
   return (
     <div>
-      <h2 className='recipeViewHeader'>{recipe.name}</h2>
+      <h2 className='recipeViewHeader'>{recipe.name}</h2> <button onClick={deleteRecipe}>Delete</button>
       <img src={recipe.image} alt='' />
 
       <div className='cookingTimes'>

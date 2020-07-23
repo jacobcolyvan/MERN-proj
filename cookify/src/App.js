@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 
 //Components
@@ -27,7 +27,7 @@ const App = () => {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    recipes: undefined
+    recipes: undefined,
     // spotifyToken: undefined
   });
   // async function requestUserData() {
@@ -56,7 +56,7 @@ const App = () => {
       if (tokenRes.data) {
         console.log('nup');
         const userRes = await Axios.get('http://localhost:3000/users/', {
-          headers: { 'x-auth-token': token }
+          headers: { 'x-auth-token': token },
         });
         console.log(userRes);
         // setUserData({
