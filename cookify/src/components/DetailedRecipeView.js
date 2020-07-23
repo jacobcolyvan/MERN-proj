@@ -21,10 +21,10 @@ const DetailedRecipeView = ({recipe}) => {
       <li>{ingredient.original}</li>
     ))}</p> 
 
-    <p>Instructions: {recipe.instructions.map((steps)=> (
-        <li>{steps.step}</li>
+    {/* <p>Instructions: {recipe.instructions.map((steps)=> (
+        <li>{steps.[0].step}</li>
     ))}
-    </p>
+    </p> */}
     {/* {JSON.stringify(recipe.instructions)} */}
     </div>
   )
