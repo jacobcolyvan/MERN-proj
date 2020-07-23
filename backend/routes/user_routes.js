@@ -48,7 +48,7 @@ router.delete('/user/:id', auth, async (req, res) => {
 router.put('/users/', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    console.log(req.body.newRecipe);
+    // console.log(req.body.newRecipe);
     newRecipes = [...user.recipes, req.body.newRecipe];
     await user.update({ recipes: newRecipes });
     res.send(newRecipes);

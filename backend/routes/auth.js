@@ -30,7 +30,6 @@ router.post('/login', async (req, res) => {
 
     // const username = user.username;
     const recipes = user.recipes;
-    console.log(recipes);
     const _id = user.id;
     const payload = {
       user: {
@@ -104,7 +103,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/tokenIsValid', async (req, res) => {
   try {
-    // console.log('before verified');
+    console.log('before verified');
     const token = req.header('x-auth-token');
     if (!token) return res.json(false);
 
@@ -113,11 +112,20 @@ router.post('/tokenIsValid', async (req, res) => {
     if (!verified) return res.json(false);
 
     // console.log('before user found');
-    const user = await userModel.findById(verified.id);
+
+    const user = await userModel.findById(verified.user.id);
     // console.log(user);
     if (!user) return res.json(false);
 
-    return res.json(true);
+    userObject = {
+      isUser: true,
+      token: token,
+      _id: user._id,
+      recipes: user.recipes
+    };
+    let isUser = true;
+    console.log('p^3');
+    return res.json(userObject);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
