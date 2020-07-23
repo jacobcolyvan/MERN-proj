@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  useHistory
 } from 'react-router-dom';
 
 //Components
@@ -22,22 +23,12 @@ import LoginForm from './components/auth/LoginForm';
 import './App.css';
 
 const App = () => {
-  // const [userRecipes, setUserRecipes] = useState(null);
-
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
     recipes: undefined
     // spotifyToken: undefined
   });
-  // async function requestUserData() {
-  //   await axios
-  //     .get('http://localhost:3000/users/5f12c2a7d4323119d3e7d0b7')
-  //     .then((res) => {
-  //       setUserRecipes(res.data.recipes);
-  //       // console.log(res);
-  //     });
-  // }
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -53,17 +44,16 @@ const App = () => {
       );
       console.log('token res coming');
       console.log(tokenRes);
-      if (tokenRes.data) {
-        console.log('nup');
-        const userRes = await Axios.get('http://localhost:3000/users/', {
-          headers: { 'x-auth-token': token }
-        });
-        console.log(userRes);
-        // setUserData({
-        //   token: ,
-        //   user: userRes.data,
-        //   recipes: userRes.data.recipes
+      if (tokenRes.data.isUser) {
+        console.log('yep');
+        // const userRes = await Axios.get('http://localhost:3000/users/', {
+        //   headers: { 'x-auth-token': token }
         // });
+        setUserData({
+          token: tokenRes.data.token,
+          user: tokenRes.data._id,
+          recipes: tokenRes.data.recipes
+        });
       }
     };
     checkLoggedIn();
