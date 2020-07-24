@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const axios = require('axios');
+// const axios = require('axios');
 const auth = require('../middleware/auth');
 const userModel = require('../models/user');
-let querystring = require('querystring');
 
-// let SpotifyWebApi = require('spotify-web-api-node');
+let SpotifyWebApi = require('spotify-web-api-node');
 // let spotifyApi = new SpotifyWebApi(credentials);
 
 router.post('/spotify/callback', auth, (req, res) => {
@@ -46,23 +45,38 @@ router.post('/spotify/callback', auth, (req, res) => {
   res.send(true);
 });
 
-module.exports = router;
+router.post('/spotify/refresh', auth, async (req, res) => {
+  const user = await userModel.findById(req.body.id);
+  let authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    form: {
+      refresh_token: user.spotifyTokens.refresh,
+      grant_type: 'refresh_token'
+    },
+    headers: {
+      Authorization:
+        'Basic ' +
+        new Buffer(
+          process.env.SPOTIFY_CLIENT_ID2 +
+            ':' +
+            process.env.SPOTIFY_CLIENT_SECRET
+        ).toString('base64')
+    },
+    json: true
+  };
 
-// let redirect_uri = 'http://localhost:3001/spotify/callback';
-// let redirect_uri = 'http://localhost:3001/spotify-loading';
-// router.get('/spotify/login', (req, res) => {
-//   try {
-//     res.redirect(
-//       'https://accounts.spotify.com/authorize?' +
-//         querystring.stringify({
-//           response_type: 'code',
-//           client_id: process.env.SPOTIFY_CLIENT_ID2,
-//           scope: 'user-read-private user-read-email',
-//           redirect_uri
-//         })
-//     );
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('Error with request ');
-//   }
-// });
+  request.post(authOptions, async function (error, response, body) {
+    console.log('–––');
+    console.log(body);
+
+    console.log(req.body.id);
+    let spotifyTokens = {
+      access: body.access_token,
+      refresh: user.refresh_token
+    };
+    user.updateOne({ spotifyTokens: spotifyTokens });
+    console.log('new access token added to user');
+  });
+});
+
+module.exports = router;

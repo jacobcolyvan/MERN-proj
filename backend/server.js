@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 app.use(userRouter);
 app.use(devRouter);
 //Defining route for auth
-app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth_routes'));
 app.use(spotifyRouter);
 
 app.listen(process.env.PORT, () => {

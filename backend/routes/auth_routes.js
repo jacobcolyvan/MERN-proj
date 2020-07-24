@@ -4,12 +4,12 @@ const router = express.Router();
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const request = require('request');
+const user = require('../models/user');
 
-// /auth
 // authenticate user and get json web token
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
   try {
     let user = await userModel.findOne({ username });
     // if not the last res.json/res.etc, have to add a return
@@ -21,7 +21,6 @@ router.post('/login', async (req, res) => {
 
     //compare entered password to the stored hash password of a found user
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return res
         .status(400)
@@ -108,12 +107,8 @@ router.post('/tokenIsValid', async (req, res) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) return res.json(false);
 
-    // console.log('before user found');
-
     const user = await userModel.findById(verified.user.id);
     const spotifyAuth = user.spotifyTokens.refresh.length > 1 ? true : false;
-    console.log(spotifyAuth);
-    // console.log(user);
     if (!user) return res.json(false);
 
     userObject = {
@@ -129,17 +124,5 @@ router.post('/tokenIsValid', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// * NOT IN USE
-//chuck middleware, so that you need a token to access the protected route
-// router.get('/', async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.user.id).select('-password');
-//     res.json(user);
-//   } catch (error) {
-//     console.error(error.message);
-//     res.status(500).send('Server error');
-//   }
-// });
 
 module.exports = router;
