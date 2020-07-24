@@ -11,6 +11,9 @@ const Navbar = () => {
       <li>
         <Link to='/add'>New</Link>
       </li>
+      <li>
+        <Link to='/account'>Account</Link>
+      </li>
       {/* <li>
         <Link to='/register'>Register</Link>
       </li>

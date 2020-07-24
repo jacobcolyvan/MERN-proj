@@ -17,6 +17,7 @@ import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
 import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
+import Dashboard from './pages/Dashboard'
 // import UserRecipeTile from './components/UserRecipeTile';
 
 //css
@@ -84,10 +85,10 @@ const App = () => {
                 />
               )}
             />
-
+            <Route exact path='/account' component={Dashboard}/>
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={LoginForm} />
-
+       
             <Redirect to='/' />
           </Switch>
           {/* )} */}

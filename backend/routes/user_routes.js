@@ -24,7 +24,7 @@ router.get('/user', auth, async (req, res) => {
     res.json({
       username: user.username,
       user: user.id,
-      recipes: user.recipes
+      recipes: user.recipes,
     });
   } catch {
     res.status(500).send(err);
@@ -32,6 +32,44 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
+//edit an account
+router.put('/user/:id', auth, async (req, res) => {
+  try {
+    console.log(req.params.id);
+    console.log(req.body.newUsername);
+    const user = await userModel.findById(req.params.id);
+
+    if (req.body.newUsername) {
+      await user.update({ username: req.body.newUsername });
+    }
+    if (req.body.newPassword) {
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      newPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+      await user.update({ password: newPassword })
+      res.status(200).send();
+    }
+    //check current password matches hashed password and then update with new password
+
+    console.log(user);
+
+    // newUsername = req.body.newUsername
+    //  newUsername = req.
+
+    // await user.update({ username: newUsername });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+//delete an account
 router.delete('/user/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);
@@ -63,7 +101,7 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-   console.log(user.id);
+    console.log(user.id);
     console.log(req.body.recipeId, 'gg');
     let recipeIndex = null;
     user.recipes.forEach((recipe, index) => {
@@ -84,7 +122,7 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
   } catch (err) {
     console.log('no deleting this time');
     res.status(400).send(err);
-    console.log(err.message)
+    console.log(err.message);
   }
 });
 
