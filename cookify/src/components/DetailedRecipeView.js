@@ -9,11 +9,13 @@ const DetailedRecipeView = ({ recipe }) => {
 
   const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
-  console.log(userData);
-  console.log(userData.token)
+  // console.log(userData);
+  // console.log(userData.token)
+
 
   const deleteRecipe = async () => {
-    await axios.put(`http://localhost:3000/users/recipes/delete`, {id:userData.user, recipeId:recipe._id}, {
+    console.log(recipe.id);
+    await axios.put(`http://localhost:3000/users/recipes/delete`, {id:userData.user, recipeId:recipe.id}, {
       headers: {
         'Content-Type': 'application/json',
         'x-auth-token': userData.token
@@ -28,7 +30,7 @@ const DetailedRecipeView = ({ recipe }) => {
       history.push(`/`)})
   }
 
-  console.log(recipe._id)
+  console.log(recipe.id, 'gg')
   return (
     <div>
       <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}

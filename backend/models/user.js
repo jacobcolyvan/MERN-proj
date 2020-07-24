@@ -70,6 +70,10 @@ const User = new Schema({
       cookingTime: {
         type: String,
         default: ''
+      },
+      id: {
+        type: String,
+        default: ''
       }
     }
   ],

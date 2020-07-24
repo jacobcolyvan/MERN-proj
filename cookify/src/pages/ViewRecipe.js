@@ -10,7 +10,6 @@ import DetailedRecipeView from '../components/DetailedRecipeView';
 const ViewRecipe = ({ recipe }) => {
   const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
-  console.log(userData)
 
 
   useEffect(() => {

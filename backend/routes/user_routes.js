@@ -63,13 +63,12 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    console.log(user)
-    console.log(user.recipes)
+   console.log(user.id);
     console.log(req.body.recipeId, 'gg');
     let recipeIndex = null;
     user.recipes.forEach((recipe, index) => {
-      console.log(recipe._id);
-      if (recipe._id == req.body.recipeId) {
+      console.log(recipe.id);
+      if (recipe.id == req.body.recipeId) {
         console.log('they match!');
         recipeIndex = index;
       }

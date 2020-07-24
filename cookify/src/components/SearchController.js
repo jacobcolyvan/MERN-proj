@@ -6,6 +6,8 @@ import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
 import { useHistory } from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid'
+
 
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -49,7 +51,8 @@ const SearchController = () => {
         dishTypes: currentRecipes[index].dishTypes,
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
-        winePairing: currentRecipes[index].winePairing
+        winePairing: currentRecipes[index].winePairing,
+        id:uuidv4()
         // id: currentRecipes[index].id
       },
       id: userData.user
