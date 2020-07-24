@@ -1,13 +1,16 @@
-// View Recipe information and playlist
+// Shows DetailedRecipeView and Playlist
+// Rendered in App.js
 
 import React, { useContext, useEffect } from 'react';
 import Playlist from '../components/Playlist';
 import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
+import DetailedRecipeView from '../components/DetailedRecipeView';
 
 const ViewRecipe = ({ recipe }) => {
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
+
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
@@ -15,8 +18,7 @@ const ViewRecipe = ({ recipe }) => {
 
   return (
     <div>
-      <h1>View Recipe</h1>
-      {recipe && <p>{recipe.name}</p>}
+      {recipe && <DetailedRecipeView recipe={recipe} />}
 
       <br />
       <br />

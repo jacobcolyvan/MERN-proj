@@ -2,7 +2,7 @@ import React from 'react';
 import './RecipeTile.css';
 import { Link } from 'react-router-dom';
 
-// this is to render individual recipe block/tiles
+//renders list of searched recipes
 
 const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
@@ -11,7 +11,7 @@ const RecipeTile = ({ recipes, saveRecipe }) => {
       {recipes.map((recipe, index) => (
         <div className='recipe'>
           <h3 key={recipe.index}>
-            <Link to>{recipe.title} </Link>
+            <Link to='/recipe/view'>{recipe.title} </Link>
           </h3>
           <img className='image' src={recipe.image} alt='' />
           <p>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
@@ -10,7 +10,7 @@ const LoginForm = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const { setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
   const { username, password } = formData;
 
@@ -39,6 +39,8 @@ const LoginForm = () => {
       err && setError(JSON.stringify(err));
     }
   };
+
+  // useEffect
 
   return (
     <div>

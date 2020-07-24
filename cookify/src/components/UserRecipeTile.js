@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-//this is for saved user recipes
+//this is for saved user recipes - rendered on home page
 
 const UserRecipeTile = ({ userRecipes }) => {
   // console.log(userRecipes);
@@ -13,8 +13,10 @@ const UserRecipeTile = ({ userRecipes }) => {
           <h3>
             <Link to={`/recipes/${index}`}>{recipe.name}</Link>
           </h3>
+          <img src={recipe.image} alt='' />
           <br />
-          <p>Playlist: {recipe.playlistRef}</p>
+          <p>Cooking time: {recipe.totalCookingTime}</p>
+          {recipe.cuisines.length > 0 && <p>{recipe.cuisines}</p>}
         </div>
       ))}
     </div>

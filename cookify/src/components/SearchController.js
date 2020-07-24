@@ -6,6 +6,8 @@ import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
 import { useHistory } from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid'
+
 
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -20,7 +22,6 @@ const SearchController = () => {
     await axios
       .get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
-        // `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
       )
       .then((res) => {
         // console.log(res.data.results);
@@ -40,42 +41,55 @@ const SearchController = () => {
         name: currentRecipes[index].title,
         image: currentRecipes[index].image,
         recipeUrl: currentRecipes[index].sourceUrl,
-        cuisines: JSON.stringify(currentRecipes[index].cuisines),
+        cuisines: currentRecipes[index].cuisines,
         sourceName: currentRecipes[index].sourceName,
         summary: currentRecipes[index].summary,
         preptime: currentRecipes[index].preparationMinutes,
+        cookingTime: currentRecipes[index].cookingMinutes,
         totalCookingTime: currentRecipes[index].readyInMinutes,
-        ingredients: JSON.stringify(currentRecipes[index].missedIngredients),
-        dishTypes: JSON.stringify(currentRecipes[index].dishTypes),
-        diets: JSON.stringify(currentRecipes[index].diets),
-        instructions: JSON.stringify(
-          currentRecipes[index].analyzedInstructions
-        ),
-        winePairing: JSON.stringify(currentRecipes[index].winePairing),
+        ingredients: parseIngredients(currentRecipes[index].missedIngredients),
+        dishTypes: currentRecipes[index].dishTypes,
+        diets: currentRecipes[index].diets,
+        instructions: currentRecipes[index].analyzedInstructions,
+        winePairing: currentRecipes[index].winePairing,
+        id:uuidv4()
+        // id: currentRecipes[index].id
       },
-      id: userData.user,
+      id: userData.user
     };
     console.log(userData.token);
     await axios
-      .put(`http://localhost:3000/users/`, data, {
+      .put(`http://localhost:3000/users/recipes/add`, data, {
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': userData.token,
-        },
+          'x-auth-token': userData.token
+        }
       })
       .then((data) => {
         console.log('recipe has been added');
         setUserData({
           token: userData.token,
           user: userData.user,
-          recipes: data.data,
+          recipes: data.data
         });
-        history.push(`/recipes/${userRecipes.length - 1}`);
-      })
+       
+      }).then( ()=> {history.push(`/recipes/${userRecipes.length}`)})
       .catch((err) => {
         console.log('somethings said no');
         console.log(err);
       });
+  };
+
+  const parseIngredients = (ingredients) => {
+    let ingredientArray = [];
+    ingredients.forEach((ingredient) => {
+      ingredientArray.push({
+        original: ingredient.original,
+        ingredient: ingredient.originalName,
+        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`
+      });
+    });
+    return ingredientArray;
   };
 
   console.log();
@@ -89,14 +103,8 @@ const SearchController = () => {
         }}
         onEnter={getRecipes}
       />
-      {/* {currentRecipes.map((recipe, index) => ( */}
-      {/* // <Link */}
-      {/* //   to={`/recipes/${userRecipes.length - 1}`} */}
-      {/* //   key={`${recipe}-${index}`} */}
-      {/* // > */}
+
       <RecipeTile saveRecipe={saveRecipe} recipes={currentRecipes} />
-      {/* // </Link> */}
-      {/* /* ))} */}
     </div>
   );
 };
