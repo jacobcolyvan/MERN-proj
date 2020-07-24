@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
@@ -38,7 +36,7 @@ router.put('/users/recipes/add', auth, async (req, res) => {
     const user = await userModel.findById(req.body.id);
     // console.log(req.body.newRecipe);
     newRecipes = [...user.recipes, req.body.newRecipe];
-    await user.update({ recipes: newRecipes });
+    await user.updateOne({ recipes: newRecipes });
     res.send(newRecipes);
     // res.send('Recipe added to user')
   } catch (err) {
@@ -51,20 +49,17 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    let recipeIndex = null;
-    user.recipes.forEach((recipe, index) => {
-      if (recipe._id == req.body.recipeId) {
-        console.log('they match!');
-        recipeIndex = index;
-      }
-    });
+
+    let recipeIndex = user.recipes.findIndex(
+      (recipe) => recipe._id == req.body.recipeId
+    );
 
     if (recipeIndex === null) throw 'no recipe with given id found';
     let newRecipes = user.recipes;
     newRecipes.splice(recipeIndex, 1);
 
-    await user.update({ recipes: newRecipes });
-    res.send(newRecipes);
+    await user.updateOne({ recipes: newRecipes });
+    res.status(200).send(newRecipes);
   } catch (err) {
     console.log('no deleting this time');
     res.status(400).send(err);

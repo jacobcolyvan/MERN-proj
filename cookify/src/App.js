@@ -7,7 +7,6 @@ import {
   Switch,
   Route,
   Redirect
-  // useHistory
 } from 'react-router-dom';
 
 //Components
@@ -15,8 +14,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
-import Register from './components/auth/Register';
-import LoginForm from './components/auth/LoginForm';
+import Register from './pages/Register';
+import LoginForm from './pages/LoginForm';
 import SpotifyRoutingPage from './pages/SpotifyRoutingPage';
 
 //css
@@ -26,9 +25,10 @@ const App = () => {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    recipes: undefined
-    // spotifyToken: undefined
+    recipes: undefined,
+    spotifyAuthorised: undefined
   });
+  const [spotifyAuth, setSpotifyAuth] = useState(false);
   // const history = useHistory();
 
   useEffect(() => {
@@ -50,6 +50,8 @@ const App = () => {
           user: tokenRes.data._id,
           recipes: tokenRes.data.recipes
         });
+        console.log(tokenRes.data.spotifyAuth);
+        setSpotifyAuth(tokenRes.data.spotifyAuth);
       }
     };
     checkLoggedIn();
@@ -58,7 +60,9 @@ const App = () => {
   return (
     <div className='main'>
       <Router>
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider
+          value={{ userData, setUserData, spotifyAuth, setSpotifyAuth }}
+        >
           <Navbar />
           <h1 className='home-header'>Cookify bru</h1>
           <br />

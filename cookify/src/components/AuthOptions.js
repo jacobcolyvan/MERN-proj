@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 
 const AuthOptions = () => {
   const { userData, setUserData } = useContext(UserContext);
-  // console.log(userData);
 
   const history = useHistory();
 
@@ -16,7 +15,6 @@ const AuthOptions = () => {
       user: undefined
     });
     localStorage.setItem('auth-token', '');
-    console.log(userData);
   };
   return (
     <div className='auth-options'>

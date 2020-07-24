@@ -13,7 +13,7 @@ const UserRecipeTile = ({ userRecipes }) => {
           <h3>
             <Link to={`/recipes/${index}`}>{recipe.name}</Link>
           </h3>
-          <img src={recipe.image} alt='' />
+          <img className='image' src={recipe.image} alt='' />
           <br />
           <p>Cooking time: {recipe.totalCookingTime}</p>
           {recipe.cuisines.length > 0 && <p>{recipe.cuisines}</p>}

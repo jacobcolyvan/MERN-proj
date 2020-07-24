@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
         .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
     }
 
-    // const username = user.username;
+    const spotifyAuth = user.spotifyTokens.refresh.length > 1 ? true : false;
     const recipes = user.recipes;
     const _id = user.id;
     const payload = {
@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        return res.json({ token, _id, recipes });
+        return res.json({ token, _id, recipes, spotifyAuth });
       }
     );
   } catch (error) {
@@ -111,14 +111,17 @@ router.post('/tokenIsValid', async (req, res) => {
     // console.log('before user found');
 
     const user = await userModel.findById(verified.user.id);
+    const spotifyAuth = user.spotifyTokens.refresh.length > 1 ? true : false;
+    console.log(spotifyAuth);
     // console.log(user);
     if (!user) return res.json(false);
 
     userObject = {
       isUser: true,
-      token: token,
+      token,
       _id: user._id,
-      recipes: user.recipes
+      recipes: user.recipes,
+      spotifyAuth
     };
     let isUser = true;
     return res.json(userObject);

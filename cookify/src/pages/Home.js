@@ -9,9 +9,8 @@ import { useHistory } from 'react-router-dom';
 import SpotifyAuth from '../components/SpotifyAuth';
 
 const Home = () => {
-  const { userData } = useContext(UserContext);
+  const { userData, spotifyAuth } = useContext(UserContext);
   const history = useHistory();
-  // console.log(userData);
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
@@ -21,7 +20,7 @@ const Home = () => {
     <div>
       <p>View saved recipes/home</p>
       <br />
-      <SpotifyAuth />
+      {!spotifyAuth && <SpotifyAuth />}
       {userData.recipes && <UserRecipeTile userRecipes={userData.recipes} />}
     </div>
   );

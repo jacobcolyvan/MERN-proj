@@ -49,7 +49,8 @@ const SearchController = () => {
         dishTypes: currentRecipes[index].dishTypes,
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
-        winePairing: currentRecipes[index].winePairing
+        winePairing: currentRecipes[index].winePairing,
+        playlistRef: 'false'
         // id: currentRecipes[index].id
       },
       id: userData.user
@@ -69,7 +70,7 @@ const SearchController = () => {
           user: userData.user,
           recipes: data.data
         });
-        history.push(`/recipes/${userRecipes.length-1}`);
+        history.push(`/recipes/${userRecipes.length - 1}`);
       })
       .catch((err) => {
         console.log('somethings said no');

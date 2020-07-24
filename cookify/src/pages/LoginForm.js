@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
-import ErrorNotice from '../ErrorNotice';
+import ErrorNotice from '../components/ErrorNotice';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const LoginForm = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData, setSpotifyAuth } = useContext(UserContext);
   const history = useHistory();
   const { username, password } = formData;
 
@@ -33,6 +33,7 @@ const LoginForm = () => {
         recipes: loginRes.data.recipes
       });
       localStorage.setItem('auth-token', loginRes.data.token);
+      setSpotifyAuth(loginRes.data.spotifyAuth);
       history.push('/');
     } catch (err) {
       console.log(err);

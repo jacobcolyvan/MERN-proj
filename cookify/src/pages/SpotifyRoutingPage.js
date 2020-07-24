@@ -18,13 +18,12 @@ const SpotifyRoutingPage = (props) => {
     };
 
     if (props.location.search.split('=')[1] && userData.token) {
-      // console.log(userData);
+      console.log(props.location.search);
       let data = {
         code: props.location.search.split('=')[1],
         id: userData.user
       };
       backendAuthCode(data).then((data) => {
-        // console.log('gg');
         history.push('/');
       }).catch = (err) => {
         console.log(err);

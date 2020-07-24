@@ -26,12 +26,12 @@ const DetailedRecipeView = ({ recipe }) => {
       <button onClick={deleteRecipe}>Delete</button>
       <img src={recipe.image} alt='' />
       <div className='cookingTimes'>
-        {recipe.preptime > 0 && <span>Prep Time:{recipe.preptime}</span>}
+        {recipe.preptime > 0 && <span>Prep Time: {recipe.preptime}</span>}
         {recipe.cookingMinutes > 0 && (
-          <span>Cooking Time:{recipe.cookingMinutes}</span>
+          <span>Cooking Time: {recipe.cookingMinutes}</span>
         )}
         {recipe.totalCookingTime > 0 && (
-          <span>Total Cooking Time:{recipe.totalCookingTime}</span>
+          <span>Total Cooking Time: {recipe.totalCookingTime}</span>
         )}
       </div>
       <p>{recipe.winePairing.length > 0 && <p>{recipe.winePairings}</p>}</p>

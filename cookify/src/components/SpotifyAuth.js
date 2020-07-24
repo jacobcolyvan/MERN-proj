@@ -9,7 +9,7 @@ const SpotifyAuth = () => {
             process.env.REACT_APP_SPOTIFY_CLIENT_ID2
           }&scope=user-read-private%20user-read-email&redirect_uri=${encodeURIComponent(
             process.env.REACT_APP_SPOTIFY_CALLBACK_URI
-          )}&show_dialog%3Dtrue`}
+          )}&show_dialog=true`}
         >
           Authorise Spotify
         </a>

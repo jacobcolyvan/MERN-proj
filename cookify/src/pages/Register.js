@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
-import ErrorNotice from '../ErrorNotice';
+import ErrorNotice from '../components/ErrorNotice';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const Register = () => {
     password2: ''
   });
 
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData, setSpotifyAuth } = useContext(UserContext);
   const { username, password, password2 } = formData;
   const [error, setError] = useState();
   const history = useHistory();
@@ -38,6 +38,7 @@ const Register = () => {
           user: loginRes.data._id,
           recipes: loginRes.data.recipes
         });
+        setSpotifyAuth(loginRes.data.spotifyAuth);
         localStorage.setItem('auth-token', loginRes.data.token);
         history.push('/');
       } catch (err) {

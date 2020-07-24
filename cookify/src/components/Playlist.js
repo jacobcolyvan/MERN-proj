@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Playlist = () => {
+const Playlist = ({ playlistRef }) => {
   return (
     <div className='playlistContainer'>
       <iframe
-        src='https://open.spotify.com/embed/playlist/7jDnWwQfQYZx2bkqdSlf3F'
+        src={`https://open.spotify.com/embed/playlist/${playlistRef}`}
         width='300'
         height='380'
         allowtransparency='true'

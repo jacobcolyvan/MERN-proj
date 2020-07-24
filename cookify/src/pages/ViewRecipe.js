@@ -17,11 +17,14 @@ const ViewRecipe = ({ recipe }) => {
 
   return (
     <div>
-      {recipe && <DetailedRecipeView recipe={recipe} />}
-
-      <br />
-      <br />
-      <Playlist />
+      {recipe && (
+        <>
+          <DetailedRecipeView recipe={recipe} />
+          <br />
+          <br />
+          {recipe.playlistRef && <Playlist playlistRef={recipe.playlistRef} />}
+        </>
+      )}
     </div>
   );
 };

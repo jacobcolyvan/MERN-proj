@@ -65,7 +65,7 @@ const User = new Schema({
       },
       playlistRef: {
         type: String,
-        default: 'crickets...'
+        default: '7jDnWwQfQYZx2bkqdSlf3F'
       },
       cookingTime: {
         type: String,
