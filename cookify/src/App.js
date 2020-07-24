@@ -1,6 +1,6 @@
 //Libraries
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import UserContext from './context/UserContext';
 import {
   BrowserRouter as Router,
@@ -38,7 +38,7 @@ const App = () => {
         localStorage.setItem('auth-token', '');
         token = '';
       }
-      const tokenRes = await Axios.post(
+      const tokenRes = await axios.post(
         'http://localhost:3000/auth/tokenIsValid',
         null,
         { headers: { 'x-auth-token': token } }
@@ -50,8 +50,21 @@ const App = () => {
           user: tokenRes.data._id,
           recipes: tokenRes.data.recipes
         });
-        console.log(tokenRes.data.spotifyAuth);
         setSpotifyAuth(tokenRes.data.spotifyAuth);
+      }
+      if (tokenRes.data.spotifyAuth) {
+        axios
+          .post(
+            `http://localhost:3000/spotify/refresh`,
+            { id: tokenRes.data._id },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': tokenRes.data.token
+              }
+            }
+          )
+          .catch();
       }
     };
     checkLoggedIn();

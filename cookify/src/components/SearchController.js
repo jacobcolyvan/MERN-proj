@@ -22,7 +22,6 @@ const SearchController = () => {
         `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
       )
       .then((res) => {
-        // console.log(res.data.results);
         console.log(res);
         setCurrentRecipes(res.data.results);
         console.log('wallah hussy, shes loaded');
