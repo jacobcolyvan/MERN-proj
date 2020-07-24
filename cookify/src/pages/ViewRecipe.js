@@ -8,8 +8,10 @@ import { useHistory } from 'react-router-dom';
 import DetailedRecipeView from '../components/DetailedRecipeView';
 
 const ViewRecipe = ({ recipe }) => {
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
+  console.log(userData)
+
 
   useEffect(() => {
     if (!userData.user) history.push('/login');

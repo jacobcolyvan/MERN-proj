@@ -1,23 +1,33 @@
 import React, {useContext} from 'react';
 import axios from 'axios'
 import UserContext from '../context/UserContext'
+import { useHistory } from 'react-router-dom';
 //shows detailed recipe info within ViewRecipe.js
 //delete button kinda works but doesn't get rid of images immediately, images update if you relog or search new item
 const DetailedRecipeView = ({ recipe }) => {
   console.log(recipe.ingredients);
 
+  const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
   console.log(userData);
   console.log(userData.token)
+
   const deleteRecipe = async () => {
     await axios.put(`http://localhost:3000/users/recipes/delete`, {id:userData.user, recipeId:recipe._id}, {
       headers: {
         'Content-Type': 'application/json',
         'x-auth-token': userData.token
       }
-    });
-    // setUserData(userData)
-  };
+    }).then((data) => {
+      console.log('recipe has been added');
+      setUserData({
+        token: userData.token,
+        user: userData.user,
+        recipes: data.data
+      })
+      history.push(`/`)})
+  }
+
   console.log(recipe._id)
   return (
     <div>
