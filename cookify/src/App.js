@@ -7,7 +7,7 @@ import {
   Switch,
   Route,
   Redirect,
-  useHistory
+  useHistory,
 } from 'react-router-dom';
 
 //Components
@@ -17,7 +17,7 @@ import AddRecipe from './pages/AddRecipe';
 import ViewRecipe from './pages/ViewRecipe';
 import Register from './components/auth/Register';
 import LoginForm from './components/auth/LoginForm';
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard';
 // import UserRecipeTile from './components/UserRecipeTile';
 
 //css
@@ -53,7 +53,7 @@ const App = () => {
         setUserData({
           token: tokenRes.data.token,
           user: tokenRes.data._id,
-          recipes: tokenRes.data.recipes
+          recipes: tokenRes.data.recipes,
         });
         // history.push
       }
@@ -85,10 +85,10 @@ const App = () => {
                 />
               )}
             />
-            <Route exact path='/account' component={Dashboard}/>
+            <Route exact path='/dashboard' component={Dashboard} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={LoginForm} />
-       
+
             <Redirect to='/' />
           </Switch>
           {/* )} */}
