@@ -1,29 +1,29 @@
-import React, {useContext} from 'react';
-import axios from 'axios'
-import UserContext from '../context/UserContext'
+import React, { useContext } from 'react';
+import axios from 'axios';
+import UserContext from '../context/UserContext';
 //shows detailed recipe info within ViewRecipe.js
 //delete button kinda works but doesn't get rid of images immediately, images update if you relog or search new item
 const DetailedRecipeView = ({ recipe }) => {
-  console.log(recipe.ingredients);
-
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   console.log(userData);
-  console.log(userData.token)
+  console.log(userData.token);
   const deleteRecipe = async () => {
-    await axios.put(`http://localhost:3000/users/recipes/delete`, {id:userData.user, recipeId:recipe._id}, {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': userData.token
+    await axios.put(
+      `http://localhost:3000/users/recipes/delete`,
+      { id: userData.user, recipeId: recipe._id },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': userData.token
+        }
       }
-    });
-    // setUserData(userData)
+    );
   };
-  console.log(recipe._id)
+
   return (
     <div>
       <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}
       <button onClick={deleteRecipe}>Delete</button>
-
       <img src={recipe.image} alt='' />
       <div className='cookingTimes'>
         {recipe.preptime > 0 && <span>Prep Time:{recipe.preptime}</span>}

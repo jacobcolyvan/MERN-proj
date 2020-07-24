@@ -13,7 +13,7 @@ const ViewRecipe = ({ recipe }) => {
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
-  });
+  }, [userData, history]);
 
   return (
     <div>

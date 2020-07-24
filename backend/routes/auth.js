@@ -83,7 +83,6 @@ router.post('/register', async (req, res) => {
       }
     };
 
-    //sign the payload using the secret from config > default.json
     jwt.sign(
       payload,
       process.env.JWT_SECRET,

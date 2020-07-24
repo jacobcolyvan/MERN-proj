@@ -12,7 +12,7 @@ const AddRecipe = () => {
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
-  });
+  }, [history, userData]);
 
   return (
     <div>

@@ -5,29 +5,9 @@ const axios = require('axios');
 const auth = require('../middleware/auth');
 const userModel = require('../models/user');
 let querystring = require('querystring');
+
 // let SpotifyWebApi = require('spotify-web-api-node');
-
-// let redirect_uri = 'http://localhost:3001/spotify/callback';
-let redirect_uri = 'http://localhost:3001/spotify-loading';
-
 // let spotifyApi = new SpotifyWebApi(credentials);
-
-router.get('/spotify/login', (req, res) => {
-  try {
-    res.redirect(
-      'https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-          response_type: 'code',
-          client_id: process.env.SPOTIFY_CLIENT_ID2,
-          scope: 'user-read-private user-read-email',
-          redirect_uri
-        })
-    );
-  } catch {
-    res.status(500).send(err);
-    console.log('Error with request ');
-  }
-});
 
 router.post('/spotify/callback', auth, (req, res) => {
   let code = req.body.code || null;
@@ -35,7 +15,7 @@ router.post('/spotify/callback', auth, (req, res) => {
     url: 'https://accounts.spotify.com/api/token',
     form: {
       code: code,
-      redirect_uri,
+      redirect_uri: process.env.SPOTIFY_CALLBACK_URI,
       grant_type: 'authorization_code'
     },
     headers: {
@@ -60,9 +40,29 @@ router.post('/spotify/callback', auth, (req, res) => {
       access: body.access_token,
       refresh: body.refresh_token
     };
-    await user.update({ spotifyTokens: spotifyTokens });
+    await user.updateOne({ spotifyTokens: spotifyTokens });
     console.log('tokens added to user');
   });
+  res.send(true);
 });
 
 module.exports = router;
+
+// let redirect_uri = 'http://localhost:3001/spotify/callback';
+// let redirect_uri = 'http://localhost:3001/spotify-loading';
+// router.get('/spotify/login', (req, res) => {
+//   try {
+//     res.redirect(
+//       'https://accounts.spotify.com/authorize?' +
+//         querystring.stringify({
+//           response_type: 'code',
+//           client_id: process.env.SPOTIFY_CLIENT_ID2,
+//           scope: 'user-read-private user-read-email',
+//           redirect_uri
+//         })
+//     );
+//   } catch {
+//     res.status(500).send(err);
+//     console.log('Error with request ');
+//   }
+// });

@@ -26,7 +26,7 @@ const LoginForm = () => {
         'http://localhost:3000/auth/login',
         formData
       );
-      console.log(loginRes);
+      // console.log(loginRes);
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data._id,
@@ -36,11 +36,13 @@ const LoginForm = () => {
       history.push('/');
     } catch (err) {
       console.log(err);
-      err && setError(JSON.stringify(err));
+      err && setError(err.message);
     }
   };
 
-  // useEffect
+  useEffect(() => {
+    if (userData.user) history.push('/');
+  });
 
   return (
     <div>

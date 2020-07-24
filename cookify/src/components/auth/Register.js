@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import UserContext from '../../context/UserContext';
@@ -12,7 +12,7 @@ const Register = () => {
     password2: ''
   });
 
-  const { setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const { username, password, password2 } = formData;
   const [error, setError] = useState();
   const history = useHistory();
@@ -20,7 +20,6 @@ const Register = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -43,10 +42,14 @@ const Register = () => {
         history.push('/');
       } catch (err) {
         console.log(err);
-        err && setError(JSON.stringify(err));
+        err && setError(err.message);
       }
     }
   };
+
+  useEffect(() => {
+    if (userData.user) history.push('/');
+  });
 
   return (
     <div>

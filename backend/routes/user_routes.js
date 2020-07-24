@@ -2,21 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
 
 const userModel = require('../models/user');
-
-// router.get('/users/:id', auth, async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.params.id);
-//     // if (!user) res.status(404).send("No user here")
-//     res.send(user);
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('No user here');
-//   }
-// });
 
 router.get('/user', auth, async (req, res) => {
   try {
@@ -63,12 +51,8 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    console.log(user);
-    console.log(user.recipes);
-    console.log(req.body.recipeId, 'gg');
     let recipeIndex = null;
     user.recipes.forEach((recipe, index) => {
-      console.log(recipe._id);
       if (recipe._id == req.body.recipeId) {
         console.log('they match!');
         recipeIndex = index;
@@ -80,7 +64,6 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
     newRecipes.splice(recipeIndex, 1);
 
     await user.update({ recipes: newRecipes });
-    console.log('done');
     res.send(newRecipes);
   } catch (err) {
     console.log('no deleting this time');
@@ -97,6 +80,17 @@ module.exports = router;
 //   try {
 //     const user = await userModel.findById(req.id);
 //     res.send(user.recipes);
+//   } catch {
+//     res.status(500).send(err);
+//     console.log('No user here');
+//   }
+// });
+
+// router.get('/users/:id', auth, async (req, res) => {
+//   try {
+//     const user = await userModel.findById(req.params.id);
+//     // if (!user) res.status(404).send("No user here")
+//     res.send(user);
 //   } catch {
 //     res.status(500).send(err);
 //     console.log('No user here');
