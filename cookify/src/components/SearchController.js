@@ -22,7 +22,7 @@ const SearchController = () => {
       const searchResults = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
       );
-      await setCurrentRecipes(searchResults.data.results);
+      setCurrentRecipes(searchResults.data.results);
       console.log('wallah hussy, shes loaded');
     } catch (err) {
       console.log(err);

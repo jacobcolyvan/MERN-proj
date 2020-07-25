@@ -18,7 +18,7 @@ const RecipeTile = ({ recipes, saveRecipe }) => {
           </div>
           <p>
             {recipe.diets.map((diet, index) => (
-              <li key={diet.index}>{diet}</li>
+              <li key={`diet${index}`}>{diet}</li>
             ))}
           </p>
           <button

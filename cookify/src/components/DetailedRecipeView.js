@@ -56,8 +56,8 @@ const DetailedRecipeView = ({ recipe }) => {
       {recipe.diets.length > 0 && (
         <p>
           Diet categories:{' '}
-          {recipe.diets.map((diet) => (
-            <span>{diet}, </span>
+          {recipe.diets.map((diet, index) => (
+            <span key={`diet${index}`}>{diet}, </span>
           ))}
         </p>
       )}
@@ -65,8 +65,8 @@ const DetailedRecipeView = ({ recipe }) => {
       <br />
       <p>
         Ingredients:
-        {recipe.ingredients.map((ingredient) => (
-          <li>{ingredient.original}</li>
+        {recipe.ingredients.map((ingredient, index) => (
+          <li key={`ingredient${index}`}>{ingredient.original}</li>
         ))}
       </p>
       <br />

@@ -6,17 +6,18 @@ import { Link } from 'react-router-dom';
 const UserRecipeTile = ({ userRecipes }) => {
   return (
     <div className='userRecipeTile'>
-      {userRecipes.map((recipe, index) => (
-        <div key={`${recipe}-${index}`}>
-          <h3>
-            <Link to={`/recipes/${index}`}>{recipe.name}</Link>
-          </h3>
-          <img className='image' src={recipe.image} alt='' />
-          <br />
-          <p>Cooking time: {recipe.totalCookingTime}</p>
-          {recipe.cuisines.length > 0 && <p>{recipe.cuisines}</p>}
-        </div>
-      ))}
+      {userRecipes &&
+        userRecipes.map((recipe, index) => (
+          <div key={`${recipe}-${index}`}>
+            <h3>
+              <Link to={`/recipes/${index}`}>{recipe.name}</Link>
+            </h3>
+            <img className='image' src={recipe.image} alt='' />
+            <br />
+            <p>Cooking time: {recipe.totalCookingTime}</p>
+            {recipe.cuisines.length > 0 && <p>{recipe.cuisines}</p>}
+          </div>
+        ))}
     </div>
   );
 };

@@ -124,27 +124,22 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
 
 // route to add playlist to a user's recipe
 router.put('/users/recipes/add-playlist', auth, async (req, res) => {
-  console.log(req.body);
   try {
     const user = await userModel.findById(req.body.id);
-
     const newPlaylistRef = req.body.newPlaylistRef;
-    console.log(req.body.id);
     let recipeIndex = user.recipes.findIndex(
-      (recipe) => recipe._id == req.body.recipeId
+      (recipe) => recipe.id == req.body.recipeId
     );
-    console.log('tryna post2');
     if (recipeIndex === null) throw 'no recipe with given id found';
 
     let newRecipes = user.recipes;
     newRecipes[recipeIndex].playlistRef = newPlaylistRef;
-    console.log('newRecipes');
 
     await user.updateOne({ recipes: newRecipes });
-
     res.status(200).send(newRecipes);
   } catch (err) {
     console.log('no adding this playlist mon');
+    console.log(err);
     res.status(400).send(err);
   }
 });
