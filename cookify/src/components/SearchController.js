@@ -18,18 +18,16 @@ const SearchController = () => {
   let userRecipes = userData.recipes;
 
   const getRecipes = async () => {
-    await axios
-      .get(
+    try {
+      const searchResults = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
-      )
-      .then((res) => {
-        setCurrentRecipes(res.data.results);
-        console.log('wallah hussy, shes loaded');
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('something wrong w/ spoonacular request');
-      });
+      );
+      await setCurrentRecipes(searchResults.data.results);
+      console.log('wallah hussy, shes loaded');
+    } catch (err) {
+      console.log(err);
+      console.log('something wrong w/ spoonacular request');
+    }
   };
 
   const saveRecipe = async (index) => {
