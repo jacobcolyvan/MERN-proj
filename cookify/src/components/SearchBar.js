@@ -5,7 +5,7 @@ import React from 'react';
 const SearchBar = (props) => {
   return (
     <div className='searchbar'>
-      <label>Search a food</label>
+      <label>Search for recipes</label>
       <input
         type='text'
         value={props.searchValue}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import Modal from '../components/Modal';
+import './Dashboard.css';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -120,22 +121,25 @@ const Dashboard = () => {
       >
         <p>Deleted accounts cannot be recovered</p>
       </Modal>
+      <h2 className='header'>Dashboard</h2>
       <div>
-        <form onSubmit={(e) => onSubmitUsername(e)} className='form'>
+        <form onSubmit={(e) => onSubmitUsername(e)} className='password-form'>
           <label>Edit Username</label>
           <input
             type='text'
-            placeholder=''
+            placeholder='Enter new username here'
             name='newUsername'
             required
             value={newUsername}
             onChange={(e) => usernameHandler(e)}
+            className='form-input'
           />
-          <input type='submit' value='Change username' />
+          <input className='submit' type='submit' value='Change username' />
           {/* <button onClick={editUsername}>Edit</button> */}
         </form>
 
-        <form onSubmit={(e) => onSubmitPasswords(e)}>
+        <form onSubmit={(e) => onSubmitPasswords(e)} className='password-form'>
+          <label>Current Password</label>
           <input
             type='password'
             placeholder='Current Password'
@@ -144,7 +148,9 @@ const Dashboard = () => {
             value={currentPassword}
             onChange={(e) => passwordHandler(e)}
             minLength='6'
+            className='form-input'
           />
+          <label>New Password</label>
           <input
             type='password'
             placeholder='New Password'
@@ -153,8 +159,9 @@ const Dashboard = () => {
             value={newPassword}
             onChange={(e) => passwordHandler(e)}
             minLength='6'
+            className='form-input'
           />
-
+          <label>Confirm new password</label>
           <input
             type='password'
             placeholder='Confirm New Password'
@@ -163,10 +170,13 @@ const Dashboard = () => {
             value={newPassword2}
             onChange={(e) => passwordHandler(e)}
             minLength='6'
+            className='form-input'
           />
-          <input type='submit' value='Change password' />
+          <input className='submit' type='submit' value='Change password' />
         </form>
-        <button onClick={showDeleteWarningHandler}>Delete Account</button>
+        <button className='delete' onClick={showDeleteWarningHandler}>
+          Delete Account
+        </button>
       </div>
     </>
   );

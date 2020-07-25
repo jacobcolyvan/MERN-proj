@@ -6,8 +6,7 @@ import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
 import { useHistory } from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid'
-
+import { v4 as uuidv4 } from 'uuid';
 
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -52,28 +51,29 @@ const SearchController = () => {
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
         winePairing: currentRecipes[index].winePairing,
-        id:uuidv4()
+        id: uuidv4(),
         // id: currentRecipes[index].id
       },
-      id: userData.user
+      id: userData.user,
     };
     console.log(userData.token);
     await axios
       .put(`http://localhost:3000/users/recipes/add`, data, {
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': userData.token
-        }
+          'x-auth-token': userData.token,
+        },
       })
       .then((data) => {
         console.log('recipe has been added');
         setUserData({
           token: userData.token,
           user: userData.user,
-          recipes: data.data
+          recipes: data.data,
         });
-       
-      }).then( ()=> {history.push(`/recipes/${userRecipes.length}`)})
+      })
+      // .then(() => { history.push(`/recipes/${userRecipes.length}`) })
+      // this should ideally have a small popup that tells you it's been added/favorited
       .catch((err) => {
         console.log('somethings said no');
         console.log(err);
@@ -86,7 +86,7 @@ const SearchController = () => {
       ingredientArray.push({
         original: ingredient.original,
         ingredient: ingredient.originalName,
-        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`
+        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`,
       });
     });
     return ingredientArray;

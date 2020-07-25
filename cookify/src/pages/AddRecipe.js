@@ -16,7 +16,7 @@ const AddRecipe = () => {
 
   return (
     <div>
-      <p>Add Recipe</p>
+      <h2>Add Recipe</h2>
       <br />
       <SearchController />
     </div>
