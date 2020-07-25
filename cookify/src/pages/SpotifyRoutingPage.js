@@ -37,7 +37,7 @@ const SpotifyRoutingPage = (props) => {
     } else if (!props.location.search.split('=')[1]) {
       history.push('/');
     }
-  }, [userData, history, props.location.search]);
+  }, [userData, history, props.location.search, setSpotifyAuth]);
 
   return (
     <div>

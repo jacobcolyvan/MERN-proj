@@ -51,9 +51,9 @@ const LoginForm = () => {
           .then((data) => {
             setSpotifyAuth(data.data.access_token);
             console.log('access_token added');
+            history.push('/');
           });
       }
-      history.push('/');
     } catch (err) {
       console.log(err);
       err && setError(err.message);

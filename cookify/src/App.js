@@ -49,6 +49,7 @@ const App = () => {
           recipes: tokenRes.data.recipes
         });
       }
+
       if (tokenRes.data.spotifyAuth) {
         axios
           .post(
@@ -75,7 +76,7 @@ const App = () => {
         <UserContext.Provider
           value={{ userData, setUserData, spotifyAuth, setSpotifyAuth }}
         >
-          <Navbar />
+          {userData.user && <Navbar />}
           <h1 className='home-header'>Cookify bru</h1>
           <br />
           <Switch>
