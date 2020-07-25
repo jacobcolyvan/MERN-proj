@@ -13,9 +13,9 @@ body {
 }
 
 .main {
-  padding: 100px 20%;
+  padding: 5rem 10%;
+  /* padding: 100px 20%; */
 }
-
 
 .searchbar {
   background-color: #2d425a;
@@ -102,8 +102,7 @@ button {
   padding: 0.2rem;
 }
 
-
-.recipeViewHeader{
+.recipeViewHeader {
   padding-bottom: 1rem;
 }
 
@@ -118,4 +117,3 @@ button {
     padding: 100px 2%;
   }
 }
-

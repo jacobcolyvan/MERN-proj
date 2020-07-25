@@ -1,5 +1,5 @@
 ::placeholder {
-  color: purple;
+  color: orange;
 }
 
 .header {
@@ -14,8 +14,13 @@
   padding: 0.5rem;
   width: 100%;
   margin: 0.5rem;
+  background-color: rgb(61 110 152 / 26%);
+  border: 0.1rem solid gray;
 }
 
+.form-input:focus {
+  border: 0.1rem solid purple;
+}
 .submit {
   /* align-self: center; */
   width: 33%;
