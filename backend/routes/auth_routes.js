@@ -107,8 +107,6 @@ router.post('/tokenIsValid', async (req, res) => {
     if (!verified) return res.json(false);
 
     const user = await userModel.findById(verified.user.id);
-    // console.log(user);
-    // console.log(user.spotifyTokens.refresh);
     const spotifyAuth = user.spotifyTokens.refresh ? true : false;
     console.log(spotifyAuth);
     if (!user) return res.json(false);
