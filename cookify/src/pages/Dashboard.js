@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import Modal from '../components/Modal';
 import './Dashboard.css';
+import GenericModal from '../components/GenericModal';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
 
   const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
-  // const [error, setError] = useState();
+  const [status, setStatus] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [passwords, setPasswords] = useState({
     currentPassword: '',
@@ -62,7 +63,7 @@ const Dashboard = () => {
   const onSubmitUsername = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
+      const response = await axios.put(
         `http://localhost:3000/user/${userData.user}`,
         { newUsername },
         {
@@ -72,8 +73,11 @@ const Dashboard = () => {
           },
         }
       );
+      console.log(response);
+      console.log(response.data);
+      setStatus(response.data);
     } catch (error) {
-      console.log(error.message);
+      setStatus('Error with updating username');
     }
     //refresh on submit username and have an alert?
     //needs alert to tell user that username has been updated
@@ -84,30 +88,36 @@ const Dashboard = () => {
     e.preventDefault();
     if (newPassword !== newPassword2) {
       // setError('new passwords do not match');
-      console.log('new passwords dont match');
+      setStatus('new passwords dont match');
     } else {
       try {
-        await axios
-          .put(
-            `http://localhost:3000/user/${userData.user}`,
-            { currentPassword, newPassword, newPassword2 },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': userData.token,
-              },
-            }
-          )
-          .then((res) => console.log(res.data.message));
+        const response = await axios.put(
+          `http://localhost:3000/user/${userData.user}`,
+          { currentPassword, newPassword, newPassword2 },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'x-auth-token': userData.token,
+            },
+          }
+        );
+        // setStatus(response.data);
+        console.log(response);
+        setStatus(response.data);
       } catch (error) {
-        console.log(error.message);
+        setStatus('Error with updating password');
       }
     }
+  };
+
+  const statusHandler = () => {
+    setStatus(null);
   };
 
   //prefill username in placeholder
   return (
     <>
+      <GenericModal header='Alert!' message={status} onClear={statusHandler} />
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteWarningHandler}

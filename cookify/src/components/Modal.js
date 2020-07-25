@@ -7,6 +7,10 @@ import Backdrop from './Backdrop';
 
 //portals allow us to render content wherever we specify
 // feed props into our modal that will be displayed by the overlay
+//style
+//header
+//onSubmit
+//footer
 const ModalOverlay = (props) => {
   const content = (
     <div className={`modal`} style={props.style}>
