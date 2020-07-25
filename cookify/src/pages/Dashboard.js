@@ -4,38 +4,22 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
-//styling
-import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
-
 const Dashboard = () => {
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      '& > * + *': {
-        marginTop: theme.spacing(2),
-      },
-    },
-  }));
-  const classes = useStyles();
+  useEffect(() => {
+    if (!userData.user) history.push('/login');
+  });
 
-  //   const [formData, setFormData] = useState({
-  //     password: '',
-  //     newPassword: '',
-  //     newPassword2: '',
-  //   });
-  //   const { password, newPassword, newPassword2 } = formData;
   const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const [newUsername, setNewUsername] = useState('');
   const [passwords, setPasswords] = useState({
-    password: '',
+    currentPassword: '',
     newPassword: '',
     newPassword2: '',
   });
 
-  const { password, newPassword, newPassword2 } = passwords;
+  const { currentPassword, newPassword, newPassword2 } = passwords;
 
   //   useEffect(async () => {
   //     await axios.get('');
@@ -48,11 +32,8 @@ const Dashboard = () => {
 
   const passwordHandler = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
+    console.log(passwords);
   };
-
-  //   console.log(userData);
-  //   console.log(userData.token);
-  //   console.log(userData.user);
 
   //logic to send a newUsername
   const onSubmitUsername = async (e) => {
@@ -71,15 +52,33 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error.message);
     }
-
-    history.push('/');
+    //refresh on submit username and have an alert?
+    //needs alert to tell user that username has been updated
+    // history.push('/');
   };
 
-  const onSubmitPassword = async (e) => {
+  const onSubmitPasswords = async (e) => {
     e.preventDefault();
     if (newPassword !== newPassword2) {
-      setError('new passwords do not match');
+      // setError('new passwords do not match');
+      console.log('new passwords dont match');
     } else {
+      try {
+        await axios
+          .put(
+            `http://localhost:3000/user/${userData.user}`,
+            { currentPassword, newPassword, newPassword2 },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': userData.token,
+              },
+            }
+          )
+          .then((res) => console.log(res.data.message));
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
@@ -91,8 +90,15 @@ const Dashboard = () => {
       },
     });
     history.push('/login');
+    setUserData({
+      token: undefined,
+      user: undefined,
+    });
+    localStorage.setItem('auth-token', '');
+    console.log(userData);
   };
 
+  //prefill username in placeholder
   return (
     <div>
       <form onSubmit={(e) => onSubmitUsername(e)} className='form'>
@@ -105,41 +111,41 @@ const Dashboard = () => {
           value={newUsername}
           onChange={(e) => usernameHandler(e)}
         />
-        <input type='submit' value='Edit' />
+        <input type='submit' value='Change username' />
         {/* <button onClick={editUsername}>Edit</button> */}
       </form>
 
-      {/* <form>
+      <form onSubmit={(e) => onSubmitPasswords(e)}>
         <input
           type='password'
-          placeholder=''
+          placeholder='Current Password'
           required
-          name='password'
-          value={password}
-          onChange={(e) => onChange(e)}
+          name='currentPassword'
+          value={currentPassword}
+          onChange={(e) => passwordHandler(e)}
           minLength='6'
-        /> */}
-      {/* <input
+        />
+        <input
           type='password'
           placeholder='New Password'
           required
-          name='password2'
+          name='newPassword'
           value={newPassword}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => passwordHandler(e)}
           minLength='6'
-        /> */}
+        />
 
-      {/* <input
+        <input
           type='password'
           placeholder='Confirm New Password'
           required
-          name='password2'
+          name='newPassword2'
           value={newPassword2}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => passwordHandler(e)}
           minLength='6'
         />
+        <input type='submit' value='Change password' />
       </form>
-      <input type='submit' value='Submit' /> */}
 
       <button onClick={deleteAccount}>Delete Account</button>
     </div>

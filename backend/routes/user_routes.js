@@ -32,38 +32,47 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
-//edit an account
+//edit an account's password and username
 router.put('/user/:id', auth, async (req, res) => {
   try {
-    console.log(req.params.id);
-    console.log(req.body.newUsername);
+    // console.log(req.params.id);
+    // console.log(req.body.newUsername);
+    // console.log(req.body);
     const user = await userModel.findById(req.params.id);
 
+    //logic for updating username
     if (req.body.newUsername) {
       await user.update({ username: req.body.newUsername });
+      res
+        .status(200)
+        .send(`Username has been updated to ${req.body.newUsername}`);
     }
+    //logic for updating password and encrypting it
+
+    // console.log(req.body.newPassword);
+    // console.log(req.body.currentPassword);
+    // console.log(user.password, 'userpassword');
     if (req.body.newPassword) {
-      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      const isMatch = await bcrypt.compare(
+        req.body.currentPassword,
+        user.password
+      );
+
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
+        console.log('current password does not match');
+        res.status(400).json({ message: 'current password does not match' });
+        // .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+
+        req.body.newPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+        await user.update({ password: req.body.newPassword });
+
+        console.log('password has been updated');
+        res.status(200).json({ message: 'password has been updated' });
       }
-
-      const salt = await bcrypt.genSalt(10);
-      newPassword = await bcrypt.hash(req.body.newPassword, salt);
-
-      await user.update({ password: newPassword })
-      res.status(200).send();
     }
-    //check current password matches hashed password and then update with new password
-
-    console.log(user);
-
-    // newUsername = req.body.newUsername
-    //  newUsername = req.
-
-    // await user.update({ username: newUsername });
   } catch (error) {
     res.status(400).send(error.message);
   }
