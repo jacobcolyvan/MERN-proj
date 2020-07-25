@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import Modal from '../components/Modal';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -19,11 +20,32 @@ const Dashboard = () => {
     newPassword2: '',
   });
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { currentPassword, newPassword, newPassword2 } = passwords;
 
-  //   useEffect(async () => {
-  //     await axios.get('');
-  //   });
+  const showDeleteWarningHandler = () => {
+    setShowConfirmModal(true);
+  };
+
+  const cancelDeleteWarningHandler = () => {
+    setShowConfirmModal(false);
+  };
+
+  const deleteAccount = async () => {
+    await axios.delete(`http://localhost:3000/user/${userData.user}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': userData.token,
+      },
+    });
+    history.push('/login');
+    setUserData({
+      token: undefined,
+      user: undefined,
+    });
+    localStorage.setItem('auth-token', '');
+    console.log(userData);
+  };
 
   const usernameHandler = (e) => {
     setNewUsername(e.target.value);
@@ -82,73 +104,71 @@ const Dashboard = () => {
     }
   };
 
-  const deleteAccount = async () => {
-    await axios.delete(`http://localhost:3000/user/${userData.user}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': userData.token,
-      },
-    });
-    history.push('/login');
-    setUserData({
-      token: undefined,
-      user: undefined,
-    });
-    localStorage.setItem('auth-token', '');
-    console.log(userData);
-  };
-
   //prefill username in placeholder
   return (
-    <div>
-      <form onSubmit={(e) => onSubmitUsername(e)} className='form'>
-        <label>Edit Username</label>
-        <input
-          type='text'
-          placeholder=''
-          name='newUsername'
-          required
-          value={newUsername}
-          onChange={(e) => usernameHandler(e)}
-        />
-        <input type='submit' value='Change username' />
-        {/* <button onClick={editUsername}>Edit</button> */}
-      </form>
+    <>
+      <Modal
+        show={showConfirmModal}
+        onCancel={cancelDeleteWarningHandler}
+        header='Are you sure?'
+        footer={
+          <>
+            <button onClick={cancelDeleteWarningHandler}>Cancel</button>
+            <button onClick={deleteAccount}>Delete Account</button>
+          </>
+        }
+      >
+        <p>Deleted accounts cannot be recovered</p>
+      </Modal>
+      <div>
+        <form onSubmit={(e) => onSubmitUsername(e)} className='form'>
+          <label>Edit Username</label>
+          <input
+            type='text'
+            placeholder=''
+            name='newUsername'
+            required
+            value={newUsername}
+            onChange={(e) => usernameHandler(e)}
+          />
+          <input type='submit' value='Change username' />
+          {/* <button onClick={editUsername}>Edit</button> */}
+        </form>
 
-      <form onSubmit={(e) => onSubmitPasswords(e)}>
-        <input
-          type='password'
-          placeholder='Current Password'
-          required
-          name='currentPassword'
-          value={currentPassword}
-          onChange={(e) => passwordHandler(e)}
-          minLength='6'
-        />
-        <input
-          type='password'
-          placeholder='New Password'
-          required
-          name='newPassword'
-          value={newPassword}
-          onChange={(e) => passwordHandler(e)}
-          minLength='6'
-        />
+        <form onSubmit={(e) => onSubmitPasswords(e)}>
+          <input
+            type='password'
+            placeholder='Current Password'
+            required
+            name='currentPassword'
+            value={currentPassword}
+            onChange={(e) => passwordHandler(e)}
+            minLength='6'
+          />
+          <input
+            type='password'
+            placeholder='New Password'
+            required
+            name='newPassword'
+            value={newPassword}
+            onChange={(e) => passwordHandler(e)}
+            minLength='6'
+          />
 
-        <input
-          type='password'
-          placeholder='Confirm New Password'
-          required
-          name='newPassword2'
-          value={newPassword2}
-          onChange={(e) => passwordHandler(e)}
-          minLength='6'
-        />
-        <input type='submit' value='Change password' />
-      </form>
-
-      <button onClick={deleteAccount}>Delete Account</button>
-    </div>
+          <input
+            type='password'
+            placeholder='Confirm New Password'
+            required
+            name='newPassword2'
+            value={newPassword2}
+            onChange={(e) => passwordHandler(e)}
+            minLength='6'
+          />
+          <input type='submit' value='Change password' />
+        </form>
+        <button onClick={showDeleteWarningHandler}>Delete Account</button>
+      </div>
+    </>
   );
 };
 
