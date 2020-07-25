@@ -9,9 +9,8 @@ const DetailedRecipeView = ({ recipe }) => {
   const { userData, setUserData } = useContext(UserContext);
 
   const deleteRecipe = async () => {
-    console.log(recipe.id);
-    await axios
-      .put(
+    try {
+      const newRecipes = await axios.put(
         `http://localhost:3000/users/recipes/delete`,
         { id: userData.user, recipeId: recipe.id },
         {
@@ -20,23 +19,24 @@ const DetailedRecipeView = ({ recipe }) => {
             'x-auth-token': userData.token
           }
         }
-      )
-      .then((data) => {
-        console.log('recipe has been added');
-        setUserData({
-          token: userData.token,
-          user: userData.user,
-          recipes: data.data
-        });
-        history.push(`/`);
+      );
+      console.log('recipe has been added');
+      await setUserData({
+        token: userData.token,
+        user: userData.user,
+        recipes: newRecipes.data
       });
+      history.push(`/`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div>
       <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}
-      <button onClick={deleteRecipe}>Delete</button>
       <img src={recipe.image} alt='' />
+      <button onClick={deleteRecipe}>Delete</button>
       <div className='cookingTimes'>
         {recipe.preptime > 0 && <span>Prep Time: {recipe.preptime}</span>}
         {recipe.cookingMinutes > 0 && (
