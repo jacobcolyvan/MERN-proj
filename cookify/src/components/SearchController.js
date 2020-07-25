@@ -49,12 +49,11 @@ const SearchController = () => {
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
         winePairing: currentRecipes[index].winePairing,
-        playlistRef: 'false'
-        // id: currentRecipes[index].id
+        playlistRef: '7jDnWwQfQYZx2bkqdSlf3F'
       },
       id: userData.user
     };
-    console.log(userData.token);
+    // console.log(userData.token);
     await axios
       .put(`http://localhost:3000/users/recipes/add`, data, {
         headers: {

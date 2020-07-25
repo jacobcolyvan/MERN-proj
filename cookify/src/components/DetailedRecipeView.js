@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import UserContext from '../context/UserContext';
 //shows detailed recipe info within ViewRecipe.js
-//delete button kinda works but doesn't get rid of images immediately, images update if you relog or search new item
+
 const DetailedRecipeView = ({ recipe }) => {
   const { userData } = useContext(UserContext);
   console.log(userData);
@@ -38,7 +38,7 @@ const DetailedRecipeView = ({ recipe }) => {
       <p>
         Source:{' '}
         <a href={recipe.recipeUrl} target='_blank' rel='noopener noreferrer'>
-          {recipe.sourceName}
+          {recipe.sourceName || 'here'}
         </a>
       </p>
       {recipe.diets.length > 0 && (

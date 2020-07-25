@@ -4,31 +4,34 @@ import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
 
 const SpotifyRoutingPage = (props) => {
-  const { userData } = useContext(UserContext);
+  const { userData, setSpotifyAuth } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {
     const backendAuthCode = async (data) => {
-      await axios.post(`http://localhost:3000/spotify/callback`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': userData.token
+      const res = await axios.post(
+        `http://localhost:3000/spotify/callback`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': userData.token
+          }
         }
-      });
+      );
+      setSpotifyAuth(res.data.access_token);
+      history.push('/');
     };
 
     if (props.location.search.split('=')[1] && userData.token) {
-      console.log(props.location.search);
       let data = {
         code: props.location.search.split('=')[1],
         id: userData.user
       };
-      backendAuthCode(data).then((data) => {
-        history.push('/');
-      }).catch = (err) => {
+
+      backendAuthCode(data).catch = (err) => {
         console.log(err);
         console.log('there was an error with the token routing');
-        // failed
         history.push('/');
       };
     } else if (!props.location.search.split('=')[1]) {

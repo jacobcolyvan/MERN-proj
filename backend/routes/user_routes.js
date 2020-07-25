@@ -34,11 +34,9 @@ router.delete('/user/:id', auth, async (req, res) => {
 router.put('/users/recipes/add', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    // console.log(req.body.newRecipe);
-    newRecipes = [...user.recipes, req.body.newRecipe];
+    let newRecipes = [...user.recipes, req.body.newRecipe];
     await user.updateOne({ recipes: newRecipes });
     res.send(newRecipes);
-    // res.send('Recipe added to user')
   } catch (err) {
     console.log('no adding nothing mon');
     res.status(400).send(err);
@@ -67,27 +65,31 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
   }
 });
 
+// route to add playlist to a user's recipe
+router.put('/users/recipes/add-playlist', auth, async (req, res) => {
+  console.log(req.body);
+  try {
+    const user = await userModel.findById(req.body.id);
+
+    const newPlaylistRef = req.body.newPlaylistRef;
+    console.log(req.body.id);
+    let recipeIndex = user.recipes.findIndex(
+      (recipe) => recipe._id == req.body.recipeId
+    );
+    console.log('tryna post2');
+    if (recipeIndex === null) throw 'no recipe with given id found';
+
+    let newRecipes = user.recipes;
+    newRecipes[recipeIndex].playlistRef = newPlaylistRef;
+    console.log('newRecipes');
+
+    await user.updateOne({ recipes: newRecipes });
+
+    res.status(200).send(newRecipes);
+  } catch (err) {
+    console.log('no adding this playlist mon');
+    res.status(400).send(err);
+  }
+});
+
 module.exports = router;
-
-// // get user recipes
-// // @private
-// router.get('/users/recipes/', auth, async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.id);
-//     res.send(user.recipes);
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('No user here');
-//   }
-// });
-
-// router.get('/users/:id', auth, async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.params.id);
-//     // if (!user) res.status(404).send("No user here")
-//     res.send(user);
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('No user here');
-//   }
-// });

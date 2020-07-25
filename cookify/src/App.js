@@ -25,11 +25,9 @@ const App = () => {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
-    recipes: undefined,
-    spotifyAuthorised: undefined
+    recipes: undefined
   });
-  const [spotifyAuth, setSpotifyAuth] = useState(false);
-  // const history = useHistory();
+  const [spotifyAuth, setSpotifyAuth] = useState(true);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -50,7 +48,6 @@ const App = () => {
           user: tokenRes.data._id,
           recipes: tokenRes.data.recipes
         });
-        setSpotifyAuth(tokenRes.data.spotifyAuth);
       }
       if (tokenRes.data.spotifyAuth) {
         axios
@@ -64,7 +61,9 @@ const App = () => {
               }
             }
           )
-          .catch();
+          .then((data) => setSpotifyAuth(data.data.access_token));
+      } else {
+        setSpotifyAuth(false);
       }
     };
     checkLoggedIn();

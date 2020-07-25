@@ -38,7 +38,7 @@ const Register = () => {
           user: loginRes.data._id,
           recipes: loginRes.data.recipes
         });
-        setSpotifyAuth(loginRes.data.spotifyAuth);
+        setSpotifyAuth(false);
         localStorage.setItem('auth-token', loginRes.data.token);
         history.push('/');
       } catch (err) {

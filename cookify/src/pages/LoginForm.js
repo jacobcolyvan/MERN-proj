@@ -33,7 +33,26 @@ const LoginForm = () => {
         recipes: loginRes.data.recipes
       });
       localStorage.setItem('auth-token', loginRes.data.token);
-      setSpotifyAuth(loginRes.data.spotifyAuth);
+
+      if (loginRes.data.spotifyAuth) {
+        await axios
+          .post(
+            'http://localhost:3000/spotify/refresh',
+            {
+              id: loginRes.data._id
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': loginRes.data.token
+              }
+            }
+          )
+          .then((data) => {
+            setSpotifyAuth(data.data.access_token);
+            console.log('access_token added');
+          });
+      }
       history.push('/');
     } catch (err) {
       console.log(err);

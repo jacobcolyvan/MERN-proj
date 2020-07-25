@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
     let user = await userModel.findOne({ username });
-    // if not the last res.json/res.etc, have to add a return
+
     if (!user) {
       return res
         .status(400)
@@ -27,7 +27,8 @@ router.post('/login', async (req, res) => {
         .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
     }
 
-    const spotifyAuth = user.spotifyTokens.refresh.length > 1 ? true : false;
+    const spotifyAuth = user.spotifyTokens.refresh ? true : false;
+    console.log(spotifyAuth);
     const recipes = user.recipes;
     const _id = user.id;
     const payload = {
@@ -64,17 +65,15 @@ router.post('/register', async (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10); //create salt for password
-
-    user = new userModel({
+    let user = new userModel({
       username,
       password,
-      recipes
+      recipes,
+      spotifyTokens: { access: '', refresh: '' }
     });
-
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-    console.log(user.recipes);
     const _id = user.id;
     const payload = {
       user: {
@@ -108,7 +107,10 @@ router.post('/tokenIsValid', async (req, res) => {
     if (!verified) return res.json(false);
 
     const user = await userModel.findById(verified.user.id);
-    const spotifyAuth = user.spotifyTokens.refresh.length > 1 ? true : false;
+    // console.log(user);
+    // console.log(user.spotifyTokens.refresh);
+    const spotifyAuth = user.spotifyTokens.refresh ? true : false;
+    console.log(spotifyAuth);
     if (!user) return res.json(false);
 
     userObject = {
