@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div>
-      <p>View saved recipes/home</p>
+      <h2>Saved Recipes</h2>
       <br />
       {!spotifyAuth && <SpotifyAuth />}
       {userData.recipes && <UserRecipeTile userRecipes={userData.recipes} />}

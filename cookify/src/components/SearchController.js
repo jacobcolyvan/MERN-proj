@@ -6,6 +6,7 @@ import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -49,7 +50,8 @@ const SearchController = () => {
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
         winePairing: currentRecipes[index].winePairing,
-        playlistRef: '7jDnWwQfQYZx2bkqdSlf3F'
+        playlistRef: '7jDnWwQfQYZx2bkqdSlf3F',
+        id: uuidv4()
       },
       id: userData.user
     };
@@ -70,6 +72,8 @@ const SearchController = () => {
         });
         history.push(`/recipes/${userRecipes.length - 1}`);
       })
+      // .then(() => { history.push(`/recipes/${userRecipes.length}`) })
+      // this should ideally have a small popup that tells you it's been added/favorited
       .catch((err) => {
         console.log('somethings said no');
         console.log(err);

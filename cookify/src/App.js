@@ -17,6 +17,7 @@ import ViewRecipe from './pages/ViewRecipe';
 import Register from './pages/Register';
 import LoginForm from './pages/LoginForm';
 import SpotifyRoutingPage from './pages/SpotifyRoutingPage';
+import Dashboard from './pages/Dashboard';
 
 //css
 import './App.css';
@@ -93,7 +94,7 @@ const App = () => {
                 />
               )}
             />
-
+            <Route exact path='/dashboard' component={Dashboard} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={LoginForm} />
             <Route path='/spotify-loading' component={SpotifyRoutingPage} />

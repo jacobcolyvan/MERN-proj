@@ -18,6 +18,63 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
+//edit an account's password and username
+router.put('/user/:id', auth, async (req, res) => {
+  // console.log(req.params.id);
+  // console.log(req.body.newUsername);
+  // console.log(req.body);
+  const user = await userModel.findById(req.params.id);
+  console.log(user.username);
+  //logic for updating username
+
+  if (req.body.newUsername) {
+    try {
+      if (req.body.newUsername !== user.username) {
+        await user.update({ username: req.body.newUsername });
+        return res
+          .status(200)
+          .send(`Username has been updated to ${req.body.newUsername}`);
+      } else {
+        return res.status(400).send('Could not update username');
+      }
+    } catch (error) {
+      return res.status(400).send('Could not update username');
+    }
+  }
+  //logic for updating password and encrypting it
+
+  // console.log(req.body.newPassword);
+  // console.log(req.body.currentPassword);
+  // console.log(user.password, 'userpassword');
+
+  try {
+    if (req.body.newPassword) {
+      const isMatch = await bcrypt.compare(
+        req.body.currentPassword,
+        user.password
+      );
+
+      if (!isMatch) {
+        console.log('Current password does not match');
+        res.status(400).send('Current password does not match');
+        // .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+
+        req.body.newPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+        await user.update({ password: req.body.newPassword });
+
+        console.log('Password has been updated');
+        res.status(200).send('Password has been updated');
+      }
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+//delete an account
 router.delete('/user/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);

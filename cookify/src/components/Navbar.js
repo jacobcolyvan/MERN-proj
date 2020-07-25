@@ -11,7 +11,11 @@ const Navbar = () => {
       <li>
         <Link to='/add'>New</Link>
       </li>
-      <AuthOptions></AuthOptions>
+      <li>
+        <Link to='/dashboard'>Dashboard</Link>
+      </li>
+
+      <AuthOptions />
     </div>
   );
 };
