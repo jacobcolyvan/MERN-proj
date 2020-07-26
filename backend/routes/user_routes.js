@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const bcrypt = require('bcryptjs');
 
 const userModel = require('../models/user');
 
@@ -10,7 +11,7 @@ router.get('/user', auth, async (req, res) => {
     res.json({
       username: user.username,
       user: user.id,
-      recipes: user.recipes
+      recipes: user.recipes,
     });
   } catch {
     res.status(500).send(err);
@@ -41,7 +42,8 @@ router.put('/user/:id', auth, async (req, res) => {
   //logic for updating password and encrypting it
 
   try {
-    if (req.body.newPassword) {
+    if (req.body.newPassword && req.body.newPassword.length > 5) {
+      console.log(req.body.newPassword.length);
       const isMatch = await bcrypt.compare(
         req.body.currentPassword,
         user.password
@@ -61,6 +63,8 @@ router.put('/user/:id', auth, async (req, res) => {
         console.log('Password has been updated');
         res.status(200).send('Password has been updated');
       }
+    } else {
+      throw error;
     }
   } catch (error) {
     res.status(400).send(error.message);

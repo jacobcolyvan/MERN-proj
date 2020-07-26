@@ -33,8 +33,8 @@ router.post('/login', async (req, res) => {
     const _id = user.id;
     const payload = {
       user: {
-        id: _id
-      }
+        id: _id,
+      },
     };
 
     jwt.sign(
@@ -63,13 +63,18 @@ router.post('/register', async (req, res) => {
         .status(400)
         .json({ errors: [{ msg: 'username already taken' }] });
     }
+    console.log(password.length);
+    //backend validation for password length
+    if (password.length < 6) {
+      return res.status(400).send('Password is too short');
+    }
 
     const salt = await bcrypt.genSalt(10); //create salt for password
     let user = new userModel({
       username,
       password,
       recipes,
-      spotifyTokens: { access: '', refresh: '' }
+      spotifyTokens: { access: '', refresh: '' },
     });
     user.password = await bcrypt.hash(password, salt);
 
@@ -77,8 +82,8 @@ router.post('/register', async (req, res) => {
     const _id = user.id;
     const payload = {
       user: {
-        id: _id
-      }
+        id: _id,
+      },
     };
 
     jwt.sign(
@@ -116,7 +121,7 @@ router.post('/tokenIsValid', async (req, res) => {
       token,
       _id: user._id,
       recipes: user.recipes,
-      spotifyAuth
+      spotifyAuth,
     };
     let isUser = true;
     return res.json(userObject);
