@@ -11,22 +11,17 @@
   padding: 1rem;
 }
 
-.delete {
+.recipe-delete {
   padding: 0.5rem 1.5rem;
   border-radius: 0.5rem;
-  margin: 0.5rem;
   color: orange;
   font-weight: bold;
+  margin-left: 5rem;
 }
 
 .header-container {
   display: flex;
   /* justify-content: space-between; */
-}
-
-img {
-  margin-top: 1rem;
-  border-radius: 0.5rem;
 }
 
 .instructions,
@@ -42,4 +37,10 @@ ol {
 p {
   padding: 0;
   line-height: 2rem;
+}
+
+@media (max-width: 900px) {
+  .recipe-delete {
+    margin-left: 2.5rem;
+  }
 }

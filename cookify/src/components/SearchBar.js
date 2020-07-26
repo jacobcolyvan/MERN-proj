@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './SearchBar.css';
 //search bar for finding recipes
 
 const SearchBar = (props) => {

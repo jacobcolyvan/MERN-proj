@@ -9,9 +9,7 @@ const RecipeTile = ({ recipes, saveRecipe }) => {
         <div key={`recipe${index}`} className='recipe-result'>
           <h3>{recipe.title}</h3>
 
-          <div>
-            <img className='image' src={recipe.image} alt='' />
-          </div>
+          <img className='image' src={recipe.image} alt='' />
 
           <ul>
             {recipe.diets.map((diet, index) => (

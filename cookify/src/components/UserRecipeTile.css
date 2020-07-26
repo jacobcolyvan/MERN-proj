@@ -21,6 +21,13 @@
   border-radius: 1rem;
 }
 
+.userRecipeTile img {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  width: 55%;
+  height: auto;
+}
+
 .userRecipeTile div h3,
 p {
   padding: 1rem;

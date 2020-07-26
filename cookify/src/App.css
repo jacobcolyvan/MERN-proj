@@ -17,23 +17,6 @@ body {
   /* padding: 100px 20%; */
 }
 
-.searchbar {
-  background-color: #2d425a;
-  padding: 10px 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.searchbar label {
-  background-color: #2d425a;
-}
-.searchbar input {
-  background-color: white;
-  padding: 5px;
-  color: black;
-  width: 70%;
-}
-
 .navBar {
   display: flex;
   margin: 0 0 10px 0;
