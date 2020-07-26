@@ -6,6 +6,7 @@ import UserContext from '../context/UserContext';
 import Modal from '../components/Modal';
 import './Dashboard.css';
 import GenericModal from '../components/GenericModal';
+import SpotifyAuth from '../components/SpotifyAuth';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -19,7 +20,7 @@ const Dashboard = () => {
   const [passwords, setPasswords] = useState({
     currentPassword: '',
     newPassword: '',
-    newPassword2: '',
+    newPassword2: ''
   });
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -37,13 +38,13 @@ const Dashboard = () => {
     await axios.delete(`http://localhost:3000/user/${userData.user}`, {
       headers: {
         'Content-Type': 'application/json',
-        'x-auth-token': userData.token,
-      },
+        'x-auth-token': userData.token
+      }
     });
     history.push('/login');
     setUserData({
       token: undefined,
-      user: undefined,
+      user: undefined
     });
     localStorage.setItem('auth-token', '');
     console.log(userData);
@@ -69,8 +70,8 @@ const Dashboard = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'x-auth-token': userData.token,
-          },
+            'x-auth-token': userData.token
+          }
         }
       );
       console.log(response);
@@ -97,8 +98,8 @@ const Dashboard = () => {
           {
             headers: {
               'Content-Type': 'application/json',
-              'x-auth-token': userData.token,
-            },
+              'x-auth-token': userData.token
+            }
           }
         );
         // setStatus(response.data);
@@ -132,6 +133,11 @@ const Dashboard = () => {
         <p>Deleted accounts cannot be recovered</p>
       </Modal>
       <h2 className='header'>Dashboard</h2>
+      <SpotifyAuth />
+      <p>
+        If you want to change the attached spotify account, or are having issues
+        with your Spotify, click here.
+      </p>
       <div>
         <form onSubmit={(e) => onSubmitUsername(e)} className='password-form'>
           <label>Edit Username</label>
