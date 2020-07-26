@@ -102,16 +102,6 @@ button {
   padding: 0.2rem;
 }
 
-.recipeViewHeader {
-  padding-bottom: 1rem;
-}
-
-.cookingTimes {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-
 @media all and (max-width: 600px) {
   .main {
     padding: 100px 2%;

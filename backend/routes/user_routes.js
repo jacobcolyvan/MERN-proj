@@ -10,7 +10,7 @@ router.get('/user', auth, async (req, res) => {
     res.json({
       username: user.username,
       user: user.id,
-      recipes: user.recipes
+      recipes: user.recipes,
     });
   } catch {
     res.status(500).send(err);
@@ -106,7 +106,7 @@ router.put('/users/recipes/delete', auth, async (req, res) => {
     const user = await userModel.findById(req.body.id);
 
     let recipeIndex = user.recipes.findIndex(
-      (recipe) => recipe._id == req.body.recipeId
+      (recipe) => recipe.id == req.body.recipeId
     );
 
     if (recipeIndex === null) throw 'no recipe with given id found';
