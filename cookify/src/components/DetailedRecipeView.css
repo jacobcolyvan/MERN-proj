@@ -1,0 +1,45 @@
+.container {
+  margin-top: 1.5rem;
+}
+
+.cookingTimes {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.cookingTimes span {
+  padding: 1rem;
+}
+
+.delete {
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  color: orange;
+  font-weight: bold;
+}
+
+.header-container {
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+img {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+
+.instructions,
+.ingredients {
+  margin-top: 2rem;
+  line-height: 1.75rem;
+}
+
+ol {
+  list-style-position: inside;
+}
+
+p {
+  padding: 0;
+  line-height: 2rem;
+}
