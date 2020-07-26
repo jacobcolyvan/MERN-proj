@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import UserContext from '../context/UserContext';
+import SpotifyAuth from './SpotifyAuth';
 
 const Playlist = ({ recipe, playlistRef }) => {
   const { userData, setUserData, spotifyAuth } = useContext(UserContext);
@@ -125,6 +126,8 @@ const Playlist = ({ recipe, playlistRef }) => {
         )}
       </div>
     );
+  } else {
+    return <SpotifyAuth />;
   }
 };
 
