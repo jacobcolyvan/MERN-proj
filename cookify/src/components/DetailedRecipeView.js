@@ -16,15 +16,16 @@ const DetailedRecipeView = ({ recipe }) => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'x-auth-token': userData.token
-          }
+            'x-auth-token': userData.token,
+          },
         }
       );
-      console.log('recipe has been added');
+      console.log('recipe has been deleted');
+
       await setUserData({
         token: userData.token,
         user: userData.user,
-        recipes: newRecipes.data
+        recipes: newRecipes.data,
       });
       history.push(`/`);
     } catch (err) {
