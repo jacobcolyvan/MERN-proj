@@ -70,14 +70,14 @@ const DetailedRecipeView = ({ recipe }) => {
         ))}
       </p>
       <br />
-      {recipe.instructions.length > 0 && (
+      {/* {recipe.instructions.length > 0 && (
         <ol>
           Instructions: <div></div>
           {recipe.instructions[0].steps.map((steps, index) => (
             <li key={`step${index}`}>{steps.step}</li>
           ))}
         </ol>
-      )}
+      )} */}
     </div>
   );
 };

@@ -8,10 +8,8 @@ const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
     <div>
       {recipes.map((recipe, index) => (
-        <div className='recipe'>
-          <h3 key={recipe.index}>
-            <Link to='/recipe/view'>{recipe.title} </Link>
-          </h3>
+        <div key={`recipe${index}`} className='recipe'>
+          <h3>{recipe.title}</h3>
 
           <div>
             <img className='image' src={recipe.image} alt='' />
