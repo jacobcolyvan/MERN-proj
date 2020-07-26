@@ -5,6 +5,7 @@ import SpotifyAuth from './SpotifyAuth';
 
 const Playlist = ({ recipe, playlistRef }) => {
   const { userData, setUserData, spotifyAuth } = useContext(UserContext);
+  const [recommendedTrackIds, setRecommendedTrackIds] = useState(undefined);
   const [recommendedTracks, setRecommendedTracks] = useState(undefined);
 
   const getRecommendedTracks = async () => {
@@ -18,12 +19,19 @@ const Playlist = ({ recipe, playlistRef }) => {
           'Content-Type': 'application/json'
         }
       });
-
+      // console.log(trackRecs);
       const trackIds = trackRecs.data.tracks.map(
         (track) => `spotify:track:${track.id}`
       );
-      console.log(trackIds);
-      setRecommendedTracks(trackIds);
+      const trackInfo = trackRecs.data.tracks.map((track) => [
+        track.name,
+        track.artists[0].name,
+        track.preview_url,
+        track.id
+      ]);
+      console.log(trackInfo);
+      setRecommendedTracks(trackInfo);
+      setRecommendedTrackIds(trackIds);
     } catch (err) {
       console.log(err);
       console.log('There was an error getting recommended tracks');
@@ -34,7 +42,7 @@ const Playlist = ({ recipe, playlistRef }) => {
     await axios({
       method: 'post',
       url: `  https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${encodeURIComponent(
-        recommendedTracks.join(',')
+        recommendedTrackIds.join(',')
       )}`,
       headers: {
         Authorization: 'Bearer ' + spotifyAuth,
@@ -107,20 +115,33 @@ const Playlist = ({ recipe, playlistRef }) => {
       <div className='playlist-container'>
         <iframe
           src={`https://open.spotify.com/embed/playlist/${playlistRef}`}
-          width='300'
+          width='400'
           height='380'
           allowtransparency='true'
           allow='encrypted-media'
           className='playlist'
           title='Playlist Object'
         ></iframe>
+        {/* <button>Delete</button> */}
       </div>
     );
   } else if (spotifyAuth) {
     return (
-      <div className='recommendations-object'>
-        {recommendedTracks ? (
-          <button onClick={saveTracksToPlaylist}>Save As Playlist</button>
+      <div>
+        {recommendedTrackIds ? (
+          <div className='recommendations-object'>
+            <p>
+              <b>Recommended tracks: </b>
+            </p>
+            <ul className='recommended-tracks'>
+              {recommendedTracks.map((track, index) => (
+                <li key={`track${index}`}>
+                  {track[1]}: <i>{track[0]}</i>
+                </li>
+              ))}
+            </ul>
+            <button onClick={saveTracksToPlaylist}>Save As Playlist</button>
+          </div>
         ) : (
           <button onClick={getRecommendedTracks}>Get Recommended Tracks</button>
         )}

@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
   const [currentRecipes, setCurrentRecipes] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -19,8 +20,11 @@ const SearchController = () => {
 
   const getRecipes = async () => {
     try {
+      const sort = 'meta-score';
+      const number = 10;
       const searchResults = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true&sort=${sort}&offset=${offset}&number=${number}`
+        // can also sort by popularity
       );
       setCurrentRecipes(searchResults.data.results);
       console.log('wallah hussy, shes loaded');
@@ -47,11 +51,10 @@ const SearchController = () => {
         diets: currentRecipes[index].diets,
         instructions: currentRecipes[index].analyzedInstructions,
         winePairing: currentRecipes[index].winePairing,
-        // playlistRef: '7jDnWwQfQYZx2bkqdSlf3F',
         playlistRef: '',
-        id: uuidv4(),
+        id: uuidv4()
       },
-      id: userData.user,
+      id: userData.user
     };
 
     try {
@@ -61,8 +64,8 @@ const SearchController = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'x-auth-token': userData.token,
-          },
+            'x-auth-token': userData.token
+          }
         }
       );
 
@@ -70,7 +73,7 @@ const SearchController = () => {
       await setUserData({
         token: userData.token,
         user: userData.user,
-        recipes: newRecipes.data,
+        recipes: newRecipes.data
       });
       // this should ideally have a small popup that tells you it's been added/favorited
       history.push(`/recipes/${userRecipes.length}`);
@@ -86,10 +89,20 @@ const SearchController = () => {
       ingredientArray.push({
         original: ingredient.original,
         ingredient: ingredient.originalName,
-        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`,
+        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`
       });
     });
     return ingredientArray;
+  };
+
+  const decreaseOffset = () => {
+    setOffset(offset - 10);
+    getRecipes();
+  };
+
+  const increaseOffset = (sign) => {
+    setOffset(offset + 10);
+    getRecipes();
   };
 
   return (
@@ -103,6 +116,12 @@ const SearchController = () => {
       />
 
       <RecipeTile saveRecipe={saveRecipe} recipes={currentRecipes} />
+      {currentRecipes.length > 0 && (
+        <div className='offset-controls'>
+          {offset > 10 && <button onClick={decreaseOffset}>Back</button>}
+          <button onClick={increaseOffset}>Next</button>
+        </div>
+      )}
     </div>
   );
 };
