@@ -22,9 +22,7 @@ const ViewRecipe = ({ recipe }) => {
           <DetailedRecipeView recipe={recipe} />
           <br />
           <br />
-          {recipe.playlistRef && (
-            <Playlist recipe={recipe} playlistRef={recipe.playlistRef} />
-          )}
+          <Playlist recipe={recipe} playlistRef={recipe.playlistRef} />
         </>
       )}
     </div>

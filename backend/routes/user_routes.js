@@ -10,7 +10,7 @@ router.get('/user', auth, async (req, res) => {
     res.json({
       username: user.username,
       user: user.id,
-      recipes: user.recipes,
+      recipes: user.recipes
     });
   } catch {
     res.status(500).send(err);
@@ -20,9 +20,6 @@ router.get('/user', auth, async (req, res) => {
 
 //edit an account's password and username
 router.put('/user/:id', auth, async (req, res) => {
-  // console.log(req.params.id);
-  // console.log(req.body.newUsername);
-  // console.log(req.body);
   const user = await userModel.findById(req.params.id);
   console.log(user.username);
   //logic for updating username
@@ -42,10 +39,6 @@ router.put('/user/:id', auth, async (req, res) => {
     }
   }
   //logic for updating password and encrypting it
-
-  // console.log(req.body.newPassword);
-  // console.log(req.body.currentPassword);
-  // console.log(user.password, 'userpassword');
 
   try {
     if (req.body.newPassword) {

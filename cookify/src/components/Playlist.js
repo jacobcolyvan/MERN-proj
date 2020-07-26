@@ -18,10 +18,9 @@ const Playlist = ({ recipe, playlistRef }) => {
         }
       });
 
-      let trackIds = [];
-      trackRecs.data.tracks.map((track) => {
-        trackIds.push(`spotify:track:${track.id}`);
-      });
+      const trackIds = trackRecs.data.tracks.map(
+        (track) => `spotify:track:${track.id}`
+      );
       console.log(trackIds);
       setRecommendedTracks(trackIds);
     } catch (err) {
@@ -31,7 +30,7 @@ const Playlist = ({ recipe, playlistRef }) => {
   };
 
   const addTracksToPlaylist = async (playlistId) => {
-    const addTracksRes = await axios({
+    await axios({
       method: 'post',
       url: `  https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${encodeURIComponent(
         recommendedTracks.join(',')
