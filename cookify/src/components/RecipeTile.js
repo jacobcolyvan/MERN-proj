@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 
 const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
-    <div>
+    <div className='recipe-results-container'>
       {recipes.map((recipe, index) => (
-        <div className='recipe'>
+        <div className='recipe-result'>
           <h3 key={recipe.index}>
             <Link to='/recipe/view'>{recipe.title} </Link>
           </h3>
