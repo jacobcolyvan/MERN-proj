@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthOptions from './auth/AuthOptions';
+import AuthOptions from './AuthOptions';
 
 const Navbar = () => {
   return (
@@ -11,14 +11,11 @@ const Navbar = () => {
       <li>
         <Link to='/add'>New</Link>
       </li>
-      {/* <li>
-        <Link to='/register'>Register</Link>
-      </li>
       <li>
-        <Link to='/login'>Login</Link>
-      </li> */}
+        <Link to='/dashboard'>Dashboard</Link>
+      </li>
 
-      <AuthOptions></AuthOptions>
+      <AuthOptions />
     </div>
   );
 };

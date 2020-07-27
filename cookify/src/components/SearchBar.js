@@ -1,12 +1,14 @@
 import React from 'react';
 
+import './SearchBar.css';
 //search bar for finding recipes
 
 const SearchBar = (props) => {
   return (
     <div className='searchbar'>
-      <label>Search a food</label>
+      <label>Search for recipes</label>
       <input
+        placeholder='Type your search term here and hit enter'
         type='text'
         value={props.searchValue}
         onChange={(event) => {

@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
-import ErrorNotice from '../ErrorNotice';
+import ErrorNotice from '../components/ErrorNotice';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const LoginForm = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const { setUserData } = useContext(UserContext);
+  const { userData, setUserData, setSpotifyAuth } = useContext(UserContext);
   const history = useHistory();
   const { username, password } = formData;
 
@@ -26,19 +26,43 @@ const LoginForm = () => {
         'http://localhost:3000/auth/login',
         formData
       );
-      console.log(loginRes);
+      // console.log(loginRes);
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data._id,
         recipes: loginRes.data.recipes
       });
       localStorage.setItem('auth-token', loginRes.data.token);
-      history.push('/');
+
+      if (loginRes.data.spotifyAuth) {
+        await axios
+          .post(
+            'http://localhost:3000/spotify/refresh',
+            {
+              id: loginRes.data._id
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': loginRes.data.token
+              }
+            }
+          )
+          .then((data) => {
+            setSpotifyAuth(data.data.access_token);
+            console.log('access_token added');
+            history.push('/');
+          });
+      }
     } catch (err) {
       console.log(err);
-      err && setError(JSON.stringify(err));
+      err && setError(err.message);
     }
   };
+
+  useEffect(() => {
+    if (userData.user) history.push('/');
+  });
 
   return (
     <div>

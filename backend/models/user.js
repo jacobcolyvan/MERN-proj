@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const User = new Schema({
   username: {
     type: String,
-    required: true,
+    required: true
     // match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   password: { type: String, required: true, minlength: 6 },
@@ -13,76 +13,82 @@ const User = new Schema({
     {
       name: {
         type: String,
-        required: true,
+        required: true
       },
       image: {
         type: String,
-        default: '',
+        default: ''
       },
       recipeUrl: {
         type: String,
-        default: '',
+        default: ''
       },
       cuisines: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       sourceName: {
         type: String,
-        default: '',
+        default: ''
       },
       summary: {
         type: String,
-        default: '',
+        default: ''
       },
       preptime: {
         type: Number,
-        default: '',
+        default: ''
       },
       totalCookingTime: {
         type: Number,
-        default: '',
+        default: ''
       },
       ingredients: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       dishTypes: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       diets: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       instructions: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       winePairing: {
-        type: String,
-        default: '',
+        type: Object,
+        default: ''
       },
       playlistRef: {
         type: String,
-        default: 'crickets...',
+        default: '7jDnWwQfQYZx2bkqdSlf3F'
       },
-    },
-  ],
-  spotifyTokens: [
-    {
-      // this one gets returned
-      access: {
+      cookingTime: {
         type: String,
-        default: '',
+        default: ''
       },
-      // this one stays on the backend
-      refresh: {
+      id: {
         type: String,
-        default: '',
-      },
-    },
+        default: ''
+      }
+    }
   ],
+  spotifyTokens: {
+    // this one gets returned
+    access: {
+      type: String,
+      default: ''
+    },
+    // this one stays on the backend
+    refresh: {
+      type: String,
+      default: ''
+    }
+  }
 });
 
 module.exports = mongoose.model('User', User);

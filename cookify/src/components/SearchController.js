@@ -6,10 +6,12 @@ import UserContext from '../context/UserContext';
 import axios from 'axios';
 import RecipeTile from '../components/RecipeTile';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const SearchController = () => {
   const [searchValue, setSearchValue] = useState('');
   const [currentRecipes, setCurrentRecipes] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -17,21 +19,19 @@ const SearchController = () => {
   let userRecipes = userData.recipes;
 
   const getRecipes = async () => {
-    await axios
-      .get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true`
-        // `https://api.spoonacular.com/recipes/search?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`
-      )
-      .then((res) => {
-        // console.log(res.data.results);
-        console.log(res);
-        setCurrentRecipes(res.data.results);
-        console.log('wallah hussy, shes loaded');
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('something wrong w/ spoonacular request');
-      });
+    try {
+      const sort = 'meta-score';
+      const number = 10;
+      const searchResults = await axios.get(
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true&sort=${sort}&offset=${offset}&number=${number}`
+        // can also sort by popularity
+      );
+      setCurrentRecipes(searchResults.data.results);
+      console.log('wallah hussy, shes loaded');
+    } catch (err) {
+      console.log(err);
+      console.log('something wrong w/ spoonacular request');
+    }
   };
 
   const saveRecipe = async (index) => {
@@ -40,45 +40,70 @@ const SearchController = () => {
         name: currentRecipes[index].title,
         image: currentRecipes[index].image,
         recipeUrl: currentRecipes[index].sourceUrl,
-        cuisines: JSON.stringify(currentRecipes[index].cuisines),
+        cuisines: currentRecipes[index].cuisines,
         sourceName: currentRecipes[index].sourceName,
         summary: currentRecipes[index].summary,
         preptime: currentRecipes[index].preparationMinutes,
+        cookingTime: currentRecipes[index].cookingMinutes,
         totalCookingTime: currentRecipes[index].readyInMinutes,
-        ingredients: JSON.stringify(currentRecipes[index].missedIngredients),
-        dishTypes: JSON.stringify(currentRecipes[index].dishTypes),
-        diets: JSON.stringify(currentRecipes[index].diets),
-        instructions: JSON.stringify(
-          currentRecipes[index].analyzedInstructions
-        ),
-        winePairing: JSON.stringify(currentRecipes[index].winePairing),
+        ingredients: parseIngredients(currentRecipes[index].missedIngredients),
+        dishTypes: currentRecipes[index].dishTypes,
+        diets: currentRecipes[index].diets,
+        instructions: currentRecipes[index].analyzedInstructions,
+        winePairing: currentRecipes[index].winePairing,
+        playlistRef: '',
+        id: uuidv4()
       },
-      id: userData.user,
+      id: userData.user
     };
-    console.log(userData.token);
-    await axios
-      .put(`http://localhost:3000/users/`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': userData.token,
-        },
-      })
-      .then((data) => {
-        console.log('recipe has been added');
-        setUserData({
-          token: userData.token,
-          user: userData.user,
-          recipes: data.data,
-        });
-        history.push(`/recipes/${userRecipes.length - 1}`);
-      })
-      .catch((err) => {
-        console.log('somethings said no');
-        console.log(err);
+
+    try {
+      const newRecipes = await axios.put(
+        `http://localhost:3000/users/recipes/add`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': userData.token
+          }
+        }
+      );
+
+      console.log('recipe has been added');
+      await setUserData({
+        token: userData.token,
+        user: userData.user,
+        recipes: newRecipes.data
       });
+      // this should ideally have a small popup that tells you it's been added/favorited
+      history.push(`/recipes/${userRecipes.length}`);
+    } catch (err) {
+      console.log('somethings said no');
+      console.log(err);
+    }
   };
 
-  console.log();
+  const parseIngredients = (ingredients) => {
+    let ingredientArray = [];
+    ingredients.forEach((ingredient) => {
+      ingredientArray.push({
+        original: ingredient.original,
+        ingredient: ingredient.originalName,
+        ingredientAmount: `${ingredient.amount} ${ingredient.unitLong}`
+      });
+    });
+    return ingredientArray;
+  };
+
+  const decreaseOffset = () => {
+    setOffset(offset - 10);
+    getRecipes();
+  };
+
+  const increaseOffset = (sign) => {
+    setOffset(offset + 10);
+    getRecipes();
+  };
 
   return (
     <div>
@@ -89,14 +114,14 @@ const SearchController = () => {
         }}
         onEnter={getRecipes}
       />
-      {/* {currentRecipes.map((recipe, index) => ( */}
-      {/* // <Link */}
-      {/* //   to={`/recipes/${userRecipes.length - 1}`} */}
-      {/* //   key={`${recipe}-${index}`} */}
-      {/* // > */}
+
       <RecipeTile saveRecipe={saveRecipe} recipes={currentRecipes} />
-      {/* // </Link> */}
-      {/* /* ))} */}
+      {currentRecipes.length > 0 && (
+        <div className='offset-controls'>
+          {offset > 10 && <button onClick={decreaseOffset}>Back</button>}
+          <button onClick={increaseOffset}>Next</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,25 +1,21 @@
 import React from 'react';
 import './RecipeTile.css';
-import { Link } from 'react-router-dom';
 
-// this is to render individual recipe block/tiles
-
+//renders list of searched recipes
 const RecipeTile = ({ recipes, saveRecipe }) => {
   return (
-    <div>
-      {/* <Link to="/View" */}
+    <div className='recipe-results-container'>
       {recipes.map((recipe, index) => (
-        <div className='recipe'>
-          <h3 key={recipe.index}>
-            <Link to>{recipe.title} </Link>
-          </h3>
-          <img className='image' src={recipe.image} alt='' />
-          <p>
-            {recipe.diets.map((diet, index) => (
-              <li key={diet.index}>{diet}</li>
-            ))}
-          </p>
+        <div key={`recipe${index}`} className='recipe-result'>
+          <h3>{recipe.title}</h3>
 
+          <img className='image' src={recipe.image} alt='' />
+
+          <ul>
+            {recipe.diets.map((diet, index) => (
+              <li key={`diet${index}`}>{diet}</li>
+            ))}
+          </ul>
           <button
             onClick={() => {
               saveRecipe(index);

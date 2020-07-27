@@ -12,11 +12,11 @@ const AddRecipe = () => {
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
-  });
+  }, [history, userData]);
 
   return (
     <div>
-      <p>Add Recipe</p>
+      <h2>Add Recipe</h2>
       <br />
       <SearchController />
     </div>
