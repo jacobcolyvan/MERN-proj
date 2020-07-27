@@ -22,7 +22,7 @@ router.get('/user', auth, async (req, res) => {
 //edit an account's password and username
 router.put('/user/:id', auth, async (req, res) => {
   const user = await userModel.findById(req.params.id);
-  console.log(user.username);
+
   //logic for updating username
 
   if (req.body.newUsername) {
@@ -43,7 +43,6 @@ router.put('/user/:id', auth, async (req, res) => {
 
   try {
     if (req.body.newPassword && req.body.newPassword.length > 5) {
-      console.log(req.body.newPassword.length);
       const isMatch = await bcrypt.compare(
         req.body.currentPassword,
         user.password

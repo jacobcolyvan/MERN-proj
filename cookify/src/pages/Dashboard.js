@@ -88,7 +88,7 @@ const Dashboard = () => {
     e.preventDefault();
     if (newPassword !== newPassword2) {
       // setError('new passwords do not match');
-      setStatus('new passwords dont match');
+      setStatus('New passwords do not match');
     } else {
       try {
         const response = await axios.put(
