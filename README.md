@@ -6,6 +6,13 @@ Link to deployed website: ######
 
 Link to Github repo: https://github.com/yeddyfit/MERN-proj
 
+Just a note that the above github repo contains most of our commits and branches before deployment.
+The below, deployment repositories, were created just before our first deployment and will contain commits and branches specific to after deploying.
+
+Links to deployment repos
+Front-end: netlify
+Back-end: heroku
+
 ### R1 Overview
 
 #### Description:
@@ -148,3 +155,28 @@ The planning for the project was mainly done through Trello and the use of Kanba
 
 19th July
 ![](./docs/19.7.20.jpg)
+
+---
+
+## T3A2 - B
+
+### R3 Project Management Methodology
+Our project's tasks were placed on a Trello board under the Kanban methodology, we initially split tasks into a simple green and yellow coloring system where green was back-end tasks and yellow was front-end. This wasn't very effective and we later progressed to an action-priority matrix that color coded tasks according to where they sat on a graph of impact versus effort required. This allowed us to quickly figure out what we needed to do and what we could ignore. 
+
+We also had a discussion on where our strengths and weaknesses lay. Jacob felt comfortable 
+with the backend and had extensive experience with the spotify api and callbacks through side projects. Andrew had less experience with a MERN backend but had created a recipe app using React during a side project. Both of our weaknesses were front-end styling. 
+
+We were also a 2-person team which meant there was a larger workload but that communication and delegation of tasks would be easier. 
+
+![](./docs/ActionPriority.jpg)
+
+### R4 Task Delegation Methodology
+
+Task delegation for the initial stages of the project were not clear-cut but this wasn't detrimental to us, we utilized a mixture pair-programming and consulted with each other when issues arose. Tasks were broken down into smaller sub-tasks, which we could quickly complete. Constant communication also allowed us to actively prioritize important tasks and progress quickly. 
+
+Since we were a smaller team and were both proactive, we would simply pick the tasks we wanted to do and assign our tags to them, the tags can be seen to the bottom right of our trello cards.  Understandably this may not work for other teams and requires a degree of trust and proactiveness.
+
+![](./docs/TaskDelegation.jpg)
+
+
+### R8 User Testing
