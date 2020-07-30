@@ -1,25 +1,32 @@
-# Cookify
+# Cheflist
 
 # MERN-docs-T3A2
 
-Link to deployed website: ######
+Link to deployed website: https://cheflist.netlify.app/login
 
-Link to Github repo: https://github.com/yeddyfit/MERN-proj
+Links to deployment repos: <br>
+Front-end: https://github.com/yeddyfit/cheflist-frontend <br>
+Back-end: https://github.com/yeddyfit/cheflist-backend
 
-Just a note that the above github repo contains most of our commits and branches before deployment.
+Link to original repo: https://github.com/yeddyfit/MERN-proj
+
+Note that the above github repo contains most of our commits and branches before deployment.
 The below, deployment repositories, were created just before our first deployment and will contain commits and branches specific to after deploying.
 
-Links to deployment repos
-Front-end: [netlify](https://cheflist.netlify.app/login)
-Back-end: [heroku](https://cheflist-backend.herokuapp.com/)
+### Description
 
-## T3A2 - B
+Website/app that lets you search recipes by key ingredients. After selecting a recipe a playlist relevant to the recipe will be generated, this can be saved to the user account.
+The user will be asked some questions to gauge mood and disposition, this will help the playlist generator in creating a playlist that is relevant and engaging. The recipes and playlists are saved securely on the site so that they can be accessed at any time.
+
+<br>
+
+## T3A2 - Part B
 
 ### R3 Project Management Methodology
 
 Our project's tasks were placed on a Trello board under the Kanban methodology, we initially split tasks into a simple green and yellow coloring system where green was back-end tasks and yellow was front-end. This wasn't very effective and we later progressed to an action-priority matrix that color coded tasks according to where they sat on a graph of impact versus effort required. This allowed us to quickly figure out what we needed to do and what we could ignore.
 
-Regarding git/source control, once we had the bas structure of the app down, we followed a pretty simplified version of a git branching model. This essentially involved master branch only being pushed to when a feature was completed, and bug-tested. We generally had a branch called devlop, that we would merge into master. On both the backend and frontend we had branches for bug-fixes and testing, as a well as feature specific branches. These would generally merge into the develop branch before being merged into master.
+Regarding git/source control, once we had the bas structure of the app down, we followed a pretty simplified version of a git branching model. This essentially involved master branch only being pushed to when a feature was completed, and bug-tested. We generally had a branch called devlop, that we would merge into master. On both the backend and frontend we had branches for bug-fixes and testing, as a well as feature specific branches. These would generally merge into the develop branch before being merged into master. This helped us to minimise bugs/errors and merge conflicts, as well as easily abandon something that was not working as it should.
 
 We also had a discussion on where our strengths and weaknesses lay. Jacob felt comfortable
 with the backend and had extensive experience with the spotify api and callbacks through side projects. Andrew had less experience with a MERN backend but had created a recipe app using React during a side project. Both of our weaknesses were front-end styling.
@@ -29,7 +36,17 @@ We were also a 2-person team which meant there was a larger workload but that co
 Pictured below is how we constructed our action priority matrix
 ![](./docs/ActionPriority.jpg)
 
-//// ADD SCREENSHOTS HERE
+<br>
+
+Pictured below are two screenshots of our kanban in practice:
+
+29th July
+![](./docs/TaskDelegation.jpg)
+
+30th July
+![](./docs/30.7.20.jpg)
+
+<br>
 
 ### R4 Task Delegation Methodology
 
@@ -38,6 +55,8 @@ Task delegation for the initial stages of the project were not clear-cut but thi
 Since we were a smaller team and were both proactive, we would simply pick the tasks we wanted to do and assign our tags to them, the tags can be seen to the bottom right of our trello cards. Understandably this may not work for other teams and requires a degree of trust and proactiveness.
 
 ![](./docs/TaskDelegation.jpg)
+
+<br>
 
 ### R8 Testing
 
@@ -51,7 +70,59 @@ Displayed below is our manual testing sheet
 ![](./docs/testing1.jpg)
 ![](./docs/testing2.jpg)
 
-## T3A2 - A
+Backend testing was done using mocha and supertest. These only tested the auth routes including whether we're receiving back the correct error. They can by calling `npm test` and can be found in the folder labelled 'test'. Screenshots of the results are shown below.
+
+![](./docs/testing3.png)
+
+<br>
+
+### Libraries
+
+#### Front end & Back end
+
+- **axios** - used to handle http requests for browser and node.js, returns a promise.
+
+#### Front end
+
+- **@testing-library/react** - provides a set of helpers for testing React components, allows you to test DOM nodes instead of instances of React components. Used in conjunction with cypress for testing.
+
+- **cypress** - Javascript-based, front end testing framework used to run tests on browsers. Can be used to run end-to-end, integration and unit tests.
+
+- **react-dom** - allows us to render React components onto the DOM and handles updating these components.
+
+- **react** - javascript library for UI interfaces, typically used in conjuction with react-dom.
+
+- **react-loader-spinner** - provides a loading spinner for us to implement during async operations where we're waiting for data to load.
+
+- **react-router-dom** - used for routing and declaring valid routes and links. Also gives us access to hooks such as useHistory to enable easier navigation of a website.
+
+- **react-transition-group** - used to apply transitions to modals.
+
+- **uuid** - used to create universally unique identifiers, which we can use as element keys.
+
+#### Back end
+
+- **bcryptjs** - provides ability to encrpyt, decrypt and compare passwords.
+
+- **cors** - allows for cross-origin resource sharing, allowing our frontend to request resources from our backend despite coming from a different origin.
+
+- **dotenv** - makes .env files in our root folder accesible with the `process.env` call.
+
+- **express** - a node web framework that simplifies the process of setting up server side api routing.
+
+- **jsonwebtoken** - used to implement json web tokens. Allows us to sign, decode and set expiry times for tokens.
+
+- **mocha** - a JavaScript test framework can run on Node.js and the browser, which we used to test our express auth/login paths.
+
+- **mongoose** - a package that lets us interface with our MongoDB database using node. It is formally know as an Object Data Modelling library, and is the middlemen between Our code and our MongoDb database object representations.
+
+- **nodemon** - uesd to automatically refresh the node application when files changes are saved.
+
+- **supertest** - used for testing HTTP requests by providing abstraction, used in conjunction with mocha.
+
+<br><br><br>
+
+## T3A2 - Part A
 
 ### R1 Overview
 
@@ -238,11 +309,5 @@ The planning for the project was mainly done through Trello and the use of Kanba
 
 19th July
 ![](./docs/19.7.20.jpg)
-
-29th July
-![](./docs/TaskDelegation.jpg)
-
-30th July
-![](./docs/30.7.20.jpg)
 
 ---
