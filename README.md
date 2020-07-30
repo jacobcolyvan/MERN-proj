@@ -40,16 +40,17 @@ Our target audience is anyone looking to listen to music while they cook. It is 
  
 
 #### Teck Stack
-Back end:
-- Express.js - web application framework for Node.js
-- Node.js - asynchronous JavaScript runtime, allows us to run JavaScript outside of a browser
-- MongoDB Atlas - NoSQL document-oriented, cloud-based database
-- Backend libraries include: SpotifyWebAPI, jsonwebtoken, bcryptjs, mocha, and mongoose
+**Back end:**
+- **Express.js** - web application framework for Node.js
+- **Node.js** - asynchronous JavaScript runtime, allows us to run JavaScript outside of a browser
+- **MongoDB Atlas** - NoSQL document-oriented, cloud-based database
+- **Heroku** - hosting for back-end of application
+- **Backend libraries include:** SpotifyWebAPI, jsonwebtoken, bcryptjs, mocha, and mongoose
 
-Front end:
-- Netlify - web hosting
-- Spotify API - used to retrieve songs and playlists
-- Spoonacular API 
+**Front end:**
+- **Netlify** - web hosting for front-end of application
+- **Spotify API** - used to retrieve songs and playlists
+- **Spoonacular API** - used to retrieve recipes and additonal data regarding those recipes
 
 ---
 ### Libraries
@@ -60,7 +61,7 @@ Front end:
 
 #### Front end
 - **@testing-library/react** - provides a set of helpers for testing React components, allows you to test DOM nodes instead of instances of React components. Used in conjunction with cypress for testing.
-  
+
 - **cypress** - Javascript-based, front end testing framework used to run tests on browsers. Can be used to run end-to-end, integration and unit tests.
   
 - **react-dom** - allows us to render React components onto the DOM and handles updating these components.
