@@ -197,6 +197,12 @@ The planning for the project was mainly done through Trello and the use of Kanba
 19th July
 ![](./docs/19.7.20.jpg)
 
+29th July
+![](./docs/TaskDelegation.jpg)
+
+30th July
+![](./docs/30.7.20.jpg)
+
 ---
 
 ## T3A2 - B
@@ -209,7 +215,7 @@ with the backend and had extensive experience with the spotify api and callbacks
 
 We were also a 2-person team which meant there was a larger workload but that communication and delegation of tasks would be easier. 
 
-Pictured below is how we constructed our action priority matrix
+Pictured below is how we constructed our action priority matrix, our trello board was colored accordingly
 ![](./docs/ActionPriority.jpg)
 
 ### R4 Task Delegation Methodology
@@ -218,6 +224,7 @@ Task delegation for the initial stages of the project were not clear-cut but thi
 
 Since we were a smaller team and were both proactive, we would simply pick the tasks we wanted to do and assign our tags to them, the tags can be seen to the bottom right of our trello cards.  Understandably this may not work for other teams and requires a degree of trust and proactiveness.
 
+Below is a snapshot of our trello board, it displays our colored priorities and also who's doing what through the tags at the bottom right of each card
 ![](./docs/TaskDelegation.jpg)
 
 
