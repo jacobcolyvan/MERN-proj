@@ -53,44 +53,46 @@ Front end:
 
 ---
 ### Libraries
-Front end & Back end
-- Axios - used to get fetch requests
 
-Front end
-- @testing-library/react - 
-  
-- cypress - Javascript-based, front end testing framework used to run tests on browsers. Can be used to run end-to-end, integration and unit tests.
-  
-- react-dom - 
-  
-- react - javascript library for UI interfaces
-  
-- react-loader-spinner -
-  
-- react-router-dom - used for routing
-- 
-- react-transition-group - used to apply transitions to modals
-  
-- uuid - used to create universally unique identifiers 
+#### Front end & Back end
 
-Back end
-- bcryptjs - provides ability to encrpyt, decrypt and compare passwords.
-  
-- cors - 
-  
-- dotenv -
-  
-- express -
-  
-- jsonwebtoken - used to implement json web tokens. Allows us to sign, decode and set expiry times for tokens.
-  
-- mocha - a JavaScript test framework can run on Node.js and the browser. 
-  
-- mongoose -
-  
-- nodemon - uesd to automatically refresh the node application when files changes are saved.
+- **axios** - used to handle http requests for browser and node.js, returns a promise.
 
-- supertest - used for testing HTTP requests by providing abstraction, used in conjunction with mocha
+#### Front end
+- **@testing-library/react** - provides a set of helpers for testing React components, allows you to test DOM nodes instead of instances of React components. Used in conjunction with cypress for testing.
+  
+- **cypress** - Javascript-based, front end testing framework used to run tests on browsers. Can be used to run end-to-end, integration and unit tests.
+  
+- **react-dom** - allows us to render React components onto the DOM and handles updating these components.
+  
+- **react** - javascript library for UI interfaces, typically used in conjuction with react-dom.
+  
+- **react-loader-spinner** - provides a loading spinner for us to implement during async operations where we're waiting for data to load.
+  
+- **react-router-dom** - used for routing and declaring valid routes and links. Also gives us access to hooks such as useHistory to enable easier navigation of a website.
+  
+- **react-transition-group** - used to apply transitions to modals.
+  
+- **uuid** - used to create universally unique identifiers 
+
+#### Back end
+- **bcryptjs** - provides ability to encrpyt, decrypt and compare passwords.
+  
+- **cors** - 
+  
+- **dotenv** -
+  
+- **express** -
+  
+- **jsonwebtoken** - used to implement json web tokens. Allows us to sign, decode and set expiry times for tokens.
+  
+- **mocha** - a JavaScript test framework can run on Node.js and the browser. 
+  
+- **mongoose** -
+  
+- **nodemon** - uesd to automatically refresh the node application when files changes are saved.
+
+- **supertest** - used for testing HTTP requests by providing abstraction, used in conjunction with mocha
 
 
 
