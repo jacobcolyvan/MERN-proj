@@ -237,4 +237,50 @@ The planning for the project was mainly done through Trello and the use of Kanba
 19th July
 ![](./docs/19.7.20.jpg)
 
+29th July
+![](./docs/TaskDelegation.jpg)
+
+30th July
+![](./docs/30.7.20.jpg)
+
 ---
+<<<<<<< HEAD
+=======
+
+## T3A2 - B
+
+### R3 Project Management Methodology
+
+Our project's tasks were placed on a Trello board under the Kanban methodology, we initially split tasks into a simple green and yellow coloring system where green was back-end tasks and yellow was front-end. This wasn't very effective and we later progressed to an action-priority matrix that color coded tasks according to where they sat on a graph of impact versus effort required. This allowed us to quickly figure out what we needed to do and what we could ignore.
+
+We also had a discussion on where our strengths and weaknesses lay. Jacob felt comfortable
+with the backend and had extensive experience with the spotify api and callbacks through side projects. Andrew had less experience with a MERN backend but had created a recipe app using React during a side project. Both of our weaknesses were front-end styling.
+
+We were also a 2-person team which meant there was a larger workload but that communication and delegation of tasks would be easier.
+
+Pictured below is how we constructed our action priority matrix, our trello board was colored accordingly
+![](./docs/ActionPriority.jpg)
+
+//// ADD SCREENSHOTS HERE
+
+### R4 Task Delegation Methodology
+
+Task delegation for the initial stages of the project were not clear-cut but this wasn't detrimental to us, we utilized a mixture of pair-programming and consulted with each other when issues arose. Tasks were broken down into smaller sub-tasks, which we could quickly complete. Constant communication also allowed us to actively prioritize important tasks and progress quickly.
+
+Since we were a smaller team and were both proactive, we would simply pick the tasks we wanted to do and assign our tags to them, the tags can be seen to the bottom right of our trello cards. Understandably this may not work for other teams and requires a degree of trust and proactiveness.
+
+Below is a snapshot of our trello board, it displays our colored priorities and also who's doing what through the tags at the bottom right of each card
+![](./docs/TaskDelegation.jpg)
+
+### R8 Testing
+
+We also used cypress to test the front end, our cypress tests can be found here: https://github.com/yeddyfit/cheflist-frontend/tree/master/cypress/integration
+
+Tests were created for standard functionality such as logins, changing passwords/usernames, adding and deleting recipes, registering accounts and a basic userflow of a user logging in, adding a recipe and generating a playlist to attach to that recipe.
+
+Manual testing was done on the the development and production site, this was done on an excel spreadsheet and allowed us to systematically test each feature of the website and ensured we didn't miss anything.
+
+Displayed below is our manual testing sheet
+![](./docs/testing1.jpg)
+![](./docs/testing2.jpg)
+>>>>>>> b945d2c1ff28d73a1de73aa4884d549a25bfdc5d
