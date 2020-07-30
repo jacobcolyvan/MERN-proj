@@ -61,6 +61,9 @@ Since we were a smaller team and were both proactive, we would simply pick the t
 ### R8 Testing
 
 We also used cypress to test the front end, our cypress tests can be found here: https://github.com/yeddyfit/cheflist-frontend/tree/master/cypress/integration
+Cypress tests can be run by running 'npm run cy:open' within the terminal for the above repo. It should bring up a pop-up screen where you can click on each test to run it.
+
+![](./docs/cyptest.png)
 
 Tests were created for standard functionality such as logins, changing passwords/usernames, adding and deleting recipes, registering accounts and a basic userflow of a user logging in, adding a recipe and generating a playlist to attach to that recipe.
 
@@ -309,5 +312,11 @@ The planning for the project was mainly done through Trello and the use of Kanba
 
 19th July
 ![](./docs/19.7.20.jpg)
+
+29th July
+![](./docs/TaskDelegation.jpg)
+
+30th July
+![](./docs/30.7.20.jpg)
 
 ---
