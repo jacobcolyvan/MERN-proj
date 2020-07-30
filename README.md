@@ -221,6 +221,18 @@ Since we were a smaller team and were both proactive, we would simply pick the t
 ![](./docs/TaskDelegation.jpg)
 
 
-### R8 User Testing
+### R8 Testing
+ 
+We also used cypress to test the front end, our cypress tests can be found here: https://github.com/yeddyfit/cheflist-frontend/tree/master/cypress/integration
 
-User testing was done on the production and development versions of the website. This was done through manual testing and recording of results. 
+Tests were created for standard functionality such as logins, changing passwords/usernames, adding and deleting recipes, registering accounts and a basic userflow of a user logging in, adding a recipe and generating a playlist to attach to that recipe.
+
+Manual testing was done on the the development and production site, this was done on an excel spreadsheet and allowed us to systematically test each feature of the website and ensured we didn't miss anything.
+
+Displayed below is our manual testing sheet
+![](./docs/testing1.jpg)
+![](./docs/testing2.jpg)
+
+
+
+
