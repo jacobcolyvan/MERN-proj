@@ -2,16 +2,19 @@
 
 # MERN-docs-T3A2
 
-Link to deployed website: ######
+**Link to deployed website:** ######
 
-Link to Github repo: https://github.com/yeddyfit/MERN-proj
+**Link to Github repo:** https://github.com/yeddyfit/MERN-proj
 
 Just a note that the above github repo contains most of our commits and branches before deployment.
-The below, deployment repositories, were created just before our first deployment and will contain commits and branches specific to after deploying.
 
-Links to deployment repos
-Front-end: [netlify](https://cheflist.netlify.app/login)
-Back-end: [heroku](https://cheflist-backend.herokuapp.com/)
+The repositories below, were created just before our first deployment and will contain commits and branches specific to after deploying.
+
+**Links to deployment repos:**
+
+**Front-end:** https://cheflist.netlify.app/login
+
+**Back-end:** https://cheflist-backend.herokuapp.com/
 
 ## T3A2 - B
 
