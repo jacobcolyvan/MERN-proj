@@ -47,17 +47,55 @@ Back end:
 - Backend libraries include: SpotifyWebAPI, jsonwebtoken, bcryptjs, mocha, and mongoose
 
 Front end:
-- React.js - javascript library for UI interfaces
-- Axios - used to get fetch requests
-- React-router-dom - used for routing
-- Cypress - end to end testing framework
-
 - Netlify - web hosting
 - Spotify API - used to retrieve songs and playlists
-- Edamam API - used to retrieve recipes and nutritional info
-- React Bootstrap - used to style components 
+- Spoonacular API 
 
 ---
+### Libraries
+Front end & Back end
+- Axios - used to get fetch requests
+
+Front end
+- @testing-library/react - 
+  
+- cypress - Javascript-based, front end testing framework used to run tests on browsers. Can be used to run end-to-end, integration and unit tests.
+  
+- react-dom - 
+  
+- react - javascript library for UI interfaces
+  
+- react-loader-spinner -
+  
+- react-router-dom - used for routing
+- 
+- react-transition-group - used to apply transitions to modals
+  
+- uuid - used to create universally unique identifiers 
+
+Back end
+- bcryptjs - provides ability to encrpyt, decrypt and compare passwords.
+  
+- cors - 
+  
+- dotenv -
+  
+- express -
+  
+- jsonwebtoken - used to implement json web tokens. Allows us to sign, decode and set expiry times for tokens.
+  
+- mocha - a JavaScript test framework can run on Node.js and the browser. 
+  
+- mongoose -
+  
+- nodemon - uesd to automatically refresh the node application when files changes are saved.
+
+- supertest - used for testing HTTP requests by providing abstraction, used in conjunction with mocha
+
+
+
+
+
 
 ### R2 Dataflow Diagram
 ![image of Dataflow diagram](./docs/DataflowDiagram.png)
@@ -168,6 +206,7 @@ with the backend and had extensive experience with the spotify api and callbacks
 
 We were also a 2-person team which meant there was a larger workload but that communication and delegation of tasks would be easier. 
 
+Pictured below is how we constructed our action priority matrix
 ![](./docs/ActionPriority.jpg)
 
 ### R4 Task Delegation Methodology
@@ -180,3 +219,5 @@ Since we were a smaller team and were both proactive, we would simply pick the t
 
 
 ### R8 User Testing
+
+User testing was done on the production and development versions of the website. This was done through manual testing and recording of results. 
