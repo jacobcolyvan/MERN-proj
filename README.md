@@ -11,7 +11,7 @@ Back-end: https://github.com/yeddyfit/cheflist-backend
 Link to original repo: https://github.com/yeddyfit/MERN-proj
 
 Note that the above github repo contains most of our commits and branches before deployment.
-The below, deployment repositories, were created just before our first deployment and will contain commits and branches specific to after deploying.
+The deployment repositories, were created just before our first deployment and will contain commits and branches specific to after deploying.
 
 ### Description
 
@@ -20,6 +20,7 @@ The user will be asked some questions to gauge mood and disposition, this will h
 
 <br>
 
+---
 ## T3A2 - Part B
 
 ### R3 Project Management Methodology
@@ -48,6 +49,8 @@ Pictured below are two screenshots of our kanban in practice:
 
 <br>
 
+---
+
 ### R4 Task Delegation Methodology
 
 Task delegation for the initial stages of the project were not clear-cut but this wasn't detrimental to us, we utilized a mixture of pair-programming and consulted with each other when issues arose. Tasks were broken down into smaller sub-tasks, which we could quickly complete. Constant communication also allowed us to actively prioritize important tasks and progress quickly.
@@ -58,9 +61,14 @@ Since we were a smaller team and were both proactive, we would simply pick the t
 
 <br>
 
+---
+
 ### R8 Testing
 
+**Front end testing**
+
 We also used cypress to test the front end, our cypress tests can be found here: https://github.com/yeddyfit/cheflist-frontend/tree/master/cypress/integration
+
 Cypress tests can be run by running 'npm run cy:open' within the terminal for the above repo. It should bring up a pop-up screen where you can click on each test to run it.
 
 ![](./docs/cyptest.png)
@@ -73,11 +81,16 @@ Displayed below is our manual testing sheet
 ![](./docs/testing1.jpg)
 ![](./docs/testing2.jpg)
 
-Backend testing was done using mocha and supertest. These only tested the auth routes including whether we're receiving back the correct error. They can by calling `npm test` and can be found in the folder labelled 'test'. Screenshots of the results are shown below.
+
+**Back end testing**
+
+Backend testing was done using mocha and supertest. These tested the auth routes including whether we were receiving back the correct error. They can by run calling `npm test` and can be found in the folder labelled 'test' within the backend repository https://github.com/yeddyfit/cheflist-backend/tree/master/test. Screenshots of the results are shown below.
 
 ![](./docs/testing3.png)
 
 <br>
+
+---
 
 ### Libraries
 
@@ -123,7 +136,10 @@ Backend testing was done using mocha and supertest. These only tested the auth r
 
 - **supertest** - used for testing HTTP requests by providing abstraction, used in conjunction with mocha.
 
-<br><br><br>
+<br><br>
+
+---
+
 
 ## T3A2 - Part A
 
