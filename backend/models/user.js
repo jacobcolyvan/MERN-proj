@@ -65,7 +65,7 @@ const User = new Schema({
       },
       playlistRef: {
         type: String,
-        default: 'crickets...'
+        default: '7jDnWwQfQYZx2bkqdSlf3F'
       },
       cookingTime: {
         type: String,
@@ -77,20 +77,18 @@ const User = new Schema({
       }
     }
   ],
-  spotifyTokens: [
-    {
-      // this one gets returned
-      access: {
-        type: String,
-        default: ''
-      },
-      // this one stays on the backend
-      refresh: {
-        type: String,
-        default: ''
-      }
+  spotifyTokens: {
+    // this one gets returned
+    access: {
+      type: String,
+      default: ''
+    },
+    // this one stays on the backend
+    refresh: {
+      type: String,
+      default: ''
     }
-  ]
+  }
 });
 
 module.exports = mongoose.model('User', User);

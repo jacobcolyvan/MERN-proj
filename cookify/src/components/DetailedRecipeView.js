@@ -1,78 +1,91 @@
-import React, {useContext} from 'react';
-import axios from 'axios'
-import UserContext from '../context/UserContext'
+import React, { useContext } from 'react';
+import axios from 'axios';
+import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
-//shows detailed recipe info within ViewRecipe.js
-//delete button kinda works but doesn't get rid of images immediately, images update if you relog or search new item
-const DetailedRecipeView = ({ recipe }) => {
-  console.log(recipe.ingredients);
 
+import './DetailedRecipeView.css';
+
+//shows detailed recipe info within ViewRecipe.js
+
+const DetailedRecipeView = ({ recipe }) => {
   const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
-  // console.log(userData);
-  // console.log(userData.token)
-
 
   const deleteRecipe = async () => {
-    console.log(recipe.id);
-    await axios.put(`http://localhost:3000/users/recipes/delete`, {id:userData.user, recipeId:recipe.id}, {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': userData.token
-      }
-    }).then((data) => {
-      console.log('recipe has been added');
-      setUserData({
+    try {
+      const newRecipes = await axios.put(
+        `http://localhost:3000/users/recipes/delete`,
+        { id: userData.user, recipeId: recipe.id },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': userData.token,
+          },
+        }
+      );
+      console.log('recipe has been deleted');
+
+      await setUserData({
         token: userData.token,
         user: userData.user,
-        recipes: data.data
-      })
-      history.push(`/`)})
-  }
+        recipes: newRecipes.data,
+      });
+      history.push(`/`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  console.log(recipe.id, 'gg')
   return (
-    <div>
-      <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}
-      <button onClick={deleteRecipe}>Delete</button>
+    <div className='container'>
+      <div className='header-container'>
+        <h2 className='recipeViewHeader'>{recipe.name}</h2>{' '}
+        <button className='recipe-delete' onClick={deleteRecipe}>
+          Delete
+        </button>
+      </div>
 
       <img src={recipe.image} alt='' />
+
       <div className='cookingTimes'>
-        {recipe.preptime > 0 && <span>Prep Time:{recipe.preptime}</span>}
+        {recipe.preptime > 0 && <span>Prep Time: {recipe.preptime}</span>}
         {recipe.cookingMinutes > 0 && (
-          <span>Cooking Time:{recipe.cookingMinutes}</span>
+          <span>Cooking Time: {recipe.cookingMinutes}</span>
         )}
         {recipe.totalCookingTime > 0 && (
-          <span>Total Cooking Time:{recipe.totalCookingTime}</span>
+          <span>Total Cooking Time: {recipe.totalCookingTime}</span>
         )}
       </div>
-      <p>{recipe.winePairing.length > 0 && <p>{recipe.winePairings}</p>}</p>
+
+      {recipe.winePairing.length > 0 && <p>{recipe.winePairings}</p>}
+
       <p>
-        Source:{' '}
+        <b>Source:</b>{' '}
         <a href={recipe.recipeUrl} target='_blank' rel='noopener noreferrer'>
-          {recipe.sourceName}
+          {recipe.sourceName || 'here'}
         </a>
       </p>
+
       {recipe.diets.length > 0 && (
         <p>
-          Diet categories:{' '}
-          {recipe.diets.map((diet) => (
-            <span>{diet}, </span>
+          <b>Diet categories:</b>{' '}
+          {recipe.diets.map((diet, index) => (
+            <span key={`diet${index}`}>{diet}, </span>
           ))}
         </p>
       )}
       {recipe.cuisines.length > 0 && <p>Cuisines: {recipe.cuisines}</p>}
-      <br />
-      <p>
-        Ingredients:
-        {recipe.ingredients.map((ingredient) => (
-          <li>{ingredient.original}</li>
+
+      <p className='ingredients'>
+        <b>Ingredients:</b>
+        {recipe.ingredients.map((ingredient, index) => (
+          <li key={`ingredient${index}`}>{ingredient.original}</li>
         ))}
       </p>
-      <br />
+
       {recipe.instructions.length > 0 && (
-        <ol>
-          Instructions: <div></div>
+        <ol className='instructions'>
+          <b>Instructions:</b>
           {recipe.instructions[0].steps.map((steps, index) => (
             <li key={`step${index}`}>{steps.step}</li>
           ))}

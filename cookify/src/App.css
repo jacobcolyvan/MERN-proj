@@ -13,25 +13,8 @@ body {
 }
 
 .main {
-  padding: 100px 20%;
-}
-
-
-.searchbar {
-  background-color: #2d425a;
-  padding: 10px 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.searchbar label {
-  background-color: #2d425a;
-}
-.searchbar input {
-  background-color: white;
-  padding: 5px;
-  color: black;
-  width: 70%;
+  padding: 5rem 10%;
+  /* padding: 100px 20%; */
 }
 
 .navBar {
@@ -102,15 +85,23 @@ button {
   padding: 0.2rem;
 }
 
-
-.recipeViewHeader{
-  padding-bottom: 1rem;
+.recommendations-object {
+  border: 1px solid white;
+  padding: 0.5rem;
+  width: 400px;
+  background-color: #314358;
+}
+.recommendations-object * {
+  background-color: #314358;
 }
 
-.cookingTimes {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
+.recommended-tracks {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.recommended-tracks li {
+  padding: 0.1rem 0;
 }
 
 @media all and (max-width: 600px) {
@@ -118,4 +109,3 @@ button {
     padding: 100px 2%;
   }
 }
-

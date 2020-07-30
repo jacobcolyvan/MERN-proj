@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import UserContext from '../../context/UserContext';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
-import ErrorNotice from '../ErrorNotice';
+import ErrorNotice from '../components/ErrorNotice';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const Register = () => {
     password2: ''
   });
 
-  const { setUserData } = useContext(UserContext);
+  const { userData, setUserData, setSpotifyAuth } = useContext(UserContext);
   const { username, password, password2 } = formData;
   const [error, setError] = useState();
   const history = useHistory();
@@ -20,7 +20,6 @@ const Register = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -39,14 +38,19 @@ const Register = () => {
           user: loginRes.data._id,
           recipes: loginRes.data.recipes
         });
+        setSpotifyAuth(false);
         localStorage.setItem('auth-token', loginRes.data.token);
         history.push('/');
       } catch (err) {
         console.log(err);
-        err && setError(JSON.stringify(err));
+        err && setError(err.message);
       }
     }
   };
+
+  useEffect(() => {
+    if (userData.user) history.push('/');
+  });
 
   return (
     <div>

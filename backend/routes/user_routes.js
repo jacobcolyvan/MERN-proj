@@ -1,22 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
+const bcrypt = require('bcryptjs');
 
 const userModel = require('../models/user');
-
-// router.get('/users/:id', auth, async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.params.id);
-//     // if (!user) res.status(404).send("No user here")
-//     res.send(user);
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('No user here');
-//   }
-// });
 
 router.get('/user', auth, async (req, res) => {
   try {
@@ -24,7 +11,7 @@ router.get('/user', auth, async (req, res) => {
     res.json({
       username: user.username,
       user: user.id,
-      recipes: user.recipes
+      recipes: user.recipes,
     });
   } catch {
     res.status(500).send(err);
@@ -32,6 +19,58 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
+//edit an account's password and username
+router.put('/user/:id', auth, async (req, res) => {
+  const user = await userModel.findById(req.params.id);
+
+  //logic for updating username
+
+  if (req.body.newUsername) {
+    try {
+      if (req.body.newUsername !== user.username) {
+        await user.update({ username: req.body.newUsername });
+        return res
+          .status(200)
+          .send(`Username has been updated to ${req.body.newUsername}`);
+      } else {
+        return res.status(400).send('Could not update username');
+      }
+    } catch (error) {
+      return res.status(400).send('Could not update username');
+    }
+  }
+  //logic for updating password and encrypting it
+
+  try {
+    if (req.body.newPassword && req.body.newPassword.length > 5) {
+      const isMatch = await bcrypt.compare(
+        req.body.currentPassword,
+        user.password
+      );
+
+      if (!isMatch) {
+        console.log('Current password does not match');
+        res.status(400).send('Current password does not match');
+        // .json({ errors: [{ msg: 'Invalid credentials (password)' }] });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+
+        req.body.newPassword = await bcrypt.hash(req.body.newPassword, salt);
+
+        await user.update({ password: req.body.newPassword });
+
+        console.log('Password has been updated');
+        res.status(200).send('Password has been updated');
+      }
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+//delete an account
 router.delete('/user/:id', auth, async (req, res) => {
   try {
     const user = await userModel.findByIdAndDelete(req.params.id);
@@ -48,11 +87,9 @@ router.delete('/user/:id', auth, async (req, res) => {
 router.put('/users/recipes/add', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-    // console.log(req.body.newRecipe);
-    newRecipes = [...user.recipes, req.body.newRecipe];
-    await user.update({ recipes: newRecipes });
+    let newRecipes = [...user.recipes, req.body.newRecipe];
+    await user.updateOne({ recipes: newRecipes });
     res.send(newRecipes);
-    // res.send('Recipe added to user')
   } catch (err) {
     console.log('no adding nothing mon');
     res.status(400).send(err);
@@ -63,41 +100,44 @@ router.put('/users/recipes/add', auth, async (req, res) => {
 router.put('/users/recipes/delete', auth, async (req, res) => {
   try {
     const user = await userModel.findById(req.body.id);
-   console.log(user.id);
-    console.log(req.body.recipeId, 'gg');
-    let recipeIndex = null;
-    user.recipes.forEach((recipe, index) => {
-      console.log(recipe.id);
-      if (recipe.id == req.body.recipeId) {
-        console.log('they match!');
-        recipeIndex = index;
-      }
-    });
+
+    let recipeIndex = user.recipes.findIndex(
+      (recipe) => recipe.id == req.body.recipeId
+    );
 
     if (recipeIndex === null) throw 'no recipe with given id found';
     let newRecipes = user.recipes;
     newRecipes.splice(recipeIndex, 1);
 
-    await user.update({ recipes: newRecipes });
-    console.log('done');
-    res.send(newRecipes);
+    await user.updateOne({ recipes: newRecipes });
+    res.status(200).send(newRecipes);
   } catch (err) {
     console.log('no deleting this time');
     res.status(400).send(err);
-    console.log(err.message)
+    console.log(err.message);
+  }
+});
+
+// route to add playlist to a user's recipe
+router.put('/users/recipes/add-playlist', auth, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.body.id);
+    const newPlaylistRef = req.body.newPlaylistRef;
+    let recipeIndex = user.recipes.findIndex(
+      (recipe) => recipe.id == req.body.recipeId
+    );
+    if (recipeIndex === null) throw 'no recipe with given id found';
+
+    let newRecipes = user.recipes;
+    newRecipes[recipeIndex].playlistRef = newPlaylistRef;
+
+    await user.updateOne({ recipes: newRecipes });
+    res.status(200).send(newRecipes);
+  } catch (err) {
+    console.log('no adding this playlist mon');
+    console.log(err);
+    res.status(400).send(err);
   }
 });
 
 module.exports = router;
-
-// // get user recipes
-// // @private
-// router.get('/users/recipes/', auth, async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.id);
-//     res.send(user.recipes);
-//   } catch {
-//     res.status(500).send(err);
-//     console.log('No user here');
-//   }
-// });

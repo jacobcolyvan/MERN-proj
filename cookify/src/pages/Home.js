@@ -6,11 +6,11 @@ import React, { useEffect, useContext } from 'react';
 import UserRecipeTile from '../components/UserRecipeTile';
 import UserContext from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
+import SpotifyAuth from '../components/SpotifyAuth';
 
 const Home = () => {
-  const { userData } = useContext(UserContext);
+  const { userData, spotifyAuth } = useContext(UserContext);
   const history = useHistory();
-  // console.log(userData);
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
@@ -18,12 +18,12 @@ const Home = () => {
 
   return (
     <div>
-      <p>View saved recipes/home</p>
+      <h2>Saved Recipes</h2>
       <br />
+      {!spotifyAuth && <SpotifyAuth />}
       {userData.recipes && <UserRecipeTile userRecipes={userData.recipes} />}
     </div>
   );
 };
-
 
 export default Home;

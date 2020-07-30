@@ -8,21 +8,23 @@ import { useHistory } from 'react-router-dom';
 import DetailedRecipeView from '../components/DetailedRecipeView';
 
 const ViewRecipe = ({ recipe }) => {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const history = useHistory();
-
 
   useEffect(() => {
     if (!userData.user) history.push('/login');
-  });
+  }, [userData, history]);
 
   return (
     <div>
-      {recipe && <DetailedRecipeView recipe={recipe} />}
-
-      <br />
-      <br />
-      <Playlist />
+      {recipe && (
+        <>
+          <DetailedRecipeView recipe={recipe} />
+          <br />
+          <br />
+          <Playlist recipe={recipe} playlistRef={recipe.playlistRef} />
+        </>
+      )}
     </div>
   );
 };
